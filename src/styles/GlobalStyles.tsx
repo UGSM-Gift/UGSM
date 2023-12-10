@@ -24,7 +24,7 @@ body {
   min-width: 375px;
   font-family: Outfit;
   margin: 0 auto;
-  padding: 20px;
+ 
   line-height: 1;
   letter-spacing: -0.025em;
   -ms-overflow-style: none;

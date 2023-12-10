@@ -4,12 +4,13 @@ const SocialButton = styled.div`
   display: flex;
   align-items: center;
   padding: 10px;
-  background-color: #eee;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background-color: #212727;
+  color: #fff;
+  font-size: 1.3rem;
+  border-radius: 10px;
+  text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
   &:hover {
     background-color: #ddd;
   }
@@ -23,10 +24,11 @@ const Icon = styled.img`
 
 interface SocialLoginType {
   socialLogin: string;
+  onClick: () => void;
 }
-const SocialLoginButton: React.FC<SocialLoginType> = ({ socialLogin }) => {
+const SocialLoginButton: React.FC<SocialLoginType> = ({ socialLogin, onClick }) => {
   return (
-    <SocialButton>
+    <SocialButton onClick={onClick}>
       <Icon />
       {socialLogin}
     </SocialButton>
