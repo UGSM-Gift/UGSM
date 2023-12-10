@@ -20,11 +20,11 @@ html {
 
 body {
   width: 100%;
-  max-width: 768px;
+  //max-width: 768px;
+  max-width: 480px;
   min-width: 375px;
   font-family: Outfit;
   margin: 0 auto;
- 
   line-height: 1;
   letter-spacing: -0.025em;
   -ms-overflow-style: none;
