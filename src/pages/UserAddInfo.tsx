@@ -89,34 +89,32 @@ const UserAddInfo = () => {
 
   return (
     <Wrapper>
-      <Wrapper>
-        <Title>
-          반가워요!
-          <br />
-          어떻게 불러드릴까요?
-        </Title>
-        <input type="text" placeholder="닉네임을 입력해주세요." onChange={handleNicknameChange} />
+      <Title>
+        반가워요!
+        <br />
+        어떻게 불러드릴까요?
+      </Title>
+      <input type="text" placeholder="닉네임을 입력해주세요." onChange={handleNicknameChange} />
 
-        <Title>OO님의 생일과 성별을 확인해주세요.</Title>
+      <Title>OO님의 생일과 성별을 확인해주세요.</Title>
 
-        <div>
-          <label>생일</label>
-          <input type="date" value={birthday} onChange={handleBirthdayChange} />
-        </div>
+      <div>
+        <label>생일</label>
+        <input type="date" value={birthday} onChange={handleBirthdayChange} />
+      </div>
 
-        <div>
-          <label>성별</label>
-          <select value={gender} onChange={handleGenderChange}>
-            <option value="남">남</option>
-            <option value="여">여</option>
-          </select>
-        </div>
+      <div>
+        <label>성별</label>
+        <select value={gender} onChange={handleGenderChange}>
+          <option value="남">남</option>
+          <option value="여">여</option>
+        </select>
+      </div>
 
-        <Title>사용하고 있는 전화번호를 알려주세요.</Title>
-        <input type="tel" placeholder="숫자만 입력해주세요." onChange={handlePhoneChange} />
+      <Title>사용하고 있는 전화번호를 알려주세요.</Title>
+      <input type="tel" placeholder="숫자만 입력해주세요." onChange={handlePhoneChange} />
 
-        <button onClick={() => {}}>완료</button>
-      </Wrapper>
+      <button onClick={() => {}}>완료</button>
     </Wrapper>
   );
 };
