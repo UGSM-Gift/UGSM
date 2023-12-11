@@ -10,7 +10,14 @@ export const googleLogin = () => {
 };
 
 //네이버 로그인
-export const naverLogin = () => {};
+const NAVER_CLIENT_ID = "opgkZtCOcqRMs0wozjW3";
+const STATE = "false";
+
+const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=${STATE}&redirect_uri=${REDIRECT_URI}`;
+
+export const naverLogin = () => {
+  window.location.href = NAVER_AUTH_URL;
+};
 
 // 카카오 로그인
 const REST_API_KEY = "425e2b2591e7b675d665772268b0c0fd";
