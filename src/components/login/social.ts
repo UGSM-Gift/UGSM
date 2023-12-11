@@ -1,13 +1,21 @@
-const REST_API_KEY = "백엔드한테 달라하자1";
-const REDIRECT_URI = "백엔드한테 달라하자2";
-const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+const REDIRECT_URI = "http://localhost:3000/login/auth";
 
-export const naverLogin = () => {
-  console.log("naverLogin");
-};
-export const kakaoLogin = () => {
-  console.log("kakaoLogin");
-};
+// 구글 로그인
+const GOOGLE_CLIENT_ID = "백엔드";
+const GOOGLE_REDIRECT_URI = "백엔드";
+const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=openid email profile`;
+
 export const googleLogin = () => {
-  console.log("googleLogin");
+  window.location.href = GOOGLE_AUTH_URL;
+};
+
+//네이버 로그인
+export const naverLogin = () => {};
+
+// 카카오 로그인
+const REST_API_KEY = "425e2b2591e7b675d665772268b0c0fd";
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+export const kakaoLogin = () => {
+  window.location.href = KAKAO_AUTH_URL;
 };
