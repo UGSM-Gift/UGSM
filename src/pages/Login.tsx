@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
-  padding: 120px 0 30px;
+  padding: 120px 20px 30px;
 `;
 
 const LogoBox = styled.div`

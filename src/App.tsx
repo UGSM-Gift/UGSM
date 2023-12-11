@@ -6,7 +6,6 @@ import UserAddInfo from "./pages/UserAddInfo";
 import GlobalStyle from "./styles/GlobalStyles";
 function App() {
   const Wrapper = styled.div`
-    padding: 0 20px;
     border: 1px solid #000;
   `;
   return (
