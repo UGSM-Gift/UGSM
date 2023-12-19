@@ -25,12 +25,11 @@ const Icon = styled.img`
 
 interface SocialLoginType {
   socialLogin: string;
-  onClick: () => void;
 }
 
-const SocialLoginButton: React.FC<SocialLoginType> = ({ socialLogin, onClick }) => {
+const SocialLoginButton: React.FC<SocialLoginType> = ({ socialLogin }) => {
   return (
-    <SocialButton onClick={onClick}>
+    <SocialButton>
       <Icon />
       {socialLogin}
     </SocialButton>
