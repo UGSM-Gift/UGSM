@@ -8,12 +8,13 @@ const Button = styled.button`
   background-color: #fff;
 `;
 
-const PreviousButton = () => {
-  return (
-    <Button>
-      <IoArrowBackOutline />
-    </Button>
-  );
+interface PrevioustButtonProps {
+  onClick: () => void;
+  step: number;
+}
+
+const PreviousButton: React.FC<PrevioustButtonProps> = ({ onClick, step }) => {
+  return <Button onClick={onClick}>{step > 1 ? <IoArrowBackOutline /> : null} </Button>;
 };
 
 export default PreviousButton;

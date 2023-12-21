@@ -12,7 +12,7 @@ const Ouath = ({ socialLogin }: { socialLogin: string }) => {
   async function getUser() {
     try {
       const response = await axios.get(
-        `http://localhost:8081/api/login/oauth2/code/${socialLogin}?code=${AUTH_CODE}&state=${AUTH_STATUS}`
+        `https://www.ugsm.co.kr/api/login/oauth2/code/${socialLogin}?code=${AUTH_CODE}&state=${AUTH_STATUS}`
       );
       console.log(response);
       navigate("/");

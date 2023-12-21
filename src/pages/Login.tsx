@@ -70,15 +70,15 @@ const CheckList = styled.div`
 
 const socialLogins = [
   {
-    link: "/api/login/oauth2/authorization/naver",
+    link: "https://www.ugsm.co.kr/api/login/oauth2/authorization/naver",
     socialLogin: "네이버로 시작",
   },
   {
-    link: "/api/login/oauth2/authorization/kakao",
+    link: "https://www.ugsm.co.kr/api/login/oauth2/authorization/kakao",
     socialLogin: "카카오톡으로 시작",
   },
   {
-    link: "/api/login/oauth2/authorization/google",
+    link: "https://www.ugsm.co.kr/api/login/oauth2/authorization/google",
     socialLogin: "구글로 시작",
   },
 ];
