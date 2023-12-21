@@ -12,16 +12,14 @@ const Button = styled.button`
 `;
 
 interface NextButtonProps {
+  // disabled: boolean;
+  onClick: () => void;
   step: number;
-  setStep: (step: number) => void;
-  text: string;
 }
 
-const NextButton: React.FC<NextButtonProps> = ({ setStep, step, text }) => {
-  const handleStepChange = () => {
-    setStep(step + 1);
-  };
-  return <Button onClick={handleStepChange}>{text}</Button>;
+const NextButton: React.FC<NextButtonProps> = ({ onClick, step }) => {
+  const MAX_STEP = 4;
+  return <Button onClick={onClick}>{step === MAX_STEP ? "완료" : "다음"}</Button>;
 };
 
 export default NextButton;

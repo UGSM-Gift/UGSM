@@ -1,5 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
+import Gender from "./pages/adduserinfo/Gender";
+import Nickname from "./pages/adduserinfo/Nickname";
+import PhoneNumber from "./pages/adduserinfo/PhoneNumber";
+import PhoneNumberAuth from "./pages/adduserinfo/PhoneNumberAuth";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
 import Ouath from "./pages/Ouath";
@@ -14,11 +18,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/addUserInfo" element={<UserAddInfo />}>
-          <Route path="/addUserInfo/nickname" element={<Login />} />
-          <Route path="/login/gender" element={<Login />} />
-          <Route path="/login/phoneNumberAuth" element={<Login />} />
-        </Route>
+        <Route path="/addUserInfo" element={<UserAddInfo />} />
+        {/* <Route path="/addUserInfo/nickname" element={<Nickname />} />
+          <Route path="/addUserInfo/gender" element={<Gender />} />
+          <Route path="/addUserInfo/phoneNumber" element={<PhoneNumber />} />
+          <Route path="/addUserInfo/phoneNumberAuth" element={<PhoneNumberAuth />} /> */}
 
         <Route path="/oauth/callback/kakao" element={<Ouath socialLogin="kakao" />} />
         <Route path="/oauth/callback/naver" element={<Ouath socialLogin="naver" />} />
