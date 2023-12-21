@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { googleLogin, kakaoLogin, naverLogin } from "../components/login/social";
 import CheckItem from "../components/login/CheckItem";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,17 +53,32 @@ const CheckList = styled.div`
   justify-content: center;
 `;
 
+// const socialLogins = [
+//   {
+//     link: "/oauth/callback/naver",
+//     socialLogin: "네이버로 시작",
+//   },
+//   {
+//     link: "/oauth/callback/kakao",
+//     socialLogin: "카카오톡으로 시작",
+//   },
+//   {
+//     link: "",
+//     socialLogin: "구글로 시작",
+//   },
+// ];
+
 const socialLogins = [
   {
-    onClick: naverLogin,
+    link: "/api/login/oauth2/authorization/naver",
     socialLogin: "네이버로 시작",
   },
   {
-    onClick: kakaoLogin,
+    link: "/api/login/oauth2/authorization/kakao",
     socialLogin: "카카오톡으로 시작",
   },
   {
-    onClick: googleLogin,
+    link: "/api/login/oauth2/authorization/google",
     socialLogin: "구글로 시작",
   },
 ];
@@ -78,11 +94,9 @@ const Login = () => {
       <SubTitle>은근슨물에서 은근테스트로 알아보자!</SubTitle>
       <SocialButtonWrapper>
         {socialLogins.map((socialLogin, index) => (
-          <SocialLoginButton
-            key={index}
-            onClick={socialLogin.onClick}
-            socialLogin={socialLogin.socialLogin}
-          />
+          <Link to={socialLogin.link} key={index}>
+            <SocialLoginButton key={index} socialLogin={socialLogin.socialLogin} />
+          </Link>
         ))}
       </SocialButtonWrapper>
       <AssentBox>
