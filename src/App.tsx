@@ -19,11 +19,6 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/addUserInfo" element={<UserAddInfo />} />
-        {/* <Route path="/addUserInfo/nickname" element={<Nickname />} />
-          <Route path="/addUserInfo/gender" element={<Gender />} />
-          <Route path="/addUserInfo/phoneNumber" element={<PhoneNumber />} />
-          <Route path="/addUserInfo/phoneNumberAuth" element={<PhoneNumberAuth />} /> */}
-
         <Route path="/oauth/callback/kakao" element={<Ouath socialLogin="kakao" />} />
         <Route path="/oauth/callback/naver" element={<Ouath socialLogin="naver" />} />
         <Route path="/oauth/callback/google" element={<Ouath socialLogin="google" />} />

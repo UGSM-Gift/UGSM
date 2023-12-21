@@ -1,21 +1,19 @@
 import InputType from "../../components/userAuth/InputType";
 import Question from "../../components/userAuth/Question";
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
   padding: 0 20px;
 `;
 
-const PhoneNumberAuth = () => {
-  const [phone, setPhone] = useState("");
+type PhoneNumberProp = {
+  phone: string;
+  phoneAuth: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
-  // 휴대폰 인증번호
-  const [phoneAuth, setPhoneAuth] = useState("");
-  // 휴대폰 인증번호 입력
-  const handlePhoneAuthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneAuth(event.target.value);
-  };
+const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange }) => {
   return (
     <Wrapper>
       <Question firstLine="방금 보내드린" secondLine="인증번호를 입력해주세요" />
@@ -23,7 +21,7 @@ const PhoneNumberAuth = () => {
         type="text"
         value={phoneAuth}
         placeholder={`${phone}로 보내드렸어요`}
-        onChange={handlePhoneAuthChange}
+        onChange={onChange}
       />
     </Wrapper>
   );
