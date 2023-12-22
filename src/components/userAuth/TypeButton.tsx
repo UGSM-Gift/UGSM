@@ -3,25 +3,22 @@ import styled from "styled-components";
 
 interface TypeButtonProps {
   type: string;
-  selectedType: string;
   setType: (type: string) => void;
+  selectedType: string;
 }
 
-const Button = styled.button<{ selected: boolean }>`
+const Button = styled.button<{ $selected: boolean }>`
   flex-grow: 1;
   border-radius: 15px;
   height: 60px;
   background-color: #fff;
-  border: 1px solid ${({ selected }) => (selected ? "#0F62FE" : "#A2A9AD")};
-  color: ${({ selected }) => (selected ? "#0F62FE" : "#A2A9AD")};
+  border: 1px solid ${({ $selected }) => ($selected ? "#0F62FE" : "#A2A9AD")};
+  color: ${({ $selected }) => ($selected ? "#0F62FE" : "#A2A9AD")};
 `;
 
-function TypeButton({ type, selectedType, setType }: TypeButtonProps) {
-  const handleClick = () => {
-    setType(type);
-  };
+function TypeButton({ type, setType, selectedType }: TypeButtonProps) {
   return (
-    <Button type="button" selected={selectedType === type} onClick={handleClick}>
+    <Button $selected={type === selectedType} onClick={() => setType(type)}>
       {type}
     </Button>
   );

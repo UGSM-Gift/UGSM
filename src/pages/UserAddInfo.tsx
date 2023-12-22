@@ -7,6 +7,7 @@ import PhoneNumber from "./adduserinfo/PhoneNumber";
 import PhoneNumberAuth from "./adduserinfo/PhoneNumberAuth";
 import NextButton from "../components/userAuth/NextButton";
 import axios from "axios";
+import { UserData } from "src/modules/@types/common";
 
 const Wrapper = styled.div``;
 
@@ -15,6 +16,7 @@ const ContentBox = styled.div`
 `;
 
 const UserAddInfo = () => {
+  const [userData, setUserData] = useState<UserData>({ nickname: "", birth: "", gender: "" });
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState("");
   // 휴대폰 인증번호
@@ -23,6 +25,7 @@ const UserAddInfo = () => {
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(event.target.value);
   };
+
   // 휴대폰 인증번호 입력
   const handlePhoneAuthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneAuthNumber(event.target.value);
@@ -44,6 +47,15 @@ const UserAddInfo = () => {
       console.log(error);
     }
   };
+
+  const userDataPost = async (userData: UserData) => {
+    try {
+      await axios.post(`https://www.ugsm.co.kr/api/???/${phoneAuthNumber}`, userData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // 최소, 최대 값
   const updateStep = (newStep: number) => {
     setStep(Math.max(1, Math.min(newStep, 4)));
@@ -54,6 +66,7 @@ const UserAddInfo = () => {
       phoneAuthPost();
     } else if (step === 4) {
       phoneAuthPut(phoneAuthNumber);
+      userDataPost(userData);
     }
     updateStep(step + 1);
   };
@@ -69,9 +82,9 @@ const UserAddInfo = () => {
           <PreviousButton onClick={handlePreviousStepChange} step={step} />
         </ContentBox>
         {step === 1 ? (
-          <Nickname />
+          <Nickname userData={userData} setUserData={setUserData} />
         ) : step === 2 ? (
-          <Gender />
+          <Gender userData={userData} setUserData={setUserData} />
         ) : step === 3 ? (
           <PhoneNumber phone={phone} onChange={handlePhoneChange} />
         ) : (

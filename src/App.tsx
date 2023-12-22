@@ -10,6 +10,7 @@ function App() {
   const Wrapper = styled.div`
     border: 1px solid #000;
   `;
+
   return (
     <Wrapper>
       <Routes>
