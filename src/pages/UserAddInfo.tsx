@@ -31,7 +31,7 @@ const UserAddInfo = () => {
   const phoneAuthPost = async () => {
     try {
       const phoneAuth = { phoneNumber: phone };
-      await axios.post("https://www.ugsm.co.kr/api/verification-code", JSON.stringify(phoneAuth));
+      await axios.post("https://www.ugsm.co.kr/api/verification-code", phoneAuth);
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +39,7 @@ const UserAddInfo = () => {
 
   const phoneAuthPut = async (phoneAuthNumber: string) => {
     try {
-      await axios.put(`/api/verification-code/${phoneAuthNumber}`);
+      await axios.put(`https://www.ugsm.co.kr/api/verification-code/${phoneAuthNumber}`);
     } catch (error) {
       console.log(error);
     }

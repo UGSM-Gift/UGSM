@@ -1,9 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
-import Gender from "./pages/adduserinfo/Gender";
-import Nickname from "./pages/adduserinfo/Nickname";
-import PhoneNumber from "./pages/adduserinfo/PhoneNumber";
-import PhoneNumberAuth from "./pages/adduserinfo/PhoneNumberAuth";
+
 import Login from "./pages/Login";
 import Main from "./pages/Main";
 import Ouath from "./pages/Ouath";
