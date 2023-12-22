@@ -1,8 +1,8 @@
 import InputType from "../../components/userAuth/InputType";
 import Question from "../../components/userAuth/Question";
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { UserData, UserDataProps } from "src/modules/@types/common";
+import { UserDataProps } from "src/modules/@types/common";
 
 const Wrapper = styled.div`
   padding: 0 20px;
@@ -10,9 +10,7 @@ const Wrapper = styled.div`
 
 const Nickname: React.FC<UserDataProps> = ({ userData, setUserData }) => {
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //   왜 이렇게 씀?
-    // setUserData((prevUserData) => ({ ...prevUserData, birth: event.target.value }));
-    setUserData({ ...userData, nickname: event.target.value });
+    setUserData((prevUserData) => ({ ...prevUserData, nickname: event.target.value }));
   };
 
   return (

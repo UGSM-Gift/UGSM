@@ -10,6 +10,7 @@ const Wrapper = styled.div`
 `;
 
 const TypeButtonBox = styled.div`
+
   display: flex;
   gap: 10px;
   margin-top: 10px;
