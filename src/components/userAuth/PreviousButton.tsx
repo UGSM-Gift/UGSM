@@ -1,5 +1,6 @@
 import React from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Button = styled.button`
@@ -14,7 +15,15 @@ interface PrevioustButtonProps {
 }
 
 const PreviousButton: React.FC<PrevioustButtonProps> = ({ onClick, step }) => {
-  return <Button onClick={onClick}>{step > 1 ? <IoArrowBackOutline /> : null} </Button>;
+  const handleHomeClick = () => {
+    navigate("/login");
+  };
+  const navigate = useNavigate();
+  return (
+    <Button onClick={step === 1 ? handleHomeClick : onClick}>
+      <IoArrowBackOutline />
+    </Button>
+  );
 };
 
 export default PreviousButton;

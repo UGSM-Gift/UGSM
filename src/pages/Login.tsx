@@ -71,15 +71,15 @@ const CheckList = styled.div`
 const socialLogins = [
   {
     link: "https://www.ugsm.co.kr/api/login/oauth2/authorization/naver",
-    socialLogin: "네이버로 시작",
+    platform: "네이버로 시작",
   },
   {
     link: "https://www.ugsm.co.kr/api/login/oauth2/authorization/kakao",
-    socialLogin: "카카오톡으로 시작",
+    platform: "카카오톡으로 시작",
   },
   {
     link: "https://www.ugsm.co.kr/api/login/oauth2/authorization/google",
-    socialLogin: "구글로 시작",
+    platform: "구글로 시작",
   },
 ];
 
@@ -95,7 +95,7 @@ const Login = () => {
       <SocialButtonWrapper>
         {socialLogins.map((socialLogin, index) => (
           <Link to={socialLogin.link} key={index}>
-            <SocialLoginButton key={index} socialLogin={socialLogin.socialLogin} />
+            <SocialLoginButton key={index} socialLogin={socialLogin.platform} />
           </Link>
         ))}
       </SocialButtonWrapper>

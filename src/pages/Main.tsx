@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Main = () => {
   const navigate = useNavigate();
+  //  user가 있으면 메인페이지로 이동
 
   const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {

@@ -35,7 +35,11 @@ const UserAddInfo = () => {
   const phoneAuthPost = async () => {
     try {
       const phoneAuth = { phoneNumber: phone };
-      await axios.post("https://www.ugsm.co.kr/api/verification-code", phoneAuth);
+      await axios.post("https://www.ugsm.co.kr/api/verification-code", phoneAuth, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +59,7 @@ const UserAddInfo = () => {
   // 유저데이터 서버 전송
   const userDataPost = async (userData: UserData) => {
     try {
-      await axios.post(`https://www.ugsm.co.kr/api/???/${phoneAuthNumber}`, userData);
+      await axios.post(`https://www.ugsm.co.kr/api/user/me`, userData);
     } catch (error) {
       console.log(error);
     }
