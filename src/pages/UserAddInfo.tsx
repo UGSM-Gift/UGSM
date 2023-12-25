@@ -9,7 +9,10 @@ import NextButton from "../components/userAuth/NextButton";
 import axios from "axios";
 import { UserData } from "src/modules/@types/common";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  position: relative;
+  height: calc(var(--vh, 1vh) * 100);
+`;
 
 const ContentBox = styled.div`
   padding: 20px 20px 0 20px;
@@ -85,8 +88,8 @@ const UserAddInfo = () => {
   };
 
   return (
-    <>
-      <Wrapper>
+    <Wrapper>
+      <>
         <ContentBox>
           <PreviousButton onClick={handlePreviousStepChange} step={step} />
         </ContentBox>
@@ -96,9 +99,9 @@ const UserAddInfo = () => {
         {step === 4 && (
           <PhoneNumberAuth phone={phone} phoneAuth={phoneAuthNumber} onChange={handlePhoneAuthChange} />
         )}
-      </Wrapper>
+      </>
       <NextButton onClick={handleNextStepChange} step={step} />
-    </>
+    </Wrapper>
   );
 };
 

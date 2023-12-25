@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = styled.button`
+  position: absolute;
+  bottom: 0;
   width: 100%;
   padding: 20px;
   background-color: #c1c7ca;

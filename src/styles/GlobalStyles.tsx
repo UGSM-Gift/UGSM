@@ -8,6 +8,11 @@ const GlobalStyles = createGlobalStyle`
      font-weight: normal;
      font-style: normal;
 }
+
+:root {
+       --vh: 100%;
+   }
+
 html {
   font-size: 10px;
 }
