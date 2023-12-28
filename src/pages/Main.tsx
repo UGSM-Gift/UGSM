@@ -29,9 +29,13 @@ const Main = () => {
       const response = await axios.get(`https://www.ugsm.co.kr/api/user/me`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      console.log("login");
-      navigate("/addUserInfo");
-      console.log(response);
+      const userChecked = response.data.data.isMobileVerified;
+
+      if (userChecked) {
+        navigate("/home");
+      } else {
+        navigate("/addUserInfo");
+      }
     } catch (error) {
       console.error(error);
     }

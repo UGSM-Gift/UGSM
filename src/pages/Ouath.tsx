@@ -36,7 +36,7 @@ const Ouath = ({ socialLogin }: { socialLogin: string }) => {
       console.error(error);
     }
   }
-  return <div>로그인중ㅇㅇ</div>;
+  return <div>로그인중2</div>;
 };
 
 export default Ouath;

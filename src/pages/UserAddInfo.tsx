@@ -8,6 +8,7 @@ import PhoneNumberAuth from "./adduserinfo/PhoneNumberAuth";
 import NextButton from "../components/userAuth/NextButton";
 import axios from "axios";
 import { UserData } from "src/modules/@types/common";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   position: relative;
@@ -22,6 +23,8 @@ const UserAddInfo = () => {
   const [userData, setUserData] = useState<UserData>({ nickname: "", birth: "", gender: "" });
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState("");
+
+  const navigator = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
   // 휴대폰 인증번호
   const [phoneAuthNumber, setPhoneAuthNumber] = useState("");
@@ -40,6 +43,7 @@ const UserAddInfo = () => {
       const phoneAuth = { phoneNumber: phone };
       await axios.post("https://www.ugsm.co.kr/api/verification-code", phoneAuth, {
         headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
           Authorization: `Bearer ${accessToken}`,
         },
       });
@@ -49,9 +53,11 @@ const UserAddInfo = () => {
   };
   // 번호인증 서버 전송
   const phoneAuthPut = async (phoneAuthNumber: string) => {
+    const phoneNumber = { receiverPhoneNumber: phone };
     try {
-      await axios.put(`https://www.ugsm.co.kr/api/verification-code/${phoneAuthNumber}`, {
+      await axios.put(`https://www.ugsm.co.kr/api/verification-code/${phoneAuthNumber}`, phoneNumber, {
         headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
           Authorization: `Bearer ${accessToken}`,
         },
       });
@@ -62,7 +68,12 @@ const UserAddInfo = () => {
   // 유저데이터 서버 전송
   const userDataPost = async (userData: UserData) => {
     try {
-      await axios.post(`https://www.ugsm.co.kr/api/user/me`, userData);
+      await axios.post(`https://www.ugsm.co.kr/api/user/me`, userData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      navigator("/");
     } catch (error) {
       console.log(error);
     }

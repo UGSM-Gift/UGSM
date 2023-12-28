@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
+import Home from "./pages/Home";
 
 import Login from "./pages/Login";
 import Main from "./pages/Main";
@@ -26,6 +27,7 @@ function App() {
       <Wrapper>
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/addUserInfo" element={<UserAddInfo />} />
           <Route path="/oauth/callback/kakao" element={<Ouath socialLogin="kakao" />} />
