@@ -1,9 +1,8 @@
-import SocialLoginButton from "../components/login/SocialLoginButton";
-import React from "react";
-import styled from "styled-components";
-import { googleLogin, kakaoLogin, naverLogin } from "../components/login/social";
-import CheckItem from "../components/login/CheckItem";
-import { Link } from "react-router-dom";
+import SocialLoginButton from '../components/login/SocialLoginButton';
+import React from 'react';
+import styled from 'styled-components';
+import CheckItem from '../components/login/CheckItem';
+import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
   display: flex;
@@ -53,33 +52,18 @@ const CheckList = styled.div`
   justify-content: center;
 `;
 
-// const socialLogins = [
-//   {
-//     link: "/oauth/callback/naver",
-//     socialLogin: "네이버로 시작",
-//   },
-//   {
-//     link: "/oauth/callback/kakao",
-//     socialLogin: "카카오톡으로 시작",
-//   },
-//   {
-//     link: "",
-//     socialLogin: "구글로 시작",
-//   },
-// ];
-
 const socialLogins = [
   {
-    link: "https://www.ugsm.co.kr/api/login/oauth2/authorization/naver",
-    platform: "네이버로 시작",
+    link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/naver',
+    platform: '네이버로 시작',
   },
   {
-    link: "https://www.ugsm.co.kr/api/login/oauth2/authorization/kakao",
-    platform: "카카오톡으로 시작",
+    link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/kakao',
+    platform: '카카오톡으로 시작',
   },
   {
-    link: "https://www.ugsm.co.kr/api/login/oauth2/authorization/google",
-    platform: "구글로 시작",
+    link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/google',
+    platform: '구글로 시작',
   },
 ];
 
@@ -102,8 +86,8 @@ const Login = () => {
       <AssentBox>
         <Notice>로그인 및 회원가입시, 아래 내용에 동의하는 것으로 간주합니다.</Notice>
         <CheckList>
-          <CheckItem children="이용약관" />
-          <CheckItem children="개인정보처리방침" />
+          <CheckItem children='이용약관' />
+          <CheckItem children='개인정보처리방침' />
         </CheckList>
       </AssentBox>
     </Wrapper>
