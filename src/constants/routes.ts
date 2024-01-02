@@ -1,6 +1,5 @@
 export const ROUTES_PATH = {
-  main: '/',
-  home: '/home',
+  home: '/',
   login: '/login',
   addUserInfo: '/addUserInfo',
   oauthKakao: '/oauth/callback/kakao',

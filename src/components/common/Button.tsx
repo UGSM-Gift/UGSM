@@ -70,6 +70,7 @@ const VARIANT_TYPE = {
 type Props = {
   variant: keyof typeof VARIANT_TYPE;
   size?: ButtonSizeType;
+  radius?: ButtonRadiusType;
   $block?: boolean;
   $style?: CSSProp;
 };
@@ -80,8 +81,10 @@ const Button = ({
   onClick,
   disabled,
   size = 'medium',
+  radius = 'small',
   $block = true,
   $style,
+
   ...props
 }: PropsWithChildren<Props> & ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
@@ -89,6 +92,7 @@ const Button = ({
       onClick={onClick}
       variant={variant}
       size={size}
+      radius={radius}
       disabled={disabled}
       $block={$block}
       $style={$style}
@@ -107,11 +111,12 @@ const StyledButton = styled.button<Props>`
   &:disabled {
     cursor: not-allowed;
   }
-  ${({ $block, $style, size = 'medium', variant }) => css`
+  ${({ $block, $style, size = 'medium', variant, radius = 'small' }) => css`
     ${VARIANT_TYPE[variant]}
     ${SIZE_TYPE[size]}
-    ${RADIUS_TYPE[size]}
+    ${RADIUS_TYPE[radius]}
     width: ${$block ? '100%' : 'fit-content'};
+
     ${$style}
   `}
 `;

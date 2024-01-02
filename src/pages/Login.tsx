@@ -1,97 +1,123 @@
 import SocialLoginButton from '../components/login/SocialLoginButton';
 import React from 'react';
-import styled from 'styled-components';
-import CheckItem from '../components/login/CheckItem';
+import styled, { css } from 'styled-components';
+
 import { Link } from 'react-router-dom';
+import BasicLayout from './layout/BasicLayout';
+import Typography from '../components/common/Typography';
+import { colors } from 'src/styles/colors';
+import { common } from 'src/styles/common';
+import CheckItem from '../components/login/CheckItem';
+import Naver from 'src/assets/icons/Naver';
+import Kakao from 'src/assets/icons/Kakao';
+import Google from 'src/assets/icons/Google';
+import { SocialLogin } from 'src/types/socialLogin';
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
-  padding: 120px 20px 30px;
-`;
+const socialLogins: SocialLogin[] = [
+  {
+    link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/kakao',
+    platform: '카카오로 시작',
+    icon: <Kakao />,
+    variant: 'primary',
+    color: colors.black,
 
-const LogoBox = styled.div`
-  width: 80px;
-  height: 80px;
-  border: 1px solid #ddd;
-  margin-bottom: 20px;
-`;
+    style: { background: '#FEE500', color: colors.black },
+  },
+  {
+    link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/naver',
+    platform: '네이버로 시작',
+    icon: <Naver />,
+    variant: 'primary',
+    color: colors.white,
+    style: { background: '#03C75A', color: colors.white },
+  },
 
-const Title = styled.div`
-  margin-bottom: 15px;
-  font-size: 3rem;
-  text-align: center;
-  font-weight: 600;
-  line-height: 3.5rem;
-`;
+  {
+    link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/google',
+    platform: '구글로 시작',
+    icon: <Google />,
+    variant: 'ghost',
+    color: colors.gray[60],
+    style: { background: colors.white, color: colors.gray[20], border: `1px solid ${colors.gray[20]}` },
+  },
+];
 
-const SubTitle = styled.div`
-  color: #343a3c;
+const Login = () => {
+  return (
+    <BasicLayout>
+      <SloganBox>
+        <Typography
+          variant='largetitle'
+          color={colors.gray[90]}
+          $style={css`
+            text-align: center;
+            margin-bottom: 20px;
+          `}
+        >
+          나도 몰랐던
+          <br /> 받고 싶은 선물이 뭘까?
+        </Typography>
+        <Typography
+          variant='body1'
+          color={colors.gray[70]}
+          $style={css`
+            text-align: center;
+            margin-bottom: 10px;
+          `}
+        >
+          은근슨물에서 은근테스트로 알아보자!
+        </Typography>
+        <picture>
+          <source type='image/webp' srcSet={`${process.env.PUBLIC_URL}/assets/images/present.webp`} />
+          <img src={`${process.env.PUBLIC_URL}/assets/images/present.webp`} alt='선물사진' />
+        </picture>
+      </SloganBox>
+      <SocialButtonWrapper>
+        {socialLogins.map((socialLogin, index) => (
+          <Link to={socialLogin.link} key={index}>
+            <SocialLoginButton
+              key={index}
+              socialLogin={socialLogin.platform}
+              variant={socialLogin.variant}
+              icon={socialLogin.icon}
+              color={socialLogin.color}
+              style={socialLogin.style}
+            />
+          </Link>
+        ))}
+      </SocialButtonWrapper>
+      <AssentBox>
+        <Typography
+          variant={'caption2'}
+          $style={css`
+            color: ${colors.gray[50]};
+          `}
+        >
+          로그인은 개인 정보 보호 정책 및 서비스 약관에 동의하는
+          <br /> 것을 의미하여, 서비스 이용을 위해
+          <br />
+          이메일과 이름, 성별, 위치를 수집합니다.
+        </Typography>
+      </AssentBox>
+    </BasicLayout>
+  );
+};
+
+export default Login;
+const SloganBox = styled.div`
+  margin-top: 132px;
+  ${common.flexCenterColumn}
 `;
 
 const SocialButtonWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin: 40px auto 100px;
+  margin: 57px auto 41px;
   gap: 10px;
 `;
 
-const AssentBox = styled.div``;
-
-const Notice = styled.div`
-  margin-bottom: 20px;
-  font-size: 1.3rem;
-  color: #878d96;
+const AssentBox = styled.div`
+  margin: 0 auto;
+  text-align: center;
 `;
-
-const CheckList = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const socialLogins = [
-  {
-    link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/naver',
-    platform: '네이버로 시작',
-  },
-  {
-    link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/kakao',
-    platform: '카카오톡으로 시작',
-  },
-  {
-    link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/google',
-    platform: '구글로 시작',
-  },
-];
-
-const Login = () => {
-  return (
-    <Wrapper>
-      <LogoBox>logo</LogoBox>
-      <Title>
-        <p>나도 몰랐던</p>
-        <p>받고 싶은 선물이 뭘까?</p>
-      </Title>
-      <SubTitle>은근슨물에서 은근테스트로 알아보자!</SubTitle>
-      <SocialButtonWrapper>
-        {socialLogins.map((socialLogin, index) => (
-          <Link to={socialLogin.link} key={index}>
-            <SocialLoginButton key={index} socialLogin={socialLogin.platform} />
-          </Link>
-        ))}
-      </SocialButtonWrapper>
-      <AssentBox>
-        <Notice>로그인 및 회원가입시, 아래 내용에 동의하는 것으로 간주합니다.</Notice>
-        <CheckList>
-          <CheckItem children='이용약관' />
-          <CheckItem children='개인정보처리방침' />
-        </CheckList>
-      </AssentBox>
-    </Wrapper>
-  );
-};
-
-export default Login;

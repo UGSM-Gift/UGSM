@@ -25,18 +25,18 @@ type Props = {
 } & HTMLAttributes<HTMLHeadingElement>;
 
 const TAG_MAPPING = {
-  largetitle: 'largetitle',
-  title1: 'title1',
-  title2: 'title2',
-  title3: 'title3',
-  subtitle1: 'subtitle1',
-  subtitle2: 'subtitle2',
-  body1: 'body1',
-  body2: 'body2',
-  button1: 'button1',
-  button2: 'button2',
-  caption1: 'caption1',
-  caption2: 'caption2',
+  largetitle: 'h1',
+  title1: 'h2',
+  title2: 'h3',
+  title3: 'h4',
+  subtitle1: 'h5',
+  subtitle2: 'h6',
+  body1: 'p',
+  body2: 'p',
+  button1: 'p',
+  button2: 'p',
+  caption1: 'p',
+  caption2: 'p',
 };
 
 const FONT_STYLE = {
@@ -80,7 +80,7 @@ const FONT_STYLE = {
     button1: '24px', // 'line-height' 값이 'px' 단위일 수 있음
     button2: '20px',
     caption1: '110%',
-    caption2: '110%',
+    caption2: '140%',
   },
   letterSpacing: {
     largetitle: '0px',

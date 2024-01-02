@@ -3,7 +3,6 @@ import { RouterProvider } from 'react-router-dom';
 import styled from 'styled-components';
 
 import router from './router/router';
-import GlobalStyle from './styles/GlobalStyles';
 
 function App() {
   function setScreenSize() {
@@ -21,7 +20,6 @@ function App() {
   return (
     <Wrapper>
       <RouterProvider router={router} />
-      <GlobalStyle />
     </Wrapper>
   );
 }

@@ -1,37 +1,21 @@
-import styled from "styled-components";
+import Button from '@components/common/Button';
+import Typography from '@components/common/Typography';
+import { common } from 'src/styles/common';
+import { SocialLoginType } from 'src/types/socialLogin';
+import styled from 'styled-components';
 
-const SocialButton = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  background-color: #212727;
-  color: #fff;
-  font-size: 1.3rem;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  &:hover {
-    background-color: #ddd;
-  }
+const SocialButton = styled(Button)<{ style: React.CSSProperties }>`
+  ${common.flexCenterRow}
+  gap: 20px;
 `;
 
-const Icon = styled.img`
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-`;
-
-interface SocialLoginType {
-  socialLogin: string;
-}
-
-const SocialLoginButton: React.FC<SocialLoginType> = ({ socialLogin }) => {
+const SocialLoginButton: React.FC<SocialLoginType> = ({ icon, socialLogin, color, style, variant }) => {
   return (
-    <SocialButton>
-      <Icon />
-      {socialLogin}
+    <SocialButton variant={variant} style={style}>
+      {icon}
+      <Typography variant={'button1'} color={color}>
+        {socialLogin}
+      </Typography>
     </SocialButton>
   );
 };

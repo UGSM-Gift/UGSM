@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
 
@@ -25,15 +25,14 @@ html {
 
 body {
   width: 100%;
-  //max-width: 768px;
   max-width: 480px;
   min-width: 375px;
   font-family: Outfit;
   margin: 0 auto;
-  line-height: 1;
+  line-height: 1.6;
   letter-spacing: -0.025em;
   -ms-overflow-style: none;
-  font-size: 1.6rem;
+  
 }
 
 body::-webkit-scrollbar {
