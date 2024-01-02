@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { ROUTES_PATH } from 'src/constants';
+import { ROUTES_PATH } from 'src/constants/routes';
 import Home from 'src/pages/Home';
 import Login from 'src/pages/Login';
 import Main from 'src/pages/Main';
