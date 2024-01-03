@@ -5,6 +5,7 @@ import Typography from '@components/common/Typography';
 import { common } from 'src/styles/common';
 import { colors } from 'src/styles/colors';
 import { phoneAuthPut } from 'src/api/account';
+import Input from '@components/common/Input';
 
 const NumberBox = styled.div``;
 
@@ -46,6 +47,14 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange
         <br />
         인증번호를 입력해주세요
       </Typography>
+      {/* <Input>
+        <Input.TextField
+          placeholder={`${phone}로 보내드렸어요`}
+          error={false}
+          value={phone}
+          onChange={onChange}
+        />
+      </Input> */}
       <InputType
         type='text'
         value={phoneAuth}
