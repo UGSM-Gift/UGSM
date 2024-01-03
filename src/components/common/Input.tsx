@@ -56,7 +56,6 @@ const Layout = styled.div`
 `;
 
 const StyledBottomText = styled.p<{ $error?: boolean; $success?: boolean }>`
-  position: absolute;
   margin-top: 10px;
   font-size: 13px;
   font-weight: 400;
