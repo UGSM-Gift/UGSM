@@ -1,5 +1,5 @@
 import InputType from '../../components/userAuth/InputType';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Typography from '@components/common/Typography';
 import { common } from 'src/styles/common';
@@ -7,6 +7,7 @@ import { colors } from 'src/styles/colors';
 import { phoneAuthPut } from 'src/api/account';
 
 const NumberBox = styled.div``;
+
 const Response = styled.div`
   ${common.flexCenterRow}
   gap: 10px;
@@ -20,6 +21,18 @@ type PhoneNumberProp = {
 };
 
 const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange }) => {
+  const [timer, setTimer] = useState(60);
+
+  useEffect(() => {
+    if (timer === 0) return;
+
+    const countdown = setInterval(() => {
+      setTimer((prevTimer: number) => prevTimer - 1);
+    }, 1000);
+
+    return () => clearInterval(countdown);
+  }, [timer]);
+
   const accessToken = localStorage.getItem('accessToken');
   return (
     <NumberBox>
@@ -38,6 +51,7 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange
         value={phoneAuth}
         placeholder={`${phone}로 보내드렸어요`}
         onChange={onChange}
+        timer={timer}
       />
       <Response>
         <Typography variant={'button2'} color={colors.gray[60]}>
@@ -47,7 +61,7 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange
           variant={'button2'}
           color={colors.gray[40]}
           onClick={() => {
-            phoneAuthPut(phoneAuth, phone, accessToken);
+            phoneAuthPut(phoneAuth, phone, accessToken, setTimer);
           }}
           $style={css`
             cursor: pointer;

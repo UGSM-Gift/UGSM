@@ -114,14 +114,12 @@ const UserAddInfo = () => {
   return (
     <BasicLayout>
       <PreviousButton onClick={handlePreviousStepChange} step={step} />
-
       {step === 1 && <Nickname userData={userData} setUserData={setUserData} />}
       {step === 2 && <Gender userData={userData} setUserData={setUserData} />}
       {step === 3 && <PhoneNumber phone={phone} onChange={numberhandleChange} />}
       {step === 4 && (
         <PhoneNumberAuth phone={phone} phoneAuth={phoneAuthNumber} onChange={handlePhoneAuthChange} />
       )}
-
       <Button variant='primary' onClick={handleNextStepChange}>
         다음
       </Button>
