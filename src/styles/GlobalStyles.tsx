@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { colors } from './colors';
 
 const GlobalStyles = createGlobalStyle`
 
@@ -91,6 +92,13 @@ button {
   font-weight: inherit;
   margin: 0;
   cursor: pointer;
+  outline: none;
+  &:hover {
+    border: 1px solid ${colors.sub[300]}; // 마우스 오버 시 적용될 색상
+  }
+  &:active {
+    border: 1px solid ${colors.sub[400]}; // 활성 상태 시 적용될 색상
+  }
 }
 
 select,

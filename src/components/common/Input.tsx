@@ -86,6 +86,7 @@ const StyledInput = styled.input<StyledInputProps>`
   &:disabled {
     background-color: ${colors.disable};
   }
+
   width: 100%;
   padding: 20px 16px;
   font-size: 15px;
