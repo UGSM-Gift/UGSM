@@ -22,6 +22,38 @@ const UserAddInfo = () => {
   const accessToken = localStorage.getItem('accessToken');
   // 휴대폰 인증번호
   const [phoneAuthNumber, setPhoneAuthNumber] = useState('');
+  // 전화번호 형식을 조정하는 함수
+  function formatPhoneNumber(value: string) {
+    if (!value) return value;
+
+    // 숫자만 추출
+    const phoneNumber = value.replace(/[^\d]/g, '');
+
+    // 각 구간별로 숫자를 분할
+    const phoneNumberParts = [];
+    const part1 = phoneNumber.slice(0, 3);
+    const part2 = phoneNumber.slice(3, 7);
+    const part3 = phoneNumber.slice(7, 11);
+
+    if (part1) phoneNumberParts.push(part1);
+    if (part2) phoneNumberParts.push(part2);
+    if (part3) phoneNumberParts.push(part3);
+
+    // 하이픈으로 연결
+    return phoneNumberParts.join('-');
+  }
+
+  // 입력값이 변경될 때 호출되는 함수
+  const numberhandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedPhone = formatPhoneNumber(event.target.value);
+    if (formattedPhone) {
+      // 포맷된 전화번호를 입력 필드에 설정
+      event.target.value = formattedPhone;
+    }
+    // 원래의 onChange 핸들러 호출
+    handlePhoneChange(event);
+  };
+
   // 휴대폰 번호 입력
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(event.target.value);
@@ -31,6 +63,7 @@ const UserAddInfo = () => {
   const handlePhoneAuthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneAuthNumber(event.target.value);
   };
+
   // 전화번호 서버 전송
   const phoneAuthPost = async () => {
     try {
@@ -84,7 +117,7 @@ const UserAddInfo = () => {
 
       {step === 1 && <Nickname userData={userData} setUserData={setUserData} />}
       {step === 2 && <Gender userData={userData} setUserData={setUserData} />}
-      {step === 3 && <PhoneNumber phone={phone} onChange={handlePhoneChange} />}
+      {step === 3 && <PhoneNumber phone={phone} onChange={numberhandleChange} />}
       {step === 4 && (
         <PhoneNumberAuth phone={phone} phoneAuth={phoneAuthNumber} onChange={handlePhoneAuthChange} />
       )}
