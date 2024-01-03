@@ -58,4 +58,5 @@ export const colors = {
   overlayColor: '#121619 / 50%',
   white: '#fff',
   black: '#000',
+  disable: '#F2F4F5',
 };
