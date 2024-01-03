@@ -7,16 +7,25 @@ export const phoneAuthPut = async (
   accessToken: any,
   setTimer?: any
 ) => {
-  const phoneNumber = { receiverPhoneNumber: phone };
+  const phoneNumber = { receiverPhoneNumber: phone.replace(/-/g, '') };
+  console.log(phoneNumber);
   // 요청 성공 시 타이머 초기화
-  setTimer(60);
+  if (typeof setTimer === 'function') {
+    setTimer(60);
+  }
+  console.log(phoneNumber);
   try {
-    await axios.put(`https://www.ugsm.co.kr/api/verification-code/${phoneAuthNumber}`, phoneNumber, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await axios.put(
+      `https://www.ugsm.co.kr/api/verification-code/${phoneAuthNumber}`,
+      phoneNumber,
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    console.log(response);
   } catch (error) {
     console.log(error);
   }

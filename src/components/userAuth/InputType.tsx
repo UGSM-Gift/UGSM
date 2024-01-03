@@ -1,5 +1,5 @@
 import Typography from '@components/common/Typography';
-import React, { ChangeEventHandler, useEffect, useState } from 'react';
+import React, { ChangeEventHandler } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -50,10 +50,13 @@ const InputType: React.FC<TextInputProps> = ({
     <Wrapper>
       <Typography variant='subtitle2'>{label}</Typography>
       <InputBox>
-        {timer && timer > 0 && <TimerTypography variant='caption1'>0:{timer}</TimerTypography>}
+        {timer && timer > 0 ? (
+          <TimerTypography variant='caption1'>
+            {`0:${timer.toString().padStart(2, '0')}`}
+          </TimerTypography>
+        ) : null}
         <Input type={type} value={value} onChange={onChange} placeholder={placeholder} />
       </InputBox>
-
       <Typography variant='caption1'>{text}</Typography>
     </Wrapper>
   );

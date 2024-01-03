@@ -19,16 +19,8 @@ const router = createBrowserRouter([
     element: <UserAddInfo />,
   },
   {
-    path: ROUTES_PATH.oauthKakao,
-    element: <Ouath socialLogin='kakao' />,
-  },
-  {
-    path: ROUTES_PATH.oauthNaver,
-    element: <Ouath socialLogin='naver' />,
-  },
-  {
-    path: ROUTES_PATH.oauthGoogle,
-    element: <Ouath socialLogin='google' />,
+    path: ROUTES_PATH.oauth,
+    element: <Ouath />,
   },
 ]);
 

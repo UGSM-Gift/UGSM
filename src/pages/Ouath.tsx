@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const Ouath = ({ socialLogin }: { socialLogin: string }) => {
+const Ouath = () => {
   const navigate = useNavigate();
   //  user가 있으면 메인페이지로 이동
 
@@ -31,9 +31,9 @@ const Ouath = ({ socialLogin }: { socialLogin: string }) => {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       const userChecked = response.data.data.isMobileVerified;
-
+      console.log(userChecked);
       if (userChecked) {
-        navigate('/home');
+        navigate('/');
       } else {
         navigate('/addUserInfo');
       }

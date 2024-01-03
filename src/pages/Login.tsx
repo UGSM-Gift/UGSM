@@ -7,7 +7,6 @@ import BasicLayout from './layout/BasicLayout';
 import Typography from '../components/common/Typography';
 import { colors } from 'src/styles/colors';
 import { common } from 'src/styles/common';
-import CheckItem from '../components/login/CheckItem';
 import Naver from 'src/assets/icons/Naver';
 import Kakao from 'src/assets/icons/Kakao';
 import Google from 'src/assets/icons/Google';

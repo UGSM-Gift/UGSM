@@ -67,7 +67,7 @@ const UserAddInfo = () => {
   // 전화번호 서버 전송
   const phoneAuthPost = async () => {
     try {
-      const phoneAuth = { phoneNumber: phone };
+      const phoneAuth = { phoneNumber: phone.replace(/-/g, '') };
       await axios.post('https://www.ugsm.co.kr/api/verification-code', phoneAuth, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -78,14 +78,15 @@ const UserAddInfo = () => {
       console.log(error);
     }
   };
-
+  // 유저데이터 전송
   const userDataPost = async (userData: UserData) => {
     try {
-      await axios.post(`https://www.ugsm.co.kr/api/user/me`, userData, {
+      const response = await axios.put(`https://www.ugsm.co.kr/api/user/me`, userData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      console.log(response);
       navigator('/');
     } catch (error) {
       console.log(error);
