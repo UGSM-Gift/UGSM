@@ -1,33 +1,27 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import PreviousButton from "../components/userAuth/PreviousButton";
-import Nickname from "./adduserinfo/Nickname";
-import Gender from "./adduserinfo/Gender";
-import PhoneNumber from "./adduserinfo/PhoneNumber";
-import PhoneNumberAuth from "./adduserinfo/PhoneNumberAuth";
-import NextButton from "../components/userAuth/NextButton";
-import axios from "axios";
-import { UserData } from "src/modules/@types/common";
-import { useNavigate } from "react-router-dom";
-
-const Wrapper = styled.div`
-  position: relative;
-  height: calc(var(--vh, 1vh) * 100);
-`;
-
-const ContentBox = styled.div`
-  padding: 20px 20px 0 20px;
-`;
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import PreviousButton from '../components/userAuth/PreviousButton';
+import Nickname from './adduserinfo/Nickname';
+import Gender from './adduserinfo/Gender';
+import PhoneNumber from './adduserinfo/PhoneNumber';
+import PhoneNumberAuth from './adduserinfo/PhoneNumberAuth';
+import NextButton from '../components/userAuth/NextButton';
+import axios from 'axios';
+import { UserData } from 'src/modules/@types/common';
+import { useNavigate } from 'react-router-dom';
+import BasicLayout from './layout/BasicLayout';
+import Button from '@components/common/Button';
+import { phoneAuthPut } from 'src/api/account';
 
 const UserAddInfo = () => {
-  const [userData, setUserData] = useState<UserData>({ nickname: "", birth: "", gender: "" });
+  const [userData, setUserData] = useState<UserData>({ nickname: '', birth: '', gender: '' });
   const [step, setStep] = useState(1);
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState('');
 
   const navigator = useNavigate();
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem('accessToken');
   // 휴대폰 인증번호
-  const [phoneAuthNumber, setPhoneAuthNumber] = useState("");
+  const [phoneAuthNumber, setPhoneAuthNumber] = useState('');
   // 휴대폰 번호 입력
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(event.target.value);
@@ -41,9 +35,9 @@ const UserAddInfo = () => {
   const phoneAuthPost = async () => {
     try {
       const phoneAuth = { phoneNumber: phone };
-      await axios.post("https://www.ugsm.co.kr/api/verification-code", phoneAuth, {
+      await axios.post('https://www.ugsm.co.kr/api/verification-code', phoneAuth, {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: `Bearer ${accessToken}`,
         },
       });
@@ -51,21 +45,7 @@ const UserAddInfo = () => {
       console.log(error);
     }
   };
-  // 번호인증 서버 전송
-  const phoneAuthPut = async (phoneAuthNumber: string) => {
-    const phoneNumber = { receiverPhoneNumber: phone };
-    try {
-      await axios.put(`https://www.ugsm.co.kr/api/verification-code/${phoneAuthNumber}`, phoneNumber, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // 유저데이터 서버 전송
+
   const userDataPost = async (userData: UserData) => {
     try {
       await axios.post(`https://www.ugsm.co.kr/api/user/me`, userData, {
@@ -73,7 +53,7 @@ const UserAddInfo = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      navigator("/");
+      navigator('/');
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +68,7 @@ const UserAddInfo = () => {
     if (step === 3) {
       phoneAuthPost();
     } else if (step === 4) {
-      phoneAuthPut(phoneAuthNumber);
+      phoneAuthPut(phoneAuthNumber, phone, accessToken);
       userDataPost(userData);
     }
     updateStep(step + 1);
@@ -99,20 +79,20 @@ const UserAddInfo = () => {
   };
 
   return (
-    <Wrapper>
-      <>
-        <ContentBox>
-          <PreviousButton onClick={handlePreviousStepChange} step={step} />
-        </ContentBox>
-        {step === 1 && <Nickname userData={userData} setUserData={setUserData} />}
-        {step === 2 && <Gender userData={userData} setUserData={setUserData} />}
-        {step === 3 && <PhoneNumber phone={phone} onChange={handlePhoneChange} />}
-        {step === 4 && (
-          <PhoneNumberAuth phone={phone} phoneAuth={phoneAuthNumber} onChange={handlePhoneAuthChange} />
-        )}
-      </>
-      <NextButton onClick={handleNextStepChange} step={step} />
-    </Wrapper>
+    <BasicLayout>
+      <PreviousButton onClick={handlePreviousStepChange} step={step} />
+
+      {step === 1 && <Nickname userData={userData} setUserData={setUserData} />}
+      {step === 2 && <Gender userData={userData} setUserData={setUserData} />}
+      {step === 3 && <PhoneNumber phone={phone} onChange={handlePhoneChange} />}
+      {step === 4 && (
+        <PhoneNumberAuth phone={phone} phoneAuth={phoneAuthNumber} onChange={handlePhoneAuthChange} />
+      )}
+
+      <Button variant='primary' onClick={handleNextStepChange}>
+        다음
+      </Button>
+    </BasicLayout>
   );
 };
 

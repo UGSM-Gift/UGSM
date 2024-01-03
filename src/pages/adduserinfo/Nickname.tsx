@@ -1,12 +1,10 @@
-import InputType from "../../components/userAuth/InputType";
-import Question from "../../components/userAuth/Question";
-import React from "react";
-import styled from "styled-components";
-import { UserDataProps } from "src/modules/@types/common";
+import InputType from '../../components/userAuth/InputType';
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { UserDataProps } from 'src/modules/@types/common';
+import Typography from '@components/common/Typography';
 
-const Wrapper = styled.div`
-  padding: 0 20px;
-`;
+const NicknameBox = styled.div``;
 
 const Nickname: React.FC<UserDataProps> = ({ userData, setUserData }) => {
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,18 +12,24 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData }) => {
   };
 
   return (
-    <>
-      <Wrapper>
-        <Question firstLine="반가워요!" secondLine="어떻게 불러드릴까요?" />
-        <InputType
-          type="text"
-          value={userData.nickname}
-          placeholder="닉네임을 입력해주세요"
-          onChange={handleNicknameChange}
-          text="* 2~16자의 한글, 영문, 숫자만 사용해주세요"
-        />
-      </Wrapper>
-    </>
+    <NicknameBox>
+      <Typography
+        variant={'title1'}
+        $style={css`
+          margin-bottom: 100px;
+        `}
+      >
+        반가워요! <br />
+        어떻게 불러드릴까요?
+      </Typography>
+      <InputType
+        type='text'
+        value={userData.nickname}
+        placeholder='닉네임을 입력해주세요'
+        onChange={handleNicknameChange}
+        text='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'
+      />
+    </NicknameBox>
   );
 };
 

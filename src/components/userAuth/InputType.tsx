@@ -1,5 +1,6 @@
-import React, { ChangeEventHandler } from "react";
-import styled from "styled-components";
+import Typography from '@components/common/Typography';
+import React, { ChangeEventHandler } from 'react';
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -11,18 +12,13 @@ const Input = styled.input`
   padding: 20px;
   margin-bottom: 10px;
   border: 1px solid #a2a9ad;
-  border-radius: 15px;
+  border-radius: 8px;
 `;
 
 const Label = styled.label`
   display: block;
   margin-bottom: 10px;
   font-weight: 500;
-`;
-
-const Notice = styled.div`
-  font-size: 1.3rem;
-  color: #878d96;
 `;
 
 interface TextInputProps {
@@ -36,9 +32,9 @@ interface TextInputProps {
 const InputType: React.FC<TextInputProps> = ({ placeholder, type, value, onChange, text, label }) => {
   return (
     <Wrapper>
-      <Label>{label}</Label>
+      <Typography variant='subtitle2'>{label}</Typography>
       <Input type={type} value={value} onChange={onChange} placeholder={placeholder} />
-      <Notice>{text}</Notice>
+      <Typography variant='caption1'>{text}</Typography>
     </Wrapper>
   );
 };

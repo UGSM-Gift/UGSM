@@ -69,7 +69,7 @@ const Login = () => {
         </Typography>
         <picture>
           <source type='image/webp' srcSet={`${process.env.PUBLIC_URL}/assets/images/present.webp`} />
-          <img src={`${process.env.PUBLIC_URL}/assets/images/present.webp`} alt='선물사진' />
+          <img src={`${process.env.PUBLIC_URL}/assets/images/present.png`} alt='선물사진' />
         </picture>
       </SloganBox>
       <SocialButtonWrapper>

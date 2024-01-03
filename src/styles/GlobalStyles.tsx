@@ -11,7 +11,7 @@ const GlobalStyles = createGlobalStyle`
 
 :root {
        --vh: 100%;
-   }
+   } 
 
 html {
   font-size: 10px;
