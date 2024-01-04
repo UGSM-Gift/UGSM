@@ -9,7 +9,6 @@ import { MyPageHeader, SettingHeader } from './TypeHeader';
 const HeaderElement = {
   mypage: () => <MyPageHeader />,
   setting: () => <SettingHeader />,
-
   Default: () => <div>default</div>,
 };
 
@@ -25,7 +24,7 @@ export const Heading = ({ children }: { children: ReactNode }) => {
 
 const Content = () => {
   const location = useLocation();
-  const HeaderComponent = headerMap[location.pathname] || HeaderElement.Default; // 경로에 해당하는 헤더 컴포넌트 또는 기본값
+  const HeaderComponent = headerMap[location.pathname] || HeaderElement.Default;
   return <HeaderComponent />;
 };
 
