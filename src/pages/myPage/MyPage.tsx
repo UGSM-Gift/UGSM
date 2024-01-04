@@ -3,8 +3,7 @@ import Profile from '@components/mypage/Profile';
 import React, { useEffect, useState } from 'react';
 import { userData } from 'src/api/userData';
 import { UserData } from 'src/types/userData';
-
-import BasicLayout from './layout/BasicLayout';
+import BasicLayout from '../layout/BasicLayout';
 
 const MyPage = () => {
   const [userProfileData, setUserProfileData] = useState<UserData>({

@@ -1,18 +1,31 @@
 import Typography from '@components/common/Typography';
 import React from 'react';
+import { To, useNavigate } from 'react-router-dom';
 import { settings } from 'src/constants/setting';
 import { colors } from 'src/styles/colors';
 import styled from 'styled-components';
-import BasicLayout from './layout/BasicLayout';
+import BasicLayout from '../layout/BasicLayout';
 
 const Setting = () => {
+  const navigate = useNavigate();
+
+  const handleMenuClick = (path: To | undefined) => {
+    if (path) {
+      navigate(path);
+    } else {
+      // 로그아웃 로직을 여기에 구현
+      console.log('로그아웃 처리');
+    }
+  };
   return (
     <BasicLayout>
       <List>
         {settings.map((setting, index) => (
           <>
-            <ListItem key={index}>
-              <Typography variant='button2'>{setting}</Typography>
+            <ListItem key={setting.name}>
+              <Typography variant='button2' onClick={() => handleMenuClick(setting.path)}>
+                {setting.name}
+              </Typography>
             </ListItem>
             {index === 1 && <Divider />}
           </>
