@@ -6,3 +6,7 @@ export type BasicLayoutProps = {
   handleBookmarkAction?: () => void;
   captureChat?: () => void;
 };
+
+export type HeaderMap = {
+  [key: string]: () => JSX.Element;
+};

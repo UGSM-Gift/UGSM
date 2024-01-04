@@ -1,3 +1,4 @@
+import { Heading } from '@components/Header';
 import React, { useEffect } from 'react';
 import { colors } from 'src/styles/colors';
 import { BasicLayoutProps } from 'src/types/layout';
@@ -15,6 +16,9 @@ const BasicLayout = ({ children, style }: BasicLayoutProps) => {
 
   return (
     <Layout style={style}>
+      <Heading>
+        <Heading.Content />
+      </Heading>
       <ContentsContainer>{children}</ContentsContainer>
     </Layout>
   );

@@ -4,6 +4,16 @@ export const common = {
       justify-content: center;
       align-items: center;
     `,
+  flexColumn: `
+      display: flex;
+      flex-direction: column;
+ 
+    `,
+  flexRow: `
+    display: flex;
+    flex-direction: row;
+ 
+  `,
   flexCenterColumn: `
       display: flex;
       flex-direction: column;
