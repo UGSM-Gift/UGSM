@@ -2,7 +2,9 @@ import Input from '@components/common/Input';
 import Profile from '@components/mypage/Profile';
 import React, { useEffect, useState } from 'react';
 import { userData } from 'src/api/userData';
+import { common } from 'src/styles/common';
 import { UserData } from 'src/types/userData';
+import styled from 'styled-components';
 import BasicLayout from '../layout/BasicLayout';
 
 const UserProfileEdit = () => {
@@ -14,6 +16,9 @@ const UserProfileEdit = () => {
     mobile: '',
     userProfileUrl: '',
   });
+  function formatPhoneNumber(phoneNumber: string) {
+    return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7)}`;
+  }
 
   const fetchUserData = async () => {
     try {
@@ -37,18 +42,25 @@ const UserProfileEdit = () => {
   }, []);
   return (
     <BasicLayout>
-      <Input label='이름'>
-        <Input.TextField value={userSettingData.nickname} />
-      </Input>
-      <Input label='닉네임'>
-        <Input.TextField value={userSettingData.nickname} />
-      </Input>
-      생일성별
-      <Input label='전화번호'>
-        <Input.TextField value={userSettingData.mobile} />
-      </Input>
+      <ContentContainer>
+        <Profile userData={userSettingData} />
+        <Input label='이름'>
+          <Input.TextField value={userSettingData.name} />
+        </Input>
+        <Input label='닉네임'>
+          <Input.TextField value={userSettingData.nickname} />
+        </Input>
+        생일성별
+        <Input label='전화번호'>
+          <Input.TextField value={formatPhoneNumber(userSettingData.mobile)} />
+        </Input>
+      </ContentContainer>
     </BasicLayout>
   );
 };
 
 export default UserProfileEdit;
+
+const ContentContainer = styled.div`
+  ${common.flexCenterColumn}
+`;

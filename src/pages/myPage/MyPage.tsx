@@ -1,8 +1,11 @@
+import Typography from '@components/common/Typography';
 import Anniversary from '@components/mypage/Anniversary';
 import Profile from '@components/mypage/Profile';
 import React, { useEffect, useState } from 'react';
 import { userData } from 'src/api/userData';
+import { common } from 'src/styles/common';
 import { UserProfile } from 'src/types/userData';
+import styled from 'styled-components';
 import BasicLayout from '../layout/BasicLayout';
 
 const MyPage = () => {
@@ -33,10 +36,18 @@ const MyPage = () => {
   }, []);
   return (
     <BasicLayout>
-      <Profile userData={userProfileData} />
+      <ProfileBox>
+        <Profile userData={userProfileData} />
+        <Typography variant='title3'>{userProfileData.nickname}</Typography>
+      </ProfileBox>
       <Anniversary userData={userProfileData} />
     </BasicLayout>
   );
 };
 
 export default MyPage;
+
+const ProfileBox = styled.div`
+  ${common.flexCenterColumn}
+  gap: 10px;
+`;

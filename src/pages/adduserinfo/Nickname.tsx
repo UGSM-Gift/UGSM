@@ -10,7 +10,7 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData }) => {
   const [isError, setIsError] = useState(false);
 
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserData((prevUserData: any) => ({ ...prevUserData, nickname: event.target.value }));
+    setUserData((prevUserData) => ({ ...prevUserData, nickname: event.target.value }));
   };
 
   const handleNicknameErrorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
