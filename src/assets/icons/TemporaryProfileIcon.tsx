@@ -7,16 +7,16 @@ const TemporaryProfileIcon = () => {
       <path
         d='M42.66 40.87C42.56 40.86 42.44 40.86 42.33 40.87C39.95 40.79 38.06 38.84 38.06 36.44C38.06 33.99 40.04 32 42.5 32C44.95 32 46.94 33.99 46.94 36.44C46.93 38.84 45.04 40.79 42.66 40.87Z'
         stroke='#262753'
-        stroke-width='1.5'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
       <path
         d='M37.66 44.56C35.24 46.18 35.24 48.82 37.66 50.43C40.41 52.27 44.92 52.27 47.67 50.43C50.09 48.81 50.09 46.17 47.67 44.56C44.93 42.73 40.42 42.73 37.66 44.56Z'
         stroke='#262753'
-        stroke-width='1.5'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );

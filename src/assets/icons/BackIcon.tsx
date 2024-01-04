@@ -6,9 +6,9 @@ const Back = () => {
       <path
         d='M22.5 32L15 24M15 24L22.5 16M15 24H33'
         stroke='#121616'
-        stroke-width='1.5'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
