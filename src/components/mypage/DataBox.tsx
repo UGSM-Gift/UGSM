@@ -24,6 +24,7 @@ const DataBox: React.FC<Anniversary> = ({ children, birth, anniversaryCount }) =
 export default DataBox;
 
 const DataContainer = styled.div`
+  width: 160px;
   padding: 16px 40px;
   ${common.flexCenterColumn}
   border: 1px solid ${colors.gray[30]};
@@ -31,6 +32,6 @@ const DataContainer = styled.div`
 `;
 
 const ContentImg = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 `;
 const Content = styled.div``;

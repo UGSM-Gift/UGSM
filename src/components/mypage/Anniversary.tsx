@@ -5,9 +5,12 @@ import styled from 'styled-components';
 import DataBox from './DataBox';
 
 const Anniversary = ({ userData }: { userData: UserData }) => {
+  const originalDate = userData.birth;
+  const formattedDate = originalDate.slice(2).replace(/-/g, '.');
+
   return (
     <AnniversaryBox>
-      <DataBox children={userData.birth} birth />
+      <DataBox children={formattedDate} birth />
       <DataBox children={'기념일'} birth={false} anniversaryCount={0} />
     </AnniversaryBox>
   );
@@ -16,8 +19,7 @@ const Anniversary = ({ userData }: { userData: UserData }) => {
 export default Anniversary;
 
 const AnniversaryBox = styled.div`
-  width: 80%;
   ${common.flexCenterRow}
-  margin: 30px auto;
-  justify-content: space-between;
+  gap: 15px;
+  margin: 24px auto;
 `;
