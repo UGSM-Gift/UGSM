@@ -3,24 +3,20 @@
 import React, { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { HeaderMap } from 'src/types/layout';
-import { SettingHeader } from './TypeHeader';
+import { MyPageHeader, SettingHeader } from './TypeHeader';
 
 // 헤더 유형별 컴포넌트 정의
 const HeaderElement = {
+  mypage: () => <MyPageHeader />,
   setting: () => <SettingHeader />,
-  // Back: () => <BackHeader />,
-  // Home: () => <LogoHeader />,
-  // BackClose: () => <BackCloseHeader />,
-  // Alert: () => <AlertHeader />,
-  // Interactive: () => <InteractiveHeader />,
+
   Default: () => <div>default</div>,
 };
 
 // 현재 경로에 따른 헤더 컴포넌트 매핑
 const headerMap: HeaderMap = {
-  '/mypage': HeaderElement.setting,
-
-  //  경로 추가
+  '/mypage': HeaderElement.mypage,
+  '/mypage/setting': HeaderElement.setting,
 };
 
 export const Heading = ({ children }: { children: ReactNode }) => {

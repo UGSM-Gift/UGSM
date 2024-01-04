@@ -2,14 +2,14 @@ import { ReactNode } from 'react';
 import { colors } from 'src/styles/colors';
 import styled from 'styled-components';
 
-interface IconBtnWrapperProps {
+interface BtnWrapperProps {
   children: ReactNode;
   type?: 'button' | 'submit' | 'reset';
   onClick?: (value?: any) => void;
   disabled?: boolean;
 }
 
-const IconBtnWrapper = ({ children, type = 'button', onClick, ...rest }: IconBtnWrapperProps) => {
+const BtnWrapper = ({ children, type = 'button', onClick, ...rest }: BtnWrapperProps) => {
   return (
     <Button type={type} onClick={onClick} {...rest}>
       {children}
@@ -17,7 +17,7 @@ const IconBtnWrapper = ({ children, type = 'button', onClick, ...rest }: IconBtn
   );
 };
 
-export default IconBtnWrapper;
+export default BtnWrapper;
 
 const Button = styled.button`
   background-color: ${colors.white};

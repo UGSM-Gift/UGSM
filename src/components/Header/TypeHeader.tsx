@@ -1,48 +1,28 @@
-import IconBtnWrapper from '@components/common/IconBtnWrapper';
+import { useNavigate } from 'react-router-dom';
+import BackIcon from 'src/assets/icons/BackIcon';
 import SettingIcon from 'src/assets/icons/SettingIcon';
-import { common } from 'src/styles/common';
-import styled from 'styled-components';
-import RightHeader from './RightHeader';
+import { ROUTES_PATH } from 'src/constants/routes';
+
+import Header from './Header';
 
 //setting
+export const MyPageHeader = () => {
+  const navigator = useNavigate();
+  return (
+    <Header
+      rightContent2={<SettingIcon />}
+      rightContentOnClick2={() => navigator(ROUTES_PATH.setting)}
+    />
+  );
+};
+
 export const SettingHeader = () => {
-  return <RightHeader children={<SettingIcon />} />;
-};
-
-//Back
-export const BackHeader = () => {
+  const navigator = useNavigate();
   return (
-    <Header>
-      <IconBtnWrapper onClick={() => {}}>{/* <IconLeft /> */}</IconBtnWrapper>
-    </Header>
+    <Header
+      leftContent1={<BackIcon />}
+      leftContentOnClick={() => navigator(ROUTES_PATH.myPage)}
+      title='설정'
+    />
   );
 };
-
-//BackClose
-export const BackCloseHeader = () => {
-  return (
-    <Header>
-      <IconBtnWrapper onClick={() => {}}>{/* <IconLeft /> */}</IconBtnWrapper>
-      <IconBtnWrapper onClick={() => {}}>{/* <IconX /> */}</IconBtnWrapper>
-    </Header>
-  );
-};
-
-//Alert
-export const AlertHeader = () => {
-  return <Header></Header>;
-};
-
-//Interactive
-export const InteractiveHeader = () => {
-  return <Header></Header>;
-};
-
-//login
-export const LogoHeader = () => {
-  return <Header></Header>;
-};
-
-const Header = styled.div`
-  ${common.flexRow}
-`;

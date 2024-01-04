@@ -3,5 +3,6 @@ export const ROUTES_PATH = {
   login: '/login',
   addUserInfo: '/addUserInfo',
   oauth: '/oauth/callback',
-  myPage: '/myPage',
+  myPage: '/mypage',
+  setting: '/mypage/setting',
 } as const;
