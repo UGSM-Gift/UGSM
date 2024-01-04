@@ -1,5 +1,5 @@
-import BtnWrapper from '@components/common/IconBtnWrapper';
-import IconBtnWrapper from '@components/common/IconBtnWrapper';
+import BtnWrapper from '@components/common/BtnWrapper';
+import IconBtnWrapper from '@components/common/BtnWrapper';
 import Typography from '@components/common/Typography';
 import React from 'react';
 import { common } from 'src/styles/common';
@@ -43,7 +43,13 @@ const Header: React.FC<HeaderElementProps> = ({
         {/* 4번 영역: 아이콘 */}
         {rightContent1 && <BtnWrapper onClick={rightContentOnClick1}>{rightContent1}</BtnWrapper>}
         {/* 5번 영역: 텍스트 버튼 또는 아이콘 */}
-        {rightContent2 && (
+        {typeof rightContent2 === 'string' ? (
+          <IconBtnWrapper onClick={rightContentOnClick2}>
+            <Typography variant='button2' style={{ padding: '16px' }}>
+              {rightContent2}
+            </Typography>
+          </IconBtnWrapper>
+        ) : (
           <IconBtnWrapper onClick={rightContentOnClick2}>{rightContent2}</IconBtnWrapper>
         )}
       </RightElement>
@@ -52,18 +58,21 @@ const Header: React.FC<HeaderElementProps> = ({
 };
 
 export default Header;
+
 const HeaderElement = styled.div`
   height: 56px;
   text-align: center;
   ${common.flexRow}
   justify-content: space-between;
 `;
+
 const LeftElement = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   width: 96px;
 `;
+
 const RightElement = styled.div`
   display: flex;
   justify-content: flex-end;

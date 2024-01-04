@@ -1,10 +1,10 @@
 import React from 'react';
 import { common } from 'src/styles/common';
-import { UserData } from 'src/types/userData';
+import { UserProfile } from 'src/types/userData';
 import styled from 'styled-components';
 import DataBox from './DataBox';
 
-const Anniversary = ({ userData }: { userData: UserData }) => {
+const Anniversary = ({ userData }: { userData: UserProfile }) => {
   const originalDate = userData.birth;
   const formattedDate = originalDate.slice(2).replace(/-/g, '.');
 

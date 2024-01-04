@@ -26,3 +26,14 @@ export const SettingHeader = () => {
     />
   );
 };
+export const UserProfileEditHeader = () => {
+  const navigator = useNavigate();
+  return (
+    <Header
+      leftContent1={<BackIcon />}
+      leftContentOnClick={() => navigator(ROUTES_PATH.myPage)}
+      title='설정'
+      rightContent2='수정'
+    />
+  );
+};

@@ -2,11 +2,11 @@ import Anniversary from '@components/mypage/Anniversary';
 import Profile from '@components/mypage/Profile';
 import React, { useEffect, useState } from 'react';
 import { userData } from 'src/api/userData';
-import { UserData } from 'src/types/userData';
+import { UserProfile } from 'src/types/userData';
 import BasicLayout from '../layout/BasicLayout';
 
 const MyPage = () => {
-  const [userProfileData, setUserProfileData] = useState<UserData>({
+  const [userProfileData, setUserProfileData] = useState<UserProfile>({
     nickname: '',
     userProfileUrl: '',
     birth: '',
@@ -16,6 +16,7 @@ const MyPage = () => {
   const fetchUserData = async () => {
     try {
       const response = await userData();
+      console.log(response);
       const userProfile = {
         nickname: response.data.nickname,
         userProfileUrl: response.data.profileImageUrl,

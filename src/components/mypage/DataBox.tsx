@@ -34,4 +34,3 @@ const DataContainer = styled.div`
 const ContentImg = styled.div`
   margin-bottom: 8px;
 `;
-const Content = styled.div``;

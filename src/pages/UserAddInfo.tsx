@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import PreviousButton from '../components/userAuth/PreviousButton';
 import Nickname from './adduserinfo/Nickname';
 import Gender from './adduserinfo/Gender';
 import PhoneNumber from './adduserinfo/PhoneNumber';
 import PhoneNumberAuth from './adduserinfo/PhoneNumberAuth';
-import NextButton from '../components/userAuth/NextButton';
 import axios from 'axios';
-import { UserData } from 'src/modules/@types/common';
+import { UserProfileData } from 'src/modules/@types/common';
 import { useNavigate } from 'react-router-dom';
 import BasicLayout from './layout/BasicLayout';
 import Button from '@components/common/Button';
 import { phoneAuthPut } from 'src/api/account';
 
 const UserAddInfo = () => {
-  const [userData, setUserData] = useState<UserData>({ nickname: '', birth: '', gender: '' });
+  const [userData, setUserData] = useState<UserProfileData>({ nickname: '', birth: '', gender: '' });
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState('');
 
@@ -79,7 +77,7 @@ const UserAddInfo = () => {
     }
   };
   // 유저데이터 전송
-  const userDataPost = async (userData: UserData) => {
+  const userDataPost = async (userData: UserProfileData) => {
     try {
       const response = await axios.put(`https://www.ugsm.co.kr/api/user/me`, userData, {
         headers: {
