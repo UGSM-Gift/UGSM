@@ -31,7 +31,7 @@ export const UserProfileEditHeader = () => {
   return (
     <Header
       leftContent1={<BackIcon />}
-      leftContentOnClick={() => navigator(ROUTES_PATH.myPage)}
+      leftContentOnClick={() => navigator(ROUTES_PATH.setting)}
       title='설정'
       rightContent2='수정'
     />

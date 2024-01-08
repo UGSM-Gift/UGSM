@@ -3,7 +3,6 @@ export type UserData = {
   nickname: string;
   birth: string;
   gender: string;
-  gender: string;
   phoneNumber: string;
 };
 

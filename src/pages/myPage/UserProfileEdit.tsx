@@ -9,14 +9,17 @@ import { UserData } from 'src/types/userData';
 import styled from 'styled-components';
 import BasicLayout from '../layout/BasicLayout';
 import { colors } from 'src/styles/colors';
+import axios from 'axios';
 const UserProfileEdit = () => {
+  const accessToken = window.localStorage.getItem('accessToken');
+
   const [userSettingData, setUserSettingData] = useState<UserData>({
-    birth: '',
+    birthdate: '',
     name: '',
     gender: '',
     nickname: '',
     mobile: '',
-    userProfileUrl: '',
+    userProfileUrl: null,
   });
   // function PhoneNumber(phoneNumber: string) {
   //   return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7)}`;
@@ -26,7 +29,7 @@ const UserProfileEdit = () => {
     try {
       const response = await userData();
       const userSettingData = {
-        birth: response.data.birthdate,
+        birthdate: response.data.birthdate,
         gender: response.data.gender,
         name: response.data.name,
         nickname: response.data.nickname,
@@ -54,13 +57,38 @@ const UserProfileEdit = () => {
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserSettingData((prevUserData) => ({ ...prevUserData, mobile: event.target.value }));
   };
+  const userMockData = {
+    birthdate: '1999-12-24',
+    gender: 'MALE',
+    name: 'newName',
+    nickname: 'newNickname',
+    mobile: '01055556666',
+    userProfileUrl: null,
+  };
+  // 유저데이터 전송
+  const userDataPost = async (userData: UserData) => {
+    try {
+      const response = await axios.put(`https://www.ugsm.co.kr/api/user/me`, userData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleEdit = (userData: UserData) => {
+    userDataPost(userData);
+  };
 
   return (
     <BasicLayout>
       <ContentContainer>
         <ProfileEditBox>
           <Profile userData={userSettingData} />
-          <Icon>
+          <Icon onClick={() => handleEdit(userMockData)}>
             <EditIcon />
           </Icon>
         </ProfileEditBox>
@@ -102,4 +130,5 @@ const Icon = styled.div`
   border: 3px solid ${colors.white};
   background-color: ${colors.sub[900]};
   box-sizing: content-box;
+  cursor: pointer;
 `;

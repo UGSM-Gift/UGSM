@@ -5,13 +5,13 @@ import styled from 'styled-components';
 import DataBox from './DataBox';
 
 const Anniversary = ({ userData }: { userData: UserProfile }) => {
-  const originalDate = userData.birth;
+  const originalDate = userData.birthdata;
   const formattedDate = originalDate.slice(2).replace(/-/g, '.');
 
   return (
     <AnniversaryBox>
-      <DataBox children={formattedDate} birth />
-      <DataBox children={'기념일'} birth={false} anniversaryCount={0} />
+      <DataBox children={formattedDate} birthdata />
+      <DataBox children={'기념일'} birthdata={false} anniversaryCount={0} />
     </AnniversaryBox>
   );
 };
