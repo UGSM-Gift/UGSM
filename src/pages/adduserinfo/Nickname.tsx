@@ -39,7 +39,7 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData }) => {
         onChange={handleNicknameChange}
         errorMessage={'dd'}
       >
-        <Input.TextField placeholder='닉네임을 입력해주세요' error={false} />
+        <Input.TextField placeholder='닉네임을 입력해주세요' value={userData.nickname} />
       </Input>
     </NicknameBox>
   );

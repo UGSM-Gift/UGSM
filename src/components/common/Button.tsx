@@ -126,6 +126,9 @@ const StyledButton = styled.button<Props>`
   &:disabled {
     cursor: not-allowed;
   }
+  &:hover {
+    border: none;
+  }
   ${({ $block, $style, size = 'medium', variant, radius = 'small' }) => css`
     ${VARIANT_TYPE[variant]}
     ${SIZE_TYPE[size]}

@@ -7,6 +7,7 @@ export type UserData = {
 };
 
 export type UserProfileData = {
+  name: string;
   nickname: string;
   birth: string;
   gender: string;

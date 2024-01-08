@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PreviousButton from '../components/userAuth/PreviousButton';
 import Nickname from './adduserinfo/Nickname';
 import Gender from './adduserinfo/Gender';
@@ -13,14 +13,54 @@ import { phoneAuthPut } from 'src/api/account';
 import Name from './adduserinfo/Name';
 
 const UserAddInfo = () => {
-  const [userData, setUserData] = useState<UserProfileData>({ nickname: '', birth: '', gender: '' });
+  const [userData, setUserData] = useState<UserProfileData>({
+    name: '',
+    nickname: '',
+    birth: '',
+    gender: '',
+  });
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState('');
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   const navigator = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
   // 휴대폰 인증번호
   const [phoneAuthNumber, setPhoneAuthNumber] = useState('');
+  // 입력값 로직
+
+  // 입력값 검증 로직
+  const validateInput = () => {
+    switch (step) {
+      case 1:
+        // 첫 번째 단계에서는 사용자의 이름이 비어있지 않은지 확인
+        return userData.name.trim().length > 0;
+      case 2:
+        // 닉네임이 2~16자리이며 한글, 영문, 숫자만 포함되었는지 확인
+        // ++중복검사 로직
+        const isAuthNicknameValid = true;
+        const isNicknameValid = /^[가-힣a-zA-Z0-9]{2,16}$/.test(userData.nickname);
+        return isAuthNicknameValid && isNicknameValid && userData.nickname.trim().length > 0; // 중복검사 결과도 여기에 반영해야 합니다.
+      case 3:
+        // 날짜와 성별이 모두 선택되었는지 확인
+        return userData.birth !== '' && userData.gender !== '';
+      case 4:
+        // 전화번호가 12자리 숫자인지 확인
+        const phoneNumber = phone.replace(/-/g, '');
+        return phoneNumber.length === 11;
+      case 5:
+        // 올바른 인증번호가 입력되었는지 확인
+        // ++인증번호 검증
+        const isAuthNumberValid = true;
+        return isAuthNumberValid && phoneAuthNumber.trim().length > 0;
+      default:
+        return false;
+    }
+  };
+  useEffect(() => {
+    setDisabled(!validateInput());
+  }, [step, userData, phone, phoneAuthNumber]); // 관련 상태가 변경될 때마다 검증
+
   // 전화번호 형식을 조정하는 함수
   function formatPhoneNumber(value: string) {
     if (!value) return value;
@@ -94,7 +134,7 @@ const UserAddInfo = () => {
 
   // 최소, 최대 값
   const updateStep = (newStep: number) => {
-    setStep(Math.max(1, Math.min(newStep, 4)));
+    setStep(Math.max(1, Math.min(newStep, 5)));
   };
 
   const handleNextStepChange = () => {
@@ -121,9 +161,15 @@ const UserAddInfo = () => {
       {step === 5 && (
         <PhoneNumberAuth phone={phone} phoneAuth={phoneAuthNumber} onChange={handlePhoneAuthChange} />
       )}
-      <Button variant='primary' onClick={handleNextStepChange}>
-        다음
-      </Button>
+      {disabled ? (
+        <Button variant='disabled' disabled={disabled}>
+          다음
+        </Button>
+      ) : (
+        <Button variant='primary' onClick={handleNextStepChange} disabled={disabled}>
+          다음
+        </Button>
+      )}
     </BasicLayout>
   );
 };
