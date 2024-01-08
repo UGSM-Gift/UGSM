@@ -5,7 +5,6 @@ import Typography from '@components/common/Typography';
 import { common } from 'src/styles/common';
 import { colors } from 'src/styles/colors';
 import { phoneAuthPut } from 'src/api/account';
-import Input from '@components/common/Input';
 
 const NumberBox = styled.div``;
 

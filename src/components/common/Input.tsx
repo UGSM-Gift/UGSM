@@ -1,4 +1,4 @@
-import {
+import React, {
   ForwardedRef,
   HTMLAttributes,
   InputHTMLAttributes,
@@ -13,6 +13,7 @@ import type { CSSProp } from 'styled-components';
 
 import Typography from './Typography';
 import { colors } from 'src/styles/colors';
+import IconBtnWrapper from './IconBtnWrapper';
 
 type InputProps = {
   label?: ReactNode;
@@ -40,7 +41,7 @@ const Input = ({
 
   return (
     <Layout {...props}>
-      <Typography variant='subtitle2'>{label}</Typography>
+      {label && <Typography variant='subtitle2'>{label}</Typography>}
       {cloneElement(child, { id, ...child.props })}
       {isSuccess && <StyledBottomText $success={true}>{successMessage}</StyledBottomText>}
       {isError && <StyledBottomText $error={true}>{errorMessage}</StyledBottomText>}
@@ -68,19 +69,45 @@ const StyledBottomText = styled.p<{ $error?: boolean; $success?: boolean }>`
   `};
 `;
 
-type TextFieldProps = {
+type StyledInputProps = {
   success?: boolean;
   error?: boolean;
   $style?: CSSProp;
+  $iconStyle?: CSSProp;
+  icon?: React.ReactNode;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-Input.TextField = forwardRef(
-  ({ success, error, $style, ...props }: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
-    return <StyledInput ref={ref} $style={$style} {...props} />;
+const renderInput = (
+  { success, error, icon, $style, $iconStyle, ...props }: StyledInputProps,
+  ref: ForwardedRef<HTMLInputElement>
+) => <StyledInput ref={ref} error={error} success={success} $style={$style} {...props} />;
+
+// text input
+Input.TextField = forwardRef((props: StyledInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+  return renderInput(props, ref);
+});
+// txt + icon  input
+Input.TextIconField = forwardRef(
+  ({ $iconStyle, icon, ...props }: StyledInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+    return (
+      <InputWithIcon>
+        {renderInput(props, ref)}
+        <IconBox> {icon && <IconBtnWrapper $iconStyle={$iconStyle}>{icon}</IconBtnWrapper>}</IconBox>
+      </InputWithIcon>
+    );
   }
 );
 
-type StyledInputProps = Pick<TextFieldProps, '$style'>;
+const IconBox = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+`;
+
+const InputWithIcon = styled.div`
+  position: relative;
+`;
 
 const StyledInput = styled.input<StyledInputProps>`
   &::placeholder {
@@ -94,8 +121,25 @@ const StyledInput = styled.input<StyledInputProps>`
   font-size: 15px;
   border-radius: 8px;
   border: 1px solid ${colors.gray[20]};
-  margin-top: 10px;
+
+  ${({ error, success }) => css`
+    // 에러 상태 스타일
+    ${error &&
+    css`
+      border: 1px solid ${colors.errorColor};
+    `}
+
+    // 성공 상태 스타일
+    ${success &&
+    css`
+      border: 1px solid ${colors.successColor};
+    `}
+  `};
+
   ${({ $style }) => css`
     ${$style}
+  `};
+  ${({ $iconStyle }) => css`
+    ${$iconStyle}
   `};
 `;
