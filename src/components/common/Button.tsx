@@ -65,6 +65,21 @@ const VARIANT_TYPE = {
     color: ${colors.gray[30]};
     border: 1px solid ${colors.gray[30]};
   `,
+  lightPrimary: css`
+    color: ${colors.primary[800]};
+    background-color: #ffe4ee;
+    border: 1px solid ${colors.primary[100]};
+  `,
+  lightGhost: css`
+    color: ${colors.gray[50]};
+    background-color: ${colors.white};
+    border: 1px solid ${colors.gray[50]};
+  `,
+
+  lightDisabled: css`
+    color: ${colors.gray[10]};
+    border: 1px solid ${colors.gray[30]};
+  `,
 } as const;
 
 type Props = {

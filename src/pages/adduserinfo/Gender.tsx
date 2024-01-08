@@ -4,7 +4,13 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { UserDataProps } from 'src/modules/@types/common';
 import Typography from '@components/common/Typography';
+import Button from '@components/common/Button';
 
+const ButtonBox = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+`;
 const GenderBox = styled.div``;
 
 const TypeButtonBox = styled.div`
@@ -38,6 +44,15 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
 
       <InputType type='date' value={userData.birth} onChange={handleBirthdayChange} label='생일' />
       <label>성별</label>
+      {/* <ButtonBox>
+        <Button variant={'lightPrimary'} radius='medium'>
+          남
+        </Button>
+        <Button variant={'lightGhost'} radius='medium'>
+          여
+        </Button>
+      </ButtonBox> */}
+
       <TypeButtonBox>
         <TypeButton type='남자' setType={(type) => handleGenderChange(type)} selectedType={gender} />
         <TypeButton type='여자' setType={(type) => handleGenderChange(type)} selectedType={gender} />

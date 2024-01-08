@@ -2,6 +2,7 @@ import InputType from '../../components/userAuth/InputType';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import Typography from '@components/common/Typography';
+import Input from '@components/common/Input';
 
 const NumberBox = styled.div``;
 type PhoneNumberProp = {
@@ -20,7 +21,14 @@ const PhoneNumber: React.FC<PhoneNumberProp> = ({ phone, onChange }) => {
         사용하고 있는 <br />
         번호를 알려주세요
       </Typography>
-      <InputType type='text' value={phone} placeholder='전화번호를 입력해주세요' onChange={onChange} />
+      <Input>
+        <Input.TextField
+          placeholder='숫자만 입력해주세요'
+          error={false}
+          value={phone}
+          onChange={onChange}
+        />
+      </Input>
     </NumberBox>
   );
 };
