@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import BackIcon from 'src/assets/icons/BackIcon';
-import SettingIcon from 'src/assets/icons/SettingIcon';
+import { ReactComponent as BackIcon } from '@assets/icons/backIcon.svg';
+import { ReactComponent as SettingIcon } from '@assets/icons/settingIcon.svg';
 import { ROUTES_PATH } from 'src/constants/routes';
 
 import Header from './Header';

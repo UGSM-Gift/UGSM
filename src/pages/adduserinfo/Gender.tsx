@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { UserDataProps } from 'src/modules/@types/common';
 import Typography from '@components/common/Typography';
-import Button from '@components/common/Button';
 
 const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
   const [gender, setGender] = useState<string>(userData.gender || '');
@@ -49,11 +48,6 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
 
 export default Gender;
 
-const ButtonBox = styled.div`
-  display: flex;
-  gap: 20px;
-  margin-bottom: 30px;
-`;
 const GenderBox = styled.div``;
 
 const TypeButtonBox = styled.div`

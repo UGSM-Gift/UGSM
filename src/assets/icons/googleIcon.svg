@@ -8,7 +8,7 @@
       />
       <mask
         id='mask0_808_36991'
-        // style='mask-type:alpha'
+       style='mask-type:alpha'
         maskUnits='userSpaceOnUse'
         x='3'
         y='14'
@@ -28,7 +28,7 @@
       </g>
       <mask
         id='mask1_808_36991'
-        // style='mask-type:alpha'
+       style='mask-type:alpha'
         maskUnits='userSpaceOnUse'
         x='2'
         y='8'
@@ -48,7 +48,7 @@
       </g>
       <mask
         id='mask2_808_36991'
-        // style='mask-type:alpha'
+        style='mask-type:alpha'
         maskUnits='userSpaceOnUse'
         x='3'
         y='3'

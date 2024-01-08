@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Back from 'src/assets/icons/BackIcon.svg';
+import { ReactComponent as Back } from '@assets/icons/backIcon.svg';
 import styled from 'styled-components';
+import IconBtnWrapper from '@components/common/IconBtnWrapper';
 
-const Button = styled.button`
+const ButtonBox = styled.div`
   margin-bottom: 30px;
   font-size: 2rem;
   background-color: #fff;
@@ -18,11 +19,15 @@ const PreviousButton: React.FC<PrevioustButtonProps> = ({ onClick, step }) => {
   const handleHomeClick = () => {
     navigate('/login');
   };
+
   const navigate = useNavigate();
+
   return (
-    <Button onClick={step === 1 ? handleHomeClick : onClick}>
-      <Back />
-    </Button>
+    <ButtonBox>
+      <IconBtnWrapper onClick={step === 1 ? handleHomeClick : onClick}>
+        <Back />
+      </IconBtnWrapper>
+    </ButtonBox>
   );
 };
 

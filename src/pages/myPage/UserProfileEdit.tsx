@@ -2,13 +2,15 @@ import Input from '@components/common/Input';
 import Profile from '@components/mypage/Profile';
 import React, { useEffect, useState } from 'react';
 import { userData } from 'src/api/userData';
-import EditIcon from 'src/assets/icons/EditIcon';
+import { ReactComponent as EditIcon } from '@assets/icons/editIcon.svg';
 import { common } from 'src/styles/common';
 import { UserData } from 'src/types/userData';
 import styled from 'styled-components';
 import BasicLayout from '../layout/BasicLayout';
 import { colors } from 'src/styles/colors';
 import axios from 'axios';
+import IconBtnWrapper from '@components/common/IconBtnWrapper';
+
 const UserProfileEdit = () => {
   const accessToken = window.localStorage.getItem('accessToken');
 
@@ -87,9 +89,9 @@ const UserProfileEdit = () => {
       <ContentContainer>
         <ProfileEditBox>
           <Profile userData={userSettingData} />
-          <Icon onClick={() => handleEdit(userMockData)}>
+          <IconBtnWrapper onClick={() => handleEdit(userMockData)}>
             <EditIcon />
-          </Icon>
+          </IconBtnWrapper>
         </ProfileEditBox>
         <Input label='이름'>
           <Input.TextField value={userSettingData.nickname} onChange={handleNameChange} />
