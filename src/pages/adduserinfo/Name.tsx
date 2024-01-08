@@ -23,7 +23,7 @@ const Name: React.FC<UserDataProps> = ({ userData, setUserData }) => {
         이름이 어떻게 되시나요?
       </Typography>
       <Input onChange={handleNameChange}>
-        <Input.TextField placeholder='닉네임을 입력해주세요' error={false} />
+        <Input.TextField placeholder='이름을 입력해주세요' error={false} />
       </Input>
     </NameBox>
   );

@@ -1,8 +1,4 @@
-import React from 'react';
-
-const SettingIcon = () => {
-  return (
-    <svg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'>
+<svg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
         d='M24 26.7954C25.5439 26.7954 26.7955 25.5439 26.7955 24C26.7955 22.4561 25.5439 21.2045 24 21.2045C22.4561 21.2045 21.2046 22.4561 21.2046 24C21.2046 25.5439 22.4561 26.7954 24 26.7954Z'
         stroke='#121616'
@@ -18,7 +14,3 @@ const SettingIcon = () => {
         strokeLinejoin='round'
       />
     </svg>
-  );
-};
-
-export default SettingIcon;

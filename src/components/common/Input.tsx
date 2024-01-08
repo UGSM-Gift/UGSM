@@ -83,17 +83,18 @@ Input.TextField = forwardRef(
 type StyledInputProps = Pick<TextFieldProps, '$style'>;
 
 const StyledInput = styled.input<StyledInputProps>`
+  &::placeholder {
+    color: ${colors.gray[40]};
+  }
   &:disabled {
     background-color: ${colors.disable};
   }
-
   width: 100%;
   padding: 20px 16px;
   font-size: 15px;
   border-radius: 8px;
   border: 1px solid ${colors.gray[20]};
   margin-top: 10px;
-
   ${({ $style }) => css`
     ${$style}
   `};

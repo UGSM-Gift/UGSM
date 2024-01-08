@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import BasicLayout from './layout/BasicLayout';
 import Button from '@components/common/Button';
 import { phoneAuthPut } from 'src/api/account';
+import Name from './adduserinfo/Name';
 
 const UserAddInfo = () => {
   const [userData, setUserData] = useState<UserProfileData>({ nickname: '', birth: '', gender: '' });
@@ -113,10 +114,11 @@ const UserAddInfo = () => {
   return (
     <BasicLayout>
       <PreviousButton onClick={handlePreviousStepChange} step={step} />
-      {step === 1 && <Nickname userData={userData} setUserData={setUserData} />}
-      {step === 2 && <Gender userData={userData} setUserData={setUserData} />}
-      {step === 3 && <PhoneNumber phone={phone} onChange={numberhandleChange} />}
-      {step === 4 && (
+      {step === 1 && <Name userData={userData} setUserData={setUserData} />}
+      {step === 2 && <Nickname userData={userData} setUserData={setUserData} />}
+      {step === 3 && <Gender userData={userData} setUserData={setUserData} />}
+      {step === 4 && <PhoneNumber phone={phone} onChange={numberhandleChange} />}
+      {step === 5 && (
         <PhoneNumberAuth phone={phone} phoneAuth={phoneAuthNumber} onChange={handlePhoneAuthChange} />
       )}
       <Button variant='primary' onClick={handleNextStepChange}>

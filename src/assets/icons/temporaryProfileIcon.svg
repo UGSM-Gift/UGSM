@@ -1,8 +1,4 @@
-import React from 'react';
-
-const TemporaryProfileIcon = () => {
-  return (
-    <svg width='85' height='84' viewBox='0 0 85 84' fill='none' xmlns='http://www.w3.org/2000/svg'>
+ <svg width='85' height='84' viewBox='0 0 85 84' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <rect x='0.5' width='84' height='84' rx='42' fill='#E1E2EA' />
       <path
         d='M42.66 40.87C42.56 40.86 42.44 40.86 42.33 40.87C39.95 40.79 38.06 38.84 38.06 36.44C38.06 33.99 40.04 32 42.5 32C44.95 32 46.94 33.99 46.94 36.44C46.93 38.84 45.04 40.79 42.66 40.87Z'
@@ -19,7 +15,3 @@ const TemporaryProfileIcon = () => {
         strokeLinejoin='round'
       />
     </svg>
-  );
-};
-
-export default TemporaryProfileIcon;

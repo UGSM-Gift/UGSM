@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Back from 'src/assets/icons/BackIcon';
+import Back from 'src/assets/icons/BackIcon.svg';
 import styled from 'styled-components';
 
 const Button = styled.button`

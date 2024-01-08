@@ -1,4 +1,3 @@
-import BtnWrapper from '@components/common/BtnWrapper';
 import Input from '@components/common/Input';
 import Profile from '@components/mypage/Profile';
 import React, { useEffect, useState } from 'react';
