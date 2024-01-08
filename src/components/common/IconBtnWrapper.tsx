@@ -9,7 +9,7 @@ interface BtnWrapperProps {
   disabled?: boolean;
 }
 
-const BtnWrapper = ({ children, type = 'button', onClick, ...rest }: BtnWrapperProps) => {
+const IconBtnWrapper = ({ children, type = 'button', onClick, ...rest }: BtnWrapperProps) => {
   return (
     <Button type={type} onClick={onClick} {...rest}>
       {children}
@@ -17,7 +17,7 @@ const BtnWrapper = ({ children, type = 'button', onClick, ...rest }: BtnWrapperP
   );
 };
 
-export default BtnWrapper;
+export default IconBtnWrapper;
 
 const Button = styled.button`
   background-color: ${colors.white};

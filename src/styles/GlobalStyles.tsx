@@ -30,7 +30,6 @@ body {
   min-width: 375px;
   font-family: Outfit;
   margin: 0 auto;
-  line-height: 1.6;
   letter-spacing: -0.025em;
   -ms-overflow-style: none;
   

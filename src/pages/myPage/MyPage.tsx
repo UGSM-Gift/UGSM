@@ -12,18 +12,17 @@ const MyPage = () => {
   const [userProfileData, setUserProfileData] = useState<UserProfile>({
     nickname: '',
     userProfileUrl: '',
-    birth: '',
+    birthdata: '',
   });
 
   // userData 함수를 async 함수로 호출
   const fetchUserData = async () => {
     try {
       const response = await userData();
-      console.log(response);
       const userProfile = {
         nickname: response.data.nickname,
         userProfileUrl: response.data.profileImageUrl,
-        birth: response.data.birthdate,
+        birthdata: response.data.birthdate,
       };
       setUserProfileData(userProfile);
     } catch (error) {

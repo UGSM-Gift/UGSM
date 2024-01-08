@@ -7,16 +7,21 @@ import BasicLayout from './layout/BasicLayout';
 import Typography from '../components/common/Typography';
 import { colors } from 'src/styles/colors';
 import { common } from 'src/styles/common';
-import Naver from 'src/assets/icons/NaverIcon';
-import Kakao from 'src/assets/icons/KakaoIcon';
-import Google from 'src/assets/icons/GoogleIcon';
+import { ReactComponent as Naver } from '@assets/icons/naverIcon.svg';
+import { ReactComponent as Kakao } from '@assets/icons/kakaoIcon.svg';
+import { ReactComponent as Google } from '@assets/icons/googleIcon.svg';
 import { SocialLogin } from 'src/types/socialLogin';
+import IconWrapper from '@components/common/IconWrapper';
 
 const socialLogins: SocialLogin[] = [
   {
     link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/kakao',
     platform: '카카오로 시작',
-    icon: <Kakao />,
+    icon: (
+      <IconWrapper>
+        <Kakao />
+      </IconWrapper>
+    ),
     variant: 'primary',
     color: colors.black,
 
@@ -25,7 +30,11 @@ const socialLogins: SocialLogin[] = [
   {
     link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/naver',
     platform: '네이버로 시작',
-    icon: <Naver />,
+    icon: (
+      <IconWrapper>
+        <Naver />
+      </IconWrapper>
+    ),
     variant: 'primary',
     color: colors.white,
     style: { background: '#03C75A', color: colors.white },
@@ -34,7 +43,11 @@ const socialLogins: SocialLogin[] = [
   {
     link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/google',
     platform: '구글로 시작',
-    icon: <Google />,
+    icon: (
+      <IconWrapper>
+        <Google />
+      </IconWrapper>
+    ),
     variant: 'ghost',
     color: colors.gray[60],
     style: { background: colors.white, color: colors.gray[20], border: `1px solid ${colors.gray[20]}` },

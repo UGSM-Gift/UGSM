@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import BackIcon from 'src/assets/icons/BackIcon';
-import SettingIcon from 'src/assets/icons/SettingIcon';
+import { ReactComponent as BackIcon } from '@assets/icons/backIcon.svg';
+import { ReactComponent as SettingIcon } from '@assets/icons/settingIcon.svg';
 import { ROUTES_PATH } from 'src/constants/routes';
 
 import Header from './Header';
@@ -31,7 +31,7 @@ export const UserProfileEditHeader = () => {
   return (
     <Header
       leftContent1={<BackIcon />}
-      leftContentOnClick={() => navigator(ROUTES_PATH.myPage)}
+      leftContentOnClick={() => navigator(ROUTES_PATH.setting)}
       title='설정'
       rightContent2='수정'
     />

@@ -30,8 +30,9 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData }) => {
           margin-bottom: 100px;
         `}
       >
-        반가워요! <br />
-        어떻게 불러드릴까요?
+        은근슨물에서는
+        <br />
+        어떤 닉네임으로 부를까요?
       </Typography>
       <Input
         bottomText='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'

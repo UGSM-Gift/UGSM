@@ -1,5 +1,5 @@
-import BtnWrapper from '@components/common/BtnWrapper';
-import IconBtnWrapper from '@components/common/BtnWrapper';
+import BtnWrapper from '@components/common/IconBtnWrapper';
+import IconBtnWrapper from '@components/common/IconBtnWrapper';
 import Typography from '@components/common/Typography';
 import React from 'react';
 import { common } from 'src/styles/common';

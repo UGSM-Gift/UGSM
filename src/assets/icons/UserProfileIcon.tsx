@@ -1,11 +1,13 @@
+import IconWrapper from '@components/common/IconWrapper';
+import { ReactComponent as TemporaryProfile } from '@assets/icons/temporaryProfileIcon.svg';
+
 import React from 'react';
-import TemporaryProfileIcon from './TemporaryProfileIcon';
 
 const UserProfileIcon = () => {
   return (
-    <div>
-      <TemporaryProfileIcon />
-    </div>
+    <IconWrapper>
+      <TemporaryProfile />
+    </IconWrapper>
   );
 };
 

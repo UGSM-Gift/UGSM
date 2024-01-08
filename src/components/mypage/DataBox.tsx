@@ -5,18 +5,20 @@ import { common } from 'src/styles/common';
 import { Anniversary } from 'src/types/userData';
 import styled from 'styled-components';
 
-const DataBox: React.FC<Anniversary> = ({ children, birth, anniversaryCount }) => {
+const DataBox: React.FC<Anniversary> = ({ children, birthdata, anniversaryCount }) => {
   return (
     <DataContainer>
       <ContentImg>
-        {birth ? (
+        {birthdata ? (
           <img src={`${process.env.PUBLIC_URL}/assets/images/cake.png`} alt='cake' />
         ) : (
           <img src={`${process.env.PUBLIC_URL}/assets/images/firecracker.png`} alt='firecracker' />
         )}
       </ContentImg>
 
-      <Typography variant='body1'>{birth ? children : `${children}(${anniversaryCount})`}</Typography>
+      <Typography variant='body1'>
+        {birthdata ? children : `${children}(${anniversaryCount})`}
+      </Typography>
     </DataContainer>
   );
 };

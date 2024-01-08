@@ -1,7 +1,4 @@
-import React from 'react';
 
-const Google = () => {
-  return (
     <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
         fill-rule='evenodd'
@@ -11,7 +8,7 @@ const Google = () => {
       />
       <mask
         id='mask0_808_36991'
-        // style='mask-type:alpha'
+       style='mask-type:alpha'
         maskUnits='userSpaceOnUse'
         x='3'
         y='14'
@@ -31,7 +28,7 @@ const Google = () => {
       </g>
       <mask
         id='mask1_808_36991'
-        // style='mask-type:alpha'
+       style='mask-type:alpha'
         maskUnits='userSpaceOnUse'
         x='2'
         y='8'
@@ -51,7 +48,7 @@ const Google = () => {
       </g>
       <mask
         id='mask2_808_36991'
-        // style='mask-type:alpha'
+        style='mask-type:alpha'
         maskUnits='userSpaceOnUse'
         x='3'
         y='3'
@@ -70,7 +67,3 @@ const Google = () => {
         />
       </g>
     </svg>
-  );
-};
-
-export default Google;
