@@ -75,6 +75,7 @@ type StyledInputProps = {
   $style?: CSSProp;
   $iconStyle?: CSSProp;
   icon?: React.ReactNode;
+  timer?: number;
   onClick?: () => void;
 } & InputHTMLAttributes<HTMLInputElement>;
 
@@ -88,29 +89,40 @@ Input.TextField = forwardRef((props: StyledInputProps, ref: ForwardedRef<HTMLInp
   return renderInput(props, ref);
 });
 // txt + icon  input
-Input.TextIconField = forwardRef(
-  ({ $iconStyle, icon, onClick, ...props }: StyledInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+Input.TextInteractiveField = forwardRef(
+  (
+    { $iconStyle, icon, onClick, timer, ...props }: StyledInputProps,
+    ref: ForwardedRef<HTMLInputElement>
+  ) => {
     return (
       <InputWithIcon>
         {renderInput(props, ref)}
-        <IconBox>
-          {' '}
+        <ContentBox>
+          <TimeBox>
+            {timer && timer > 0 ? (
+              <Typography variant='caption1'>{`0:${timer.toString().padStart(2, '0')}`}</Typography>
+            ) : null}
+          </TimeBox>
+
           {icon && (
             <IconBtnWrapper $iconStyle={$iconStyle} onClick={onClick}>
               {icon}
             </IconBtnWrapper>
           )}
-        </IconBox>
+        </ContentBox>
       </InputWithIcon>
     );
   }
 );
 
-const IconBox = styled.div`
+const ContentBox = styled.div`
   position: absolute;
   top: 50%;
   right: 5px;
   transform: translateY(-50%);
+`;
+const TimeBox = styled.div`
+  margin-right: 10px;
 `;
 
 const InputWithIcon = styled.div`

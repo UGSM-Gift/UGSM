@@ -16,4 +16,6 @@ export type UserProfileData = {
 export interface UserDataProps {
   userData: UserProfileData;
   setUserData: React.Dispatch<React.SetStateAction<UserProfileData>>;
+  onFocus?: (event: React.FocusEvent) => void;
+  onBlur?: (event: React.FocusEvent) => void;
 }

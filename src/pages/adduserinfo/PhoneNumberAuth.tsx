@@ -5,6 +5,7 @@ import Typography from '@components/common/Typography';
 import { common } from 'src/styles/common';
 import { colors } from 'src/styles/colors';
 import { phoneAuthPut } from 'src/api/account';
+import Input from '@components/common/Input';
 
 const NumberBox = styled.div``;
 
@@ -18,9 +19,11 @@ type PhoneNumberProp = {
   phone: string;
   phoneAuth: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus: (event: React.FocusEvent) => void;
+  onBlur: (event: React.FocusEvent) => void;
 };
 
-const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange }) => {
+const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange, onFocus, onBlur }) => {
   const [timer, setTimer] = useState(60);
 
   useEffect(() => {
@@ -46,21 +49,17 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange
         <br />
         인증번호를 입력해주세요
       </Typography>
-      {/* <Input>
-        <Input.TextField
+      <Input>
+        <Input.TextInteractiveField
           placeholder={`${phone}로 보내드렸어요`}
           error={false}
-          value={phone}
           onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          timer={timer}
         />
-      </Input> */}
-      <InputType
-        type='text'
-        value={phoneAuth}
-        placeholder={`${phone}로 보내드렸어요`}
-        onChange={onChange}
-        timer={timer}
-      />
+      </Input>
+
       <Response>
         <Typography variant={'button2'} color={colors.gray[60]}>
           인증 문자가 오지않나요?

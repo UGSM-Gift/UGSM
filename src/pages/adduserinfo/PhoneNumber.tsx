@@ -7,8 +7,10 @@ const NumberBox = styled.div``;
 type PhoneNumberProp = {
   phone: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus: (event: React.FocusEvent) => void;
+  onBlur: (event: React.FocusEvent) => void;
 };
-const PhoneNumber: React.FC<PhoneNumberProp> = ({ phone, onChange }) => {
+const PhoneNumber: React.FC<PhoneNumberProp> = ({ phone, onChange, onFocus, onBlur }) => {
   return (
     <NumberBox>
       <Typography
@@ -26,6 +28,8 @@ const PhoneNumber: React.FC<PhoneNumberProp> = ({ phone, onChange }) => {
           error={false}
           value={phone}
           onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
       </Input>
     </NumberBox>

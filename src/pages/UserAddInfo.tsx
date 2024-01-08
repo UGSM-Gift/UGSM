@@ -11,6 +11,8 @@ import BasicLayout from './layout/BasicLayout';
 import Button from '@components/common/Button';
 import { phoneAuthPut } from 'src/api/account';
 import Name from './adduserinfo/Name';
+import styled from 'styled-components';
+import { colors } from 'src/styles/colors';
 
 const UserAddInfo = () => {
   const [userData, setUserData] = useState<UserProfileData>({
@@ -22,6 +24,29 @@ const UserAddInfo = () => {
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState('');
   const [disabled, setDisabled] = useState<boolean>(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  // 키보드가 올라왔을 때 호출되는 함수
+  const handleKeyboardShow = () => {
+    setKeyboardVisible(true);
+  };
+
+  // 키보드가 내려갔을 때 호출되는 함수
+  const handleKeyboardHide = () => {
+    setKeyboardVisible(false);
+  };
+
+  // 키보드 이벤트 리스너 추가 (예: focus 이벤트 등을 사용)
+  useEffect(() => {
+    // 키보드 이벤트 리스너를 추가하는 로직
+    window.addEventListener('focus', handleKeyboardShow);
+    window.addEventListener('blur', handleKeyboardHide);
+
+    return () => {
+      // 컴포넌트가 언마운트될 때 이벤트 리스너를 제거하는 로직
+      window.removeEventListener('focus', handleKeyboardShow);
+      window.removeEventListener('blur', handleKeyboardHide);
+    };
+  }, []);
 
   const navigator = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
@@ -154,24 +179,73 @@ const UserAddInfo = () => {
   return (
     <BasicLayout>
       <PreviousButton onClick={handlePreviousStepChange} step={step} />
-      {step === 1 && <Name userData={userData} setUserData={setUserData} />}
-      {step === 2 && <Nickname userData={userData} setUserData={setUserData} />}
+      {step === 1 && (
+        <Name
+          userData={userData}
+          setUserData={setUserData}
+          onFocus={handleKeyboardShow}
+          onBlur={handleKeyboardHide}
+        />
+      )}
+      {step === 2 && (
+        <Nickname
+          userData={userData}
+          setUserData={setUserData}
+          onFocus={handleKeyboardShow}
+          onBlur={handleKeyboardHide}
+        />
+      )}
       {step === 3 && <Gender userData={userData} setUserData={setUserData} />}
-      {step === 4 && <PhoneNumber phone={phone} onChange={numberhandleChange} />}
+      {step === 4 && (
+        <PhoneNumber
+          phone={phone}
+          onChange={numberhandleChange}
+          onFocus={handleKeyboardShow}
+          onBlur={handleKeyboardHide}
+        />
+      )}
       {step === 5 && (
-        <PhoneNumberAuth phone={phone} phoneAuth={phoneAuthNumber} onChange={handlePhoneAuthChange} />
+        <PhoneNumberAuth
+          phone={phone}
+          phoneAuth={phoneAuthNumber}
+          onChange={handlePhoneAuthChange}
+          onFocus={handleKeyboardShow}
+          onBlur={handleKeyboardHide}
+        />
       )}
-      {disabled ? (
-        <Button variant='disabled' disabled={disabled}>
-          다음
-        </Button>
-      ) : (
-        <Button variant='primary' onClick={handleNextStepChange} disabled={disabled}>
-          다음
-        </Button>
-      )}
+      <ButtonContainer keyboardVisible={keyboardVisible}>
+        <ButtonBox>
+          {disabled ? (
+            <Button variant='disabled' disabled={disabled}>
+              다음
+            </Button>
+          ) : (
+            <Button variant='primary' onClick={handleNextStepChange} disabled={disabled}>
+              다음
+            </Button>
+          )}
+        </ButtonBox>
+      </ButtonContainer>
     </BasicLayout>
   );
 };
 
 export default UserAddInfo;
+
+const ButtonContainer = styled.div<{ keyboardVisible: boolean }>`
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  margin-left: -16px;
+  margin-right: -16px;
+  height: 88px;
+  background-color: ${colors.white};
+  box-shadow: ${(props) => (props.keyboardVisible ? '0px -8px 12px 0px rgba(0, 0, 0, 0.04)' : 'none')};
+`;
+
+const ButtonBox = styled.div`
+  width: calc(100% - 32px);
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+`;

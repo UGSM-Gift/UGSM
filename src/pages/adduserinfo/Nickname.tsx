@@ -7,7 +7,7 @@ import { ReactComponent as CloseIcon } from '@assets/icons/closeIcon.svg';
 
 const NicknameBox = styled.div``;
 
-const Nickname: React.FC<UserDataProps> = ({ userData, setUserData }) => {
+const Nickname: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur }) => {
   const [isError, setIsError] = useState(false);
 
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,13 +40,14 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData }) => {
       <Input
         bottomText='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'
         onChange={handleNicknameChange}
-        onClick={handleCicknameReset}
         errorMessage={'dd'}
       >
-        <Input.TextIconField
+        <Input.TextInteractiveField
           placeholder='닉네임을 입력해주세요'
           icon={<CloseIcon />}
           value={userData.nickname}
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
       </Input>
     </NicknameBox>
