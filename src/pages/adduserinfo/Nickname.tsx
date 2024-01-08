@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { UserDataProps } from 'src/modules/@types/common';
 import Typography from '@components/common/Typography';
 import Input from '@components/common/Input';
+import { ReactComponent as CloseIcon } from '@assets/icons/closeIcon.svg';
 
 const NicknameBox = styled.div``;
 
@@ -21,7 +22,9 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData }) => {
       setIsError(false);
     }
   };
-
+  const handleCicknameReset = () => {
+    setUserData((prevUserData) => ({ ...prevUserData, nickname: '' }));
+  };
   return (
     <NicknameBox>
       <Typography
@@ -37,9 +40,14 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData }) => {
       <Input
         bottomText='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'
         onChange={handleNicknameChange}
+        onClick={handleCicknameReset}
         errorMessage={'dd'}
       >
-        <Input.TextField placeholder='닉네임을 입력해주세요' value={userData.nickname} />
+        <Input.TextIconField
+          placeholder='닉네임을 입력해주세요'
+          icon={<CloseIcon />}
+          value={userData.nickname}
+        />
       </Input>
     </NicknameBox>
   );

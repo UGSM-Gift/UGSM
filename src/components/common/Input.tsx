@@ -75,6 +75,7 @@ type StyledInputProps = {
   $style?: CSSProp;
   $iconStyle?: CSSProp;
   icon?: React.ReactNode;
+  onClick?: () => void;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const renderInput = (
@@ -88,11 +89,18 @@ Input.TextField = forwardRef((props: StyledInputProps, ref: ForwardedRef<HTMLInp
 });
 // txt + icon  input
 Input.TextIconField = forwardRef(
-  ({ $iconStyle, icon, ...props }: StyledInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+  ({ $iconStyle, icon, onClick, ...props }: StyledInputProps, ref: ForwardedRef<HTMLInputElement>) => {
     return (
       <InputWithIcon>
         {renderInput(props, ref)}
-        <IconBox> {icon && <IconBtnWrapper $iconStyle={$iconStyle}>{icon}</IconBtnWrapper>}</IconBox>
+        <IconBox>
+          {' '}
+          {icon && (
+            <IconBtnWrapper $iconStyle={$iconStyle} onClick={onClick}>
+              {icon}
+            </IconBtnWrapper>
+          )}
+        </IconBox>
       </InputWithIcon>
     );
   }
