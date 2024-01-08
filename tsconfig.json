@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "baseUrl": "./",
     "target": "es5",
@@ -20,11 +21,10 @@
       }
     ],
     "paths": {
-      "@/*": ["./app/*"],
-      "@components/*": ["src/components/*"],
-      "@styled/*": ["src/styled/*"]
+      "@components/*": ["src/components/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/Account/PetInfoForm/styled.js", "app/components/Login/naver.js"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
+
