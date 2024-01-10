@@ -34,5 +34,5 @@ const Button = styled.button<{ $iconStyle: CSSProp }>`
   &:hover {
     border: none;
   }
-  background-color: ${colors.white};
+  background-color: transparent;
 `;

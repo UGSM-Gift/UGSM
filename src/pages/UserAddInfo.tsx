@@ -47,19 +47,6 @@ const UserAddInfo = () => {
     setKeyboardVisible(false);
   };
 
-  // 키보드 이벤트 리스너 추가 (예: focus 이벤트 등을 사용)
-  useEffect(() => {
-    // 키보드 이벤트 리스너를 추가하는 로직
-    window.addEventListener('focus', handleFocus);
-    window.addEventListener('blur', handleBlur);
-
-    return () => {
-      // 컴포넌트가 언마운트될 때 이벤트 리스너를 제거하는 로직
-      window.removeEventListener('focus', handleFocus);
-      window.removeEventListener('blur', handleBlur);
-    };
-  }, []);
-
   const navigator = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
   // 휴대폰 인증번호

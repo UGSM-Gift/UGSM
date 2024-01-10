@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { UserDataProps } from 'src/modules/@types/common';
 import Typography from '@components/common/Typography';

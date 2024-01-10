@@ -1,9 +1,9 @@
-import InputType from '../../components/userAuth/InputType';
 import TypeButton from '../../components/userAuth/TypeButton';
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { UserDataProps } from 'src/modules/@types/common';
 import Typography from '@components/common/Typography';
+import Input from '@components/common/Input';
 
 const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
   const [gender, setGender] = useState<string>(userData.gender || '');
@@ -27,7 +27,9 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
         생일과 성별을 확인해주세요
       </Typography>
 
-      <InputType type='date' value={userData.birth} onChange={handleBirthdayChange} label='생일' />
+      <Input onChange={handleBirthdayChange} label='생일'>
+        <Input.DateField />
+      </Input>
       <label>성별</label>
       {/* <ButtonBox>
         <Button variant={'lightPrimary'} radius='medium'>

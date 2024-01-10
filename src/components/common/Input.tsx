@@ -98,7 +98,7 @@ const renderInput = (
 Input.TextField = forwardRef((props: StyledInputProps, ref: ForwardedRef<HTMLInputElement>) => {
   return renderInput(props, ref);
 });
-// txt + icon  input
+// txt + content  input
 Input.TextInteractiveField = forwardRef(
   (
     { $iconStyle, icon, onClick, timer, ...props }: StyledInputProps,
@@ -108,11 +108,11 @@ Input.TextInteractiveField = forwardRef(
       <InputWithIcon>
         {renderInput(props, ref)}
         <ContentBox>
-          <TimeBox>
-            {timer && timer > 0 ? (
-              <Typography variant='caption1'>{`0:${timer.toString().padStart(2, '0')}`}</Typography>
-            ) : null}
-          </TimeBox>
+          {timer && timer > 0 ? (
+            <TimeBox>
+              <Typography variant='caption1'>{`0:${timer.toString().padStart(2, '0')}`}</Typography>{' '}
+            </TimeBox>
+          ) : null}
 
           {icon && (
             <IconBtnWrapper $iconStyle={$iconStyle} onClick={onClick}>
@@ -124,6 +124,10 @@ Input.TextInteractiveField = forwardRef(
     );
   }
 );
+// dateField
+Input.DateField = () => {
+  return <ContentBox></ContentBox>;
+};
 
 const ContentBox = styled.div`
   position: absolute;
