@@ -25,26 +25,38 @@ const UserAddInfo = () => {
   const [phone, setPhone] = useState('');
   const [disabled, setDisabled] = useState<boolean>(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [isNicknameError, setIsNicknameError] = useState(false);
+  const [isAuthError, setIsAuthError] = useState(false);
+
+  const handleAuthErrorChange = () => {};
+
+  const handleNicknameErrorChange = () => {
+    const isNicknameValid = /^[가-힣a-zA-Z0-9]{2,16}$/.test(userData.nickname);
+    // 닉네임 유효성 검사 로직
+    setIsNicknameError(!isNicknameValid);
+  };
+
   // 키보드가 올라왔을 때 호출되는 함수
-  const handleKeyboardShow = () => {
+  const handleFocus = () => {
     setKeyboardVisible(true);
   };
 
   // 키보드가 내려갔을 때 호출되는 함수
-  const handleKeyboardHide = () => {
+  const handleBlur = () => {
+    handleNicknameErrorChange();
     setKeyboardVisible(false);
   };
 
   // 키보드 이벤트 리스너 추가 (예: focus 이벤트 등을 사용)
   useEffect(() => {
     // 키보드 이벤트 리스너를 추가하는 로직
-    window.addEventListener('focus', handleKeyboardShow);
-    window.addEventListener('blur', handleKeyboardHide);
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('blur', handleBlur);
 
     return () => {
       // 컴포넌트가 언마운트될 때 이벤트 리스너를 제거하는 로직
-      window.removeEventListener('focus', handleKeyboardShow);
-      window.removeEventListener('blur', handleKeyboardHide);
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('blur', handleBlur);
     };
   }, []);
 
@@ -180,19 +192,15 @@ const UserAddInfo = () => {
     <BasicLayout>
       <PreviousButton onClick={handlePreviousStepChange} step={step} />
       {step === 1 && (
-        <Name
-          userData={userData}
-          setUserData={setUserData}
-          onFocus={handleKeyboardShow}
-          onBlur={handleKeyboardHide}
-        />
+        <Name userData={userData} setUserData={setUserData} onFocus={handleFocus} onBlur={handleBlur} />
       )}
       {step === 2 && (
         <Nickname
+          isNicknameError={isNicknameError}
           userData={userData}
           setUserData={setUserData}
-          onFocus={handleKeyboardShow}
-          onBlur={handleKeyboardHide}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
       )}
       {step === 3 && <Gender userData={userData} setUserData={setUserData} />}
@@ -200,8 +208,8 @@ const UserAddInfo = () => {
         <PhoneNumber
           phone={phone}
           onChange={numberhandleChange}
-          onFocus={handleKeyboardShow}
-          onBlur={handleKeyboardHide}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
       )}
       {step === 5 && (
@@ -209,11 +217,11 @@ const UserAddInfo = () => {
           phone={phone}
           phoneAuth={phoneAuthNumber}
           onChange={handlePhoneAuthChange}
-          onFocus={handleKeyboardShow}
-          onBlur={handleKeyboardHide}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
       )}
-      <ButtonContainer keyboardVisible={keyboardVisible}>
+      <ButtonContainer $keyboardVisible={keyboardVisible}>
         <ButtonBox>
           {disabled ? (
             <Button variant='disabled' disabled={disabled}>
@@ -232,7 +240,7 @@ const UserAddInfo = () => {
 
 export default UserAddInfo;
 
-const ButtonContainer = styled.div<{ keyboardVisible: boolean }>`
+const ButtonContainer = styled.div<{ $keyboardVisible: boolean }>`
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -240,7 +248,7 @@ const ButtonContainer = styled.div<{ keyboardVisible: boolean }>`
   margin-right: -16px;
   height: 88px;
   background-color: ${colors.white};
-  box-shadow: ${(props) => (props.keyboardVisible ? '0px -8px 12px 0px rgba(0, 0, 0, 0.04)' : 'none')};
+  box-shadow: ${(props) => (props.$keyboardVisible ? '0px -8px 12px 0px rgba(0, 0, 0, 0.04)' : 'none')};
 `;
 
 const ButtonBox = styled.div`

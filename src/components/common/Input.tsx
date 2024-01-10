@@ -28,9 +28,10 @@ const Input = ({
   label,
   children,
   bottomText,
-  successMessage = '확인',
-  errorMessage = '잘못된 입력입니다.',
+  successMessage = '확인되었습니다',
+  errorMessage = '다시 확인해주세요',
   $style,
+
   ...props
 }: PropsWithChildren<InputProps> & HTMLAttributes<HTMLDivElement>) => {
   const child =
@@ -38,14 +39,16 @@ const Input = ({
   const id = useId();
   const isError: boolean = child.props.error ?? false;
   const isSuccess: boolean = child.props.success ?? false;
+  // successMessage 또는 errorMessage가 있는 경우 bottomText를 렌더링하지 않음
+  const shouldRenderBottomText = !isSuccess && !isError && bottomText !== null;
 
   return (
     <Layout {...props}>
       {label && <Typography variant='subtitle2'>{label}</Typography>}
       {cloneElement(child, { id, ...child.props })}
-      {isSuccess && <StyledBottomText $success={true}>{successMessage}</StyledBottomText>}
-      {isError && <StyledBottomText $error={true}>{errorMessage}</StyledBottomText>}
-      {bottomText !== null && <StyledBottomText>{bottomText}</StyledBottomText>}
+      {isSuccess && <StyledBottomText $success={isSuccess}>{successMessage}</StyledBottomText>}
+      {isError && <StyledBottomText $error={isError}>{errorMessage}</StyledBottomText>}
+      {shouldRenderBottomText && <StyledBottomText>{bottomText}</StyledBottomText>}
     </Layout>
   );
 };
@@ -60,12 +63,19 @@ const StyledBottomText = styled.p<{ $error?: boolean; $success?: boolean }>`
   margin-top: 10px;
   font-size: 13px;
   font-weight: 400;
+  color: ${colors.gray[40]};
+  ${({ $error, $success }) => css`
+    // 에러 상태 스타일
+    ${$error &&
+    css`
+      color: ${colors.errorColor};
+    `}
 
-  ${({ $error }) => css`
-    color: ${$error ? colors.warningColor : colors.gray[40]};
-  `};
-  ${({ $success }) => css`
-    color: ${$success ? colors.successColor : colors.gray[40]};
+    // 성공 상태 스타일
+    ${$success &&
+    css`
+      color: ${colors.successColor};
+    `}
   `};
 `;
 

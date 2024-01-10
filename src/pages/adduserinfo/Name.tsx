@@ -26,8 +26,9 @@ const Name: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur 
         반가워요! <br />
         이름이 어떻게 되시나요?
       </Typography>
-      <Input onChange={handleNameChange} onClick={handleNameReset}>
+      <Input onClick={handleNameReset}>
         <Input.TextInteractiveField
+          onChange={handleNameChange}
           placeholder='이름을 입력해주세요'
           icon={<CloseIcon />}
           value={userData.name}
