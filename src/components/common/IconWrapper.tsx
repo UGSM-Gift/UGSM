@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { colors } from 'src/styles/colors';
 import styled from 'styled-components';
 
 interface IconWrapperProps {
@@ -17,6 +16,4 @@ const IconWrapper = ({ children, onClick, ...rest }: IconWrapperProps) => {
 
 export default IconWrapper;
 
-const Icon = styled.button`
-  background-color: ${colors.white};
-`;
+const Icon = styled.div``;

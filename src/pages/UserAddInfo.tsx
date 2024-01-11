@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PreviousButton from '../components/userAuth/PreviousButton';
 import Nickname from './adduserinfo/Nickname';
 import Gender from './adduserinfo/Gender';
@@ -11,16 +11,93 @@ import BasicLayout from './layout/BasicLayout';
 import Button from '@components/common/Button';
 import { phoneAuthPut } from 'src/api/account';
 import Name from './adduserinfo/Name';
+import styled from 'styled-components';
+import { colors } from 'src/styles/colors';
 
 const UserAddInfo = () => {
-  const [userData, setUserData] = useState<UserProfileData>({ nickname: '', birth: '', gender: '' });
+  const [userData, setUserData] = useState<UserProfileData>({
+    name: '',
+    nickname: '',
+    birth: '',
+    gender: '',
+  });
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState('');
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [isNicknameError, setIsNicknameError] = useState(false);
+  const [isAuthError, setIsAuthError] = useState(false);
+
+  const handleAuthErrorChange = () => {};
+
+  const handleNicknameErrorChange = () => {
+    const isNicknameValid = /^[가-힣a-zA-Z0-9]{2,16}$/.test(userData.nickname);
+    // 닉네임 유효성 검사 로직
+    setIsNicknameError(!isNicknameValid);
+  };
+
+  // 키보드가 올라왔을 때 호출되는 함수
+  const handleFocus = () => {
+    setKeyboardVisible(true);
+  };
+
+  // 키보드가 내려갔을 때 호출되는 함수
+  const handleBlur = () => {
+    handleNicknameErrorChange();
+    setKeyboardVisible(false);
+  };
+
+  // 키보드 이벤트 리스너 추가 (예: focus 이벤트 등을 사용)
+  useEffect(() => {
+    // 키보드 이벤트 리스너를 추가하는 로직
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('blur', handleBlur);
+
+    return () => {
+      // 컴포넌트가 언마운트될 때 이벤트 리스너를 제거하는 로직
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('blur', handleBlur);
+    };
+  }, []);
 
   const navigator = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
   // 휴대폰 인증번호
   const [phoneAuthNumber, setPhoneAuthNumber] = useState('');
+  // 입력값 로직
+
+  // 입력값 검증 로직
+  const validateInput = () => {
+    switch (step) {
+      case 1:
+        // 첫 번째 단계에서는 사용자의 이름이 비어있지 않은지 확인
+        return userData.name.trim().length > 0;
+      case 2:
+        // 닉네임이 2~16자리이며 한글, 영문, 숫자만 포함되었는지 확인
+        // ++중복검사 로직
+        const isAuthNicknameValid = true;
+        const isNicknameValid = /^[가-힣a-zA-Z0-9]{2,16}$/.test(userData.nickname);
+        return isAuthNicknameValid && isNicknameValid && userData.nickname.trim().length > 0; // 중복검사 결과도 여기에 반영해야 합니다.
+      case 3:
+        // 날짜와 성별이 모두 선택되었는지 확인
+        return userData.birth !== '' && userData.gender !== '';
+      case 4:
+        // 전화번호가 12자리 숫자인지 확인
+        const phoneNumber = phone.replace(/-/g, '');
+        return phoneNumber.length === 11;
+      case 5:
+        // 올바른 인증번호가 입력되었는지 확인
+        // ++인증번호 검증
+        const isAuthNumberValid = true;
+        return isAuthNumberValid && phoneAuthNumber.trim().length > 0;
+      default:
+        return false;
+    }
+  };
+  useEffect(() => {
+    setDisabled(!validateInput());
+  }, [step, userData, phone, phoneAuthNumber]); // 관련 상태가 변경될 때마다 검증
+
   // 전화번호 형식을 조정하는 함수
   function formatPhoneNumber(value: string) {
     if (!value) return value;
@@ -94,7 +171,7 @@ const UserAddInfo = () => {
 
   // 최소, 최대 값
   const updateStep = (newStep: number) => {
-    setStep(Math.max(1, Math.min(newStep, 4)));
+    setStep(Math.max(1, Math.min(newStep, 5)));
   };
 
   const handleNextStepChange = () => {
@@ -114,18 +191,69 @@ const UserAddInfo = () => {
   return (
     <BasicLayout>
       <PreviousButton onClick={handlePreviousStepChange} step={step} />
-      {step === 1 && <Name userData={userData} setUserData={setUserData} />}
-      {step === 2 && <Nickname userData={userData} setUserData={setUserData} />}
-      {step === 3 && <Gender userData={userData} setUserData={setUserData} />}
-      {step === 4 && <PhoneNumber phone={phone} onChange={numberhandleChange} />}
-      {step === 5 && (
-        <PhoneNumberAuth phone={phone} phoneAuth={phoneAuthNumber} onChange={handlePhoneAuthChange} />
+      {step === 1 && (
+        <Name userData={userData} setUserData={setUserData} onFocus={handleFocus} onBlur={handleBlur} />
       )}
-      <Button variant='primary' onClick={handleNextStepChange}>
-        다음
-      </Button>
+      {step === 2 && (
+        <Nickname
+          isNicknameError={isNicknameError}
+          userData={userData}
+          setUserData={setUserData}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      )}
+      {step === 3 && <Gender userData={userData} setUserData={setUserData} />}
+      {step === 4 && (
+        <PhoneNumber
+          phone={phone}
+          onChange={numberhandleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      )}
+      {step === 5 && (
+        <PhoneNumberAuth
+          phone={phone}
+          phoneAuth={phoneAuthNumber}
+          onChange={handlePhoneAuthChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      )}
+      <ButtonContainer $keyboardVisible={keyboardVisible}>
+        <ButtonBox>
+          {disabled ? (
+            <Button variant='disabled' disabled={disabled}>
+              다음
+            </Button>
+          ) : (
+            <Button variant='primary' onClick={handleNextStepChange} disabled={disabled}>
+              다음
+            </Button>
+          )}
+        </ButtonBox>
+      </ButtonContainer>
     </BasicLayout>
   );
 };
 
 export default UserAddInfo;
+
+const ButtonContainer = styled.div<{ $keyboardVisible: boolean }>`
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  margin-left: -16px;
+  margin-right: -16px;
+  height: 88px;
+  background-color: ${colors.white};
+  box-shadow: ${(props) => (props.$keyboardVisible ? '0px -8px 12px 0px rgba(0, 0, 0, 0.04)' : 'none')};
+`;
+
+const ButtonBox = styled.div`
+  width: calc(100% - 32px);
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+`;

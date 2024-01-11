@@ -7,6 +7,7 @@ export type UserData = {
 };
 
 export type UserProfileData = {
+  name: string;
   nickname: string;
   birth: string;
   gender: string;
@@ -15,4 +16,7 @@ export type UserProfileData = {
 export interface UserDataProps {
   userData: UserProfileData;
   setUserData: React.Dispatch<React.SetStateAction<UserProfileData>>;
+  onFocus?: (event: React.FocusEvent) => void;
+  onBlur?: (event: React.FocusEvent) => void;
+  isNicknameError?: boolean;
 }

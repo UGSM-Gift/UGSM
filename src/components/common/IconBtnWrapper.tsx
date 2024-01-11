@@ -1,17 +1,25 @@
 import { ReactNode } from 'react';
 import { colors } from 'src/styles/colors';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { CSSProp } from 'styled-components/dist/types';
 
 interface BtnWrapperProps {
   children: ReactNode;
   type?: 'button' | 'submit' | 'reset';
-  onClick?: (value?: any) => void;
+  onClick?: () => void;
   disabled?: boolean;
+  $iconStyle?: CSSProp;
 }
 
-const IconBtnWrapper = ({ children, type = 'button', onClick, ...rest }: BtnWrapperProps) => {
+const IconBtnWrapper = ({
+  children,
+  type = 'button',
+  onClick,
+  $iconStyle,
+  ...rest
+}: BtnWrapperProps) => {
   return (
-    <Button type={type} onClick={onClick} {...rest}>
+    <Button type={type} onClick={onClick} $iconStyle={$iconStyle} {...rest}>
       {children}
     </Button>
   );
@@ -19,6 +27,12 @@ const IconBtnWrapper = ({ children, type = 'button', onClick, ...rest }: BtnWrap
 
 export default IconBtnWrapper;
 
-const Button = styled.button`
+const Button = styled.button<{ $iconStyle: CSSProp }>`
+  ${({ $iconStyle }) => css`
+    ${$iconStyle}
+  `};
+  &:hover {
+    border: none;
+  }
   background-color: ${colors.white};
 `;
