@@ -10,6 +10,8 @@ import React, {
 import { Children, cloneElement, forwardRef } from 'react';
 import { css, styled } from 'styled-components';
 import type { CSSProp } from 'styled-components';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css'; // 스타일을 위한 CSS import
 
 import Typography from './Typography';
 import { colors } from 'src/styles/colors';
@@ -125,8 +127,17 @@ Input.TextInteractiveField = forwardRef(
   }
 );
 // dateField
-Input.DateField = () => {
-  return <ContentBox></ContentBox>;
+Input.DateField = ({ selectedDate, setSelectedDate }: any) => {
+  return (
+    <DatePicker
+      dateFormat='yyyy.MM.dd' // 날짜 형태
+      shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
+      minDate={new Date('2000-01-01')} // minDate 이전 날짜 선택 불가
+      maxDate={new Date()} // maxDate 이후 날짜 선택 불가
+      selected={selectedDate}
+      onChange={(date: any) => setSelectedDate(date)}
+    />
+  );
 };
 
 const ContentBox = styled.div`
@@ -135,6 +146,7 @@ const ContentBox = styled.div`
   right: 5px;
   transform: translateY(-50%);
 `;
+
 const TimeBox = styled.div`
   margin-right: 10px;
 `;
@@ -142,6 +154,8 @@ const TimeBox = styled.div`
 const InputWithIcon = styled.div`
   position: relative;
 `;
+
+const DatePickerWrapper = styled.div``;
 
 const StyledInput = styled.input<StyledInputProps>`
   &::placeholder {
