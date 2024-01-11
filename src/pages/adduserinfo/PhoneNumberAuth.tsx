@@ -1,4 +1,3 @@
-import InputType from '../../components/userAuth/InputType';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Typography from '@components/common/Typography';
