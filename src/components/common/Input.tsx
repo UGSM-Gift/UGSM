@@ -10,9 +10,6 @@ import React, {
 import { Children, cloneElement, forwardRef } from 'react';
 import { css, styled } from 'styled-components';
 import type { CSSProp } from 'styled-components';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; // 스타일을 위한 CSS import
-
 import Typography from './Typography';
 import { colors } from 'src/styles/colors';
 import IconBtnWrapper from './IconBtnWrapper';
@@ -24,6 +21,7 @@ type InputProps = {
   errorMessage?: string;
   successMessage?: string;
   $style?: CSSProp;
+  type?: string;
 };
 
 const Input = ({
@@ -33,7 +31,7 @@ const Input = ({
   successMessage = '확인되었습니다',
   errorMessage = '다시 확인해주세요',
   $style,
-
+  type = 'text',
   ...props
 }: PropsWithChildren<InputProps> & HTMLAttributes<HTMLDivElement>) => {
   const child =
@@ -41,13 +39,23 @@ const Input = ({
   const id = useId();
   const isError: boolean = child.props.error ?? false;
   const isSuccess: boolean = child.props.success ?? false;
-  // successMessage 또는 errorMessage가 있는 경우 bottomText를 렌더링하지 않음
   const shouldRenderBottomText = !isSuccess && !isError && bottomText !== null;
+
+  const renderChild = (child: ReactElement) =>
+    React.cloneElement(child, {
+      id,
+      'data-type': type,
+      ...child.props,
+    });
 
   return (
     <Layout {...props}>
-      {label && <Typography variant='subtitle2'>{label}</Typography>}
-      {cloneElement(child, { id, ...child.props })}
+      {label && (
+        <Typography variant='subtitle2'>
+          <Label>{label}</Label>
+        </Typography>
+      )}
+      {React.Children.map(children, renderChild)}
       {isSuccess && <StyledBottomText $success={isSuccess}>{successMessage}</StyledBottomText>}
       {isError && <StyledBottomText $error={isError}>{errorMessage}</StyledBottomText>}
       {shouldRenderBottomText && <StyledBottomText>{bottomText}</StyledBottomText>}
@@ -100,6 +108,7 @@ const renderInput = (
 Input.TextField = forwardRef((props: StyledInputProps, ref: ForwardedRef<HTMLInputElement>) => {
   return renderInput(props, ref);
 });
+
 // txt + content  input
 Input.TextInteractiveField = forwardRef(
   (
@@ -126,18 +135,10 @@ Input.TextInteractiveField = forwardRef(
     );
   }
 );
+
 // dateField
-Input.DateField = ({ selectedDate, setSelectedDate }: any) => {
-  return (
-    <DatePicker
-      dateFormat='yyyy.MM.dd' // 날짜 형태
-      shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
-      minDate={new Date('2000-01-01')} // minDate 이전 날짜 선택 불가
-      maxDate={new Date()} // maxDate 이후 날짜 선택 불가
-      selected={selectedDate}
-      onChange={(date: any) => setSelectedDate(date)}
-    />
-  );
+Input.DateField = (props: StyledInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+  return <DatePickerWrapper>{renderInput(props, ref)}</DatePickerWrapper>;
 };
 
 const ContentBox = styled.div`
@@ -145,6 +146,10 @@ const ContentBox = styled.div`
   top: 50%;
   right: 5px;
   transform: translateY(-50%);
+`;
+
+const Label = styled.div`
+  margin-bottom: 10px;
 `;
 
 const TimeBox = styled.div`
@@ -176,7 +181,6 @@ const StyledInput = styled.input<StyledInputProps>`
     css`
       border: 1px solid ${colors.errorColor};
     `}
-
     // 성공 상태 스타일
     ${success &&
     css`

@@ -121,14 +121,15 @@ const Button = ({
 export default Button;
 
 const StyledButton = styled.button<Props>`
+  background-color: transparent;
   position: relative;
   cursor: pointer;
   &:disabled {
     cursor: not-allowed;
   }
-  &:hover {
+  /* &:hover {
     border: none;
-  }
+  } */
   ${({ $block, $style, size = 'medium', variant, radius = 'small' }) => css`
     ${VARIANT_TYPE[variant]}
     ${SIZE_TYPE[size]}

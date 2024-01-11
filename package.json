@@ -5,7 +5,6 @@
   "dependencies": {
     "@craco/craco": "^7.0.0-alpha.9",
     "@react-icons/all-files": "^4.1.0",
-    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
@@ -49,8 +48,6 @@
     "@types/react-datepicker": "^4.19.5",
     "eslint-plugin-storybook": "^0.6.15",
     "prop-types": "^15.8.1",
-    "storybook": "^7.6.6",
-    "storybook-addon-designs": "^6.3.1",
     "webpack": "^5.89.0"
   }
 }

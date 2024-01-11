@@ -4,12 +4,15 @@ import styled, { css } from 'styled-components';
 import { UserDataProps } from 'src/modules/@types/common';
 import Typography from '@components/common/Typography';
 import Input from '@components/common/Input';
+import Button from '@components/common/Button';
 
 const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
+  const [selectedDate, setSelectedDate] = useState();
   const [gender, setGender] = useState<string>(userData.gender || '');
   const handleBirthdayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, birth: event.target.value });
   };
+
   const handleGenderChange = (selectedGender: string) => {
     setUserData({ ...userData, gender: selectedGender });
     setGender(selectedGender);
@@ -26,20 +29,18 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
         {userData.nickname}님의 <br />
         생일과 성별을 확인해주세요
       </Typography>
-
-      <Input onChange={handleBirthdayChange} label='생일'>
-        <Input.DateField />
+      <Input label='생일'>
+        <Input.TextField type='date' onChange={handleBirthdayChange} />
       </Input>
       <label>성별</label>
       {/* <ButtonBox>
-        <Button variant={'lightPrimary'} radius='medium'>
+        <Button variant={'outline'} radius='medium'>
           남
         </Button>
-        <Button variant={'lightGhost'} radius='medium'>
+        <Button variant={'outline'} radius='medium'>
           여
         </Button>
       </ButtonBox> */}
-
       <TypeButtonBox>
         <TypeButton type='남자' setType={(type) => handleGenderChange(type)} selectedType={gender} />
         <TypeButton type='여자' setType={(type) => handleGenderChange(type)} selectedType={gender} />
@@ -51,6 +52,7 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
 export default Gender;
 
 const GenderBox = styled.div``;
+const ButtonBox = styled.div``;
 
 const TypeButtonBox = styled.div`
   display: flex;
