@@ -10,7 +10,7 @@ const HeaderElement = {
   mypage: () => <MyPageHeader />,
   setting: () => <SettingHeader />,
   userProfileEdit: () => <UserProfileEditHeader />,
-  Default: () => <div>default</div>,
+  Default: () => null,
 };
 
 // 현재 경로에 따른 헤더 컴포넌트 매핑

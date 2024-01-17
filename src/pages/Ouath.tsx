@@ -10,9 +10,7 @@ const Ouath = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     const login = searchParams.get('login');
-    console.log(login);
     const accessToken = searchParams.get('accessToken');
-    console.log(accessToken);
     const refreshToken = searchParams.get('refreshToken');
     if (!login || !accessToken || !refreshToken) return;
 
@@ -32,6 +30,7 @@ const Ouath = () => {
       const response = await axios.get(`https://www.ugsm.co.kr/api/user/me`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+      console.log(response.data.data.mobileVerified);
       const userChecked = response.data.data.mobileVerified;
 
       if (userChecked) {

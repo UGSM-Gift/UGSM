@@ -37,16 +37,16 @@ const Nickname: React.FC<UserDataProps> = ({
       <Input
         bottomText='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'
         errorMessage='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'
-        onChange={handleNicknameChange}
       >
         <Input.TextInteractiveField
           placeholder='닉네임을 입력해주세요'
           icon={<CloseIcon />}
+          onChange={handleNicknameChange}
           value={userData.nickname}
           onClick={handleClickNicknameReset}
           onFocus={onFocus}
           onBlur={onBlur}
-          error={isNicknameError}
+          $error={isNicknameError}
         />
       </Input>
     </NicknameBox>

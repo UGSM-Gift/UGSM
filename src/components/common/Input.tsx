@@ -91,7 +91,7 @@ const StyledBottomText = styled.p<{ $error?: boolean; $success?: boolean }>`
 
 type StyledInputProps = {
   success?: boolean;
-  error?: boolean;
+  $error?: boolean;
   $style?: CSSProp;
   $iconStyle?: CSSProp;
   icon?: React.ReactNode;
@@ -100,9 +100,9 @@ type StyledInputProps = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const renderInput = (
-  { success, error, icon, $style, $iconStyle, ...props }: StyledInputProps,
+  { success, $error, icon, $style, $iconStyle, ...props }: StyledInputProps,
   ref: ForwardedRef<HTMLInputElement>
-) => <StyledInput ref={ref} error={error} success={success} $style={$style} {...props} />;
+) => <StyledInput ref={ref} $error={$error} success={success} $style={$style} {...props} />;
 
 // text input
 Input.TextField = forwardRef((props: StyledInputProps, ref: ForwardedRef<HTMLInputElement>) => {
@@ -175,9 +175,9 @@ const StyledInput = styled.input<StyledInputProps>`
   border-radius: 8px;
   border: 1px solid ${colors.gray[20]};
 
-  ${({ error, success }) => css`
+  ${({ $error, success }) => css`
     // 에러 상태 스타일
-    ${error &&
+    ${$error &&
     css`
       border: 1px solid ${colors.errorColor};
     `}

@@ -25,7 +25,7 @@ const PhoneNumber: React.FC<PhoneNumberProp> = ({ phone, onChange, onFocus, onBl
       <Input>
         <Input.TextField
           placeholder='숫자만 입력해주세요'
-          error={false}
+          $error={false}
           value={phone}
           onChange={onChange}
           onFocus={onFocus}

@@ -15,6 +15,7 @@ import Nickname from './adduserinfo/Nickname';
 import Gender from './adduserinfo/Gender';
 import PhoneNumber from './adduserinfo/PhoneNumber';
 import PhoneNumberAuth from './adduserinfo/PhoneNumberAuth';
+import { phoneAuthPost, userDataPost } from 'src/api/userData';
 
 const Account = () => {
   const [userData, setUserData] = useState<UserProfileData>({
@@ -129,46 +130,17 @@ const Account = () => {
     setPhoneAuthNumber(event.target.value);
   };
 
-  // 전화번호 서버 전송
-  const phoneAuthPost = async () => {
-    try {
-      const phoneAuth = { phoneNumber: phone.replace(/-/g, '') };
-      await axios.post('https://www.ugsm.co.kr/api/verification-code', phoneAuth, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // 유저데이터 전송
-  const userDataPost = async (userData: UserProfileData) => {
-    try {
-      const response = await axios.put(`https://www.ugsm.co.kr/api/user/me`, userData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log(response);
-      navigator('/');
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   // 최소, 최대 값
   const updateStep = (newStep: number) => {
     setStep(Math.max(1, Math.min(newStep, 5)));
   };
 
   const handleNextStepChange = () => {
-    if (step === 3) {
-      phoneAuthPost();
-    } else if (step === 4) {
+    if (step === 4) {
+      phoneAuthPost(phone, accessToken);
+    } else if (step === 5) {
       phoneAuthPut(phoneAuthNumber, phone, accessToken);
-      userDataPost(userData);
+      userDataPost(userData, accessToken, navigator);
     }
     updateStep(step + 1);
   };

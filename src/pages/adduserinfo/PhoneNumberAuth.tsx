@@ -51,7 +51,7 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange
       <Input>
         <Input.TextInteractiveField
           placeholder={`${phone}로 보내드렸어요`}
-          error={false}
+          $error={false}
           onChange={onChange}
           onFocus={onFocus}
           onBlur={onBlur}

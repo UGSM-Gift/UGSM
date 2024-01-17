@@ -15,7 +15,6 @@ const MyPage = () => {
     birthdata: '',
   });
 
-  // userData 함수를 async 함수로 호출
   const fetchUserData = async () => {
     try {
       const response = await userData();
