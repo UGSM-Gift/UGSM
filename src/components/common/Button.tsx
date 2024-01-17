@@ -83,7 +83,7 @@ const VARIANT_TYPE = {
 } as const;
 
 type Props = {
-  variant: keyof typeof VARIANT_TYPE;
+  $variant: keyof typeof VARIANT_TYPE;
   size?: ButtonSizeType;
   radius?: ButtonRadiusType;
   $block?: boolean;
@@ -91,7 +91,7 @@ type Props = {
 };
 
 const Button = ({
-  variant,
+  $variant,
   children,
   onClick,
   disabled,
@@ -105,7 +105,7 @@ const Button = ({
   return (
     <StyledButton
       onClick={onClick}
-      variant={variant}
+      $variant={$variant}
       size={size}
       radius={radius}
       disabled={disabled}
@@ -130,8 +130,8 @@ const StyledButton = styled.button<Props>`
   /* &:hover {
     border: none;
   } */
-  ${({ $block, $style, size = 'medium', variant, radius = 'small' }) => css`
-    ${VARIANT_TYPE[variant]}
+  ${({ $block, $style, size = 'medium', $variant, radius = 'small' }) => css`
+    ${VARIANT_TYPE[$variant]}
     ${SIZE_TYPE[size]}
     ${RADIUS_TYPE[radius]}
     width: ${$block ? '100%' : 'fit-content'};

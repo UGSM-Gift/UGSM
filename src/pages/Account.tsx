@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import PreviousButton from '../components/userAuth/PreviousButton';
-import Nickname from './adduserinfo/Nickname';
-import Gender from './adduserinfo/Gender';
-import PhoneNumber from './adduserinfo/PhoneNumber';
-import PhoneNumberAuth from './adduserinfo/PhoneNumberAuth';
+
 import axios from 'axios';
 import { UserProfileData } from 'src/modules/@types/common';
 import { useNavigate } from 'react-router-dom';
 import BasicLayout from './layout/BasicLayout';
 import Button from '@components/common/Button';
 import { phoneAuthPut } from 'src/api/account';
-import Name from './adduserinfo/Name';
+
 import styled from 'styled-components';
 import { colors } from 'src/styles/colors';
+import Name from './adduserinfo/Name';
+import Nickname from './adduserinfo/Nickname';
+import Gender from './adduserinfo/Gender';
+import PhoneNumber from './adduserinfo/PhoneNumber';
+import PhoneNumberAuth from './adduserinfo/PhoneNumberAuth';
 
-const UserAddInfo = () => {
+const Account = () => {
   const [userData, setUserData] = useState<UserProfileData>({
     name: '',
     nickname: '',
@@ -211,11 +213,11 @@ const UserAddInfo = () => {
       <ButtonContainer $keyboardVisible={keyboardVisible}>
         <ButtonBox>
           {disabled ? (
-            <Button variant='disabled' disabled={disabled}>
+            <Button $variant='disabled' disabled={disabled}>
               다음
             </Button>
           ) : (
-            <Button variant='primary' onClick={handleNextStepChange} disabled={disabled}>
+            <Button $variant='primary' onClick={handleNextStepChange} disabled={disabled}>
               다음
             </Button>
           )}
@@ -225,7 +227,7 @@ const UserAddInfo = () => {
   );
 };
 
-export default UserAddInfo;
+export default Account;
 
 const ButtonContainer = styled.div<{ $keyboardVisible: boolean }>`
   width: 100%;

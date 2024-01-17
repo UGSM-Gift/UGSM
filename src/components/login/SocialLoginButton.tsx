@@ -9,11 +9,11 @@ const SocialButton = styled(Button)<{ style: React.CSSProperties }>`
   gap: 20px;
 `;
 
-const SocialLoginButton: React.FC<SocialLoginType> = ({ icon, socialLogin, color, style, variant }) => {
+const SocialLoginButton: React.FC<SocialLoginType> = ({ icon, socialLogin, color, style, $variant }) => {
   return (
-    <SocialButton variant={variant} style={style}>
+    <SocialButton $variant={$variant} style={style}>
       {icon}
-      <Typography variant={'button1'} color={color}>
+      <Typography $variant={'button1'} color={color}>
         {socialLogin}
       </Typography>
     </SocialButton>

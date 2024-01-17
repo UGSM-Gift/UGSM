@@ -4,12 +4,12 @@ export type UserData = {
   name: string;
   nickname: string;
   mobile: string;
-  userProfileUrl: string | null;
+  profileImgFile: string | null;
 };
 
 export type UserProfile = {
   nickname: string;
-  userProfileUrl: string | null;
+  profileImgFile: string | null;
   birthdata: string;
 };
 

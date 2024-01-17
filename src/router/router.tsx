@@ -5,7 +5,7 @@ import Login from 'src/pages/Login';
 
 import Ouath from 'src/pages/Ouath';
 import Setting from 'src/pages/myPage/Setting';
-import UserAddInfo from 'src/pages/UserAddInfo';
+import UserAddInfo from 'src/pages/Account';
 import MyPage from 'src/pages/myPage/MyPage';
 import UserProfileEdit from 'src/pages/myPage/UserProfileEdit';
 import NotificationSetting from 'src/pages/myPage/NotificationSetting';
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: ROUTES_PATH.addUserInfo,
+    path: ROUTES_PATH.account,
     element: <UserAddInfo />,
   },
   {

@@ -14,7 +14,7 @@ const PhoneNumber: React.FC<PhoneNumberProp> = ({ phone, onChange, onFocus, onBl
   return (
     <NumberBox>
       <Typography
-        variant={'title1'}
+        $variant={'title1'}
         $style={css`
           margin-bottom: 100px;
         `}

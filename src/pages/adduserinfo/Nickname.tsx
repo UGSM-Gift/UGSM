@@ -25,7 +25,7 @@ const Nickname: React.FC<UserDataProps> = ({
   return (
     <NicknameBox>
       <Typography
-        variant={'title1'}
+        $variant={'title1'}
         $style={css`
           margin-bottom: 100px;
         `}

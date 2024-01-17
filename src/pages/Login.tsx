@@ -15,14 +15,15 @@ import IconWrapper from '@components/common/IconWrapper';
 
 const socialLogins: SocialLogin[] = [
   {
-    link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/kakao',
+    link: `https://www.ugsm.co.kr/api/login/oauth2/authorization/kakao`,
     platform: '카카오로 시작',
+
     icon: (
       <IconWrapper>
         <Kakao />
       </IconWrapper>
     ),
-    variant: 'primary',
+    $variant: 'primary',
     color: colors.black,
 
     style: { background: '#FEE500', color: colors.black },
@@ -35,11 +36,10 @@ const socialLogins: SocialLogin[] = [
         <Naver />
       </IconWrapper>
     ),
-    variant: 'primary',
+    $variant: 'primary',
     color: colors.white,
     style: { background: '#03C75A', color: colors.white },
   },
-
   {
     link: 'https://www.ugsm.co.kr/api/login/oauth2/authorization/google',
     platform: '구글로 시작',
@@ -48,7 +48,7 @@ const socialLogins: SocialLogin[] = [
         <Google />
       </IconWrapper>
     ),
-    variant: 'ghost',
+    $variant: 'ghost',
     color: colors.gray[60],
     style: { background: colors.white, color: colors.gray[20], border: `1px solid ${colors.gray[20]}` },
   },
@@ -59,7 +59,7 @@ const Login = () => {
     <BasicLayout>
       <SloganBox>
         <Typography
-          variant='largetitle'
+          $variant='largetitle'
           color={colors.gray[90]}
           $style={css`
             text-align: center;
@@ -70,7 +70,7 @@ const Login = () => {
           <br /> 받고 싶은 선물이 뭘까?
         </Typography>
         <Typography
-          variant='body1'
+          $variant='body1'
           color={colors.gray[70]}
           $style={css`
             text-align: center;
@@ -90,7 +90,7 @@ const Login = () => {
             <SocialLoginButton
               key={index}
               socialLogin={socialLogin.platform}
-              variant={socialLogin.variant}
+              $variant={socialLogin.$variant}
               icon={socialLogin.icon}
               color={socialLogin.color}
               style={socialLogin.style}
@@ -100,7 +100,7 @@ const Login = () => {
       </SocialButtonWrapper>
       <AssentBox>
         <Typography
-          variant={'caption2'}
+          $variant={'caption2'}
           $style={css`
             color: ${colors.gray[50]};
           `}

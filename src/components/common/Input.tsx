@@ -51,7 +51,7 @@ const Input = ({
   return (
     <Layout {...props}>
       {label && (
-        <Typography variant='subtitle2'>
+        <Typography $variant='subtitle2'>
           <Label>{label}</Label>
         </Typography>
       )}
@@ -121,7 +121,7 @@ Input.TextInteractiveField = forwardRef(
         <ContentBox>
           {timer && timer > 0 ? (
             <TimeBox>
-              <Typography variant='caption1'>{`0:${timer.toString().padStart(2, '0')}`}</Typography>{' '}
+              <Typography $variant='caption1'>{`0:${timer.toString().padStart(2, '0')}`}</Typography>{' '}
             </TimeBox>
           ) : null}
 

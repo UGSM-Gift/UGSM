@@ -7,7 +7,6 @@ import { common } from 'src/styles/common';
 import { UserData } from 'src/types/userData';
 import styled from 'styled-components';
 import BasicLayout from '../layout/BasicLayout';
-import { colors } from 'src/styles/colors';
 import axios from 'axios';
 import IconBtnWrapper from '@components/common/IconBtnWrapper';
 
@@ -20,7 +19,7 @@ const UserProfileEdit = () => {
     gender: '',
     nickname: '',
     mobile: '',
-    userProfileUrl: null,
+    profileImgFile: '',
   });
   // function PhoneNumber(phoneNumber: string) {
   //   return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7)}`;
@@ -29,14 +28,17 @@ const UserProfileEdit = () => {
   const fetchUserData = async () => {
     try {
       const response = await userData();
+
+      const user = response.data;
       const userSettingData = {
-        birthdate: response.data.birthdate,
-        gender: response.data.gender,
-        name: response.data.name,
-        nickname: response.data.nickname,
-        mobile: response.data.mobile,
-        userProfileUrl: response.data.profileImageUrl,
+        birthdate: user.birthdate,
+        gender: user.gender,
+        name: user.name,
+        nickname: user.nickname,
+        mobile: user.mobile,
+        profileImgFile: user.profileImageUrl,
       };
+      console.log('데이터가져오기', userSettingData);
       setUserSettingData(userSettingData);
     } catch (error) {
       console.error('데이터 가져오기에 실패했습니다.', error);
@@ -47,30 +49,31 @@ const UserProfileEdit = () => {
     fetchUserData();
   }, []);
 
+  // 이름
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserSettingData((prevUserData) => ({ ...prevUserData, name: event.target.value }));
   };
+  // 닉네임
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserSettingData((prevUserData) => ({ ...prevUserData, nickname: event.target.value }));
   };
 
-  // 휴대폰 번호 입력
+  // 휴대폰 번호
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserSettingData((prevUserData) => ({ ...prevUserData, mobile: event.target.value }));
   };
-  const userMockData = {
-    birthdate: '1999-12-24',
-    gender: 'MALE',
-    name: 'newName',
-    nickname: 'newNickname',
-    mobile: '01055556666',
-    userProfileUrl: null,
+  // 생일 수정
+  const handleBirthdayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserSettingData((prevUserData) => ({ ...prevUserData, birthdate: event.target.value }));
   };
+
   // 유저데이터 전송
-  const userDataPost = async (userData: UserData) => {
+  const userDataPost = async (userSettingData: UserData) => {
+    console.log(userSettingData, 'userSettingData');
     try {
-      const response = await axios.put(`https://www.ugsm.co.kr/api/user/me`, userData, {
+      const response = await axios.put(`https://www.ugsm.co.kr/api/user/me`, userSettingData, {
         headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: `Bearer ${accessToken}`,
         },
       });
@@ -89,17 +92,28 @@ const UserProfileEdit = () => {
       <ContentContainer>
         <ProfileEditBox>
           <Profile userData={userSettingData} />
-          <IconBtnWrapper onClick={() => handleEdit(userMockData)}>
+          <IconBtnWrapper>
             <EditIcon />
           </IconBtnWrapper>
         </ProfileEditBox>
+        <div onClick={() => handleEdit(userSettingData)}>수정하기</div>
         <Input label='이름'>
-          <Input.TextField value={userSettingData.nickname} onChange={handleNameChange} />
+          <Input.TextField value={userSettingData.name} onChange={handleNameChange} />
         </Input>
         <Input label='닉네임'>
           <Input.TextField value={userSettingData.nickname} onChange={handleNicknameChange} />
         </Input>
-        생일성별
+        <Input label='생일'>
+          <Input.TextField
+            type='date'
+            value={userSettingData.birthdate}
+            onChange={handleBirthdayChange}
+          />
+        </Input>
+        {/* <TypeButtonBox>
+          <TypeButton type='남자' setType={(type) => handleGenderChange(type)} selectedType={gender} />
+          <TypeButton type='여자' setType={(type) => handleGenderChange(type)} selectedType={gender} />
+        </TypeButtonBox> */}
         <Input label='전화번호'>
           <Input.TextField value={userSettingData.mobile} onChange={handlePhoneChange} />
         </Input>
@@ -116,20 +130,10 @@ const ContentContainer = styled.div`
 const ProfileEditBox = styled.div`
   position: relative;
 `;
-const Icon = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  ${common.flexCenterColumn}
-  width: 24px;
-  height: 24px;
-  border-radius: 20px;
-  border: 3px solid ${colors.white};
-  background-color: ${colors.sub[900]};
-  box-sizing: content-box;
-  cursor: pointer;
-`;
+// const TypeButtonBox = styled.div`
+//   display: flex;
+//   gap: 10px;
+//   margin-top: 10px;
+//   margin-bottom: 30px;
+// `;

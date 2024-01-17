@@ -21,7 +21,7 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
   return (
     <GenderBox>
       <Typography
-        variant={'title1'}
+        $variant={'title1'}
         $style={css`
           margin-bottom: 100px;
         `}
@@ -34,10 +34,10 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
       </Input>
       <label>성별</label>
       {/* <ButtonBox>
-        <Button variant={'outline'} radius='medium'>
+        <Button $variant={'outline'} radius='medium'>
           남
         </Button>
-        <Button variant={'outline'} radius='medium'>
+        <Button $variant={'outline'} radius='medium'>
           여
         </Button>
       </ButtonBox> */}

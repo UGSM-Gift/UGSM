@@ -39,7 +39,7 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange
   return (
     <NumberBox>
       <Typography
-        variant={'title1'}
+        $variant={'title1'}
         $style={css`
           margin-bottom: 100px;
         `}
@@ -60,11 +60,11 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange
       </Input>
 
       <Response>
-        <Typography variant={'button2'} color={colors.gray[60]}>
+        <Typography $variant={'button2'} color={colors.gray[60]}>
           인증 문자가 오지않나요?
         </Typography>
         <Typography
-          variant={'button2'}
+          $variant={'button2'}
           color={colors.gray[40]}
           onClick={() => {
             phoneAuthPut(phoneAuth, phone, accessToken, setTimer);

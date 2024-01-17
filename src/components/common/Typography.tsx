@@ -4,7 +4,7 @@ import type { CSSProp } from 'styled-components';
 import { colors } from 'src/styles/colors';
 
 type Props = {
-  variant:
+  $variant:
     | 'largetitle'
     | 'title1'
     | 'title2'
@@ -98,7 +98,7 @@ const FONT_STYLE = {
   },
 } as const;
 const Typography = ({
-  variant,
+  $variant,
   fontSize,
   fontWeight,
   color,
@@ -108,8 +108,8 @@ const Typography = ({
 }: PropsWithChildren<Props>) => {
   return (
     <StyledTypography
-      as={TAG_MAPPING[variant]}
-      variant={variant}
+      as={TAG_MAPPING[$variant]}
+      $variant={$variant}
       fontSize={fontSize}
       fontWeight={fontWeight}
       color={color}
@@ -124,11 +124,11 @@ const Typography = ({
 const StyledTypography = styled.div<Props>`
   white-space: pre-line;
 
-  ${({ variant, fontSize, fontWeight, color, $style }) => css`
-    font-size: ${fontSize || FONT_STYLE.fontSize[variant]};
-    font-weight: ${fontWeight || FONT_STYLE.fontWeight[variant]};
-    line-height: ${FONT_STYLE.lineHeight[variant]};
-    letter-spacing: ${FONT_STYLE.letterSpacing[variant]};
+  ${({ $variant, fontSize, fontWeight, color, $style }) => css`
+    font-size: ${fontSize || FONT_STYLE.fontSize[$variant]};
+    font-weight: ${fontWeight || FONT_STYLE.fontWeight[$variant]};
+    line-height: ${FONT_STYLE.lineHeight[$variant]};
+    letter-spacing: ${FONT_STYLE.letterSpacing[$variant]};
     color: ${color || colors.black};
 
     ${$style};

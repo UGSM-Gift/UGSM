@@ -11,7 +11,7 @@ import BasicLayout from '../layout/BasicLayout';
 const MyPage = () => {
   const [userProfileData, setUserProfileData] = useState<UserProfile>({
     nickname: '',
-    userProfileUrl: '',
+    profileImgFile: '',
     birthdata: '',
   });
 
@@ -21,7 +21,7 @@ const MyPage = () => {
       const response = await userData();
       const userProfile = {
         nickname: response.data.nickname,
-        userProfileUrl: response.data.profileImageUrl,
+        profileImgFile: response.data.profileImageUrl,
         birthdata: response.data.birthdate,
       };
       setUserProfileData(userProfile);
@@ -37,7 +37,7 @@ const MyPage = () => {
     <BasicLayout>
       <ProfileBox>
         <Profile userData={userProfileData} />
-        <Typography variant='title3'>{userProfileData.nickname}</Typography>
+        <Typography $variant='title3'>{userProfileData.nickname}</Typography>
       </ProfileBox>
       <Anniversary userData={userProfileData} />
     </BasicLayout>

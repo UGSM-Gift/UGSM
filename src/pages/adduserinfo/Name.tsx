@@ -18,7 +18,7 @@ const Name: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur 
   return (
     <NameBox>
       <Typography
-        variant={'title1'}
+        $variant={'title1'}
         $style={css`
           margin-bottom: 100px;
         `}
