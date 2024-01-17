@@ -23,14 +23,14 @@ const Setting = () => {
     <BasicLayout>
       <List>
         {settings.map((setting, index) => (
-          <>
-            <ListItem key={index}>
+          <div key={index}>
+            <ListItem>
               <Typography $variant='button2' onClick={() => handleMenuClick(setting.path)}>
                 {setting.name}
               </Typography>
             </ListItem>
             {index === 1 && <Divider />}
-          </>
+          </div>
         ))}
       </List>
     </BasicLayout>

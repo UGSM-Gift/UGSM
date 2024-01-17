@@ -40,7 +40,7 @@ export const userDataPost = async (
   navigator: NavigateFunction
 ) => {
   try {
-    const response = await axios.put(`https://www.ugsm.co.kr/api/user/me`, userData, {
+    await axios.put(`https://www.ugsm.co.kr/api/user/me`, userData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

@@ -32,6 +32,7 @@ const MyPage = () => {
   useEffect(() => {
     fetchUserData();
   }, []);
+
   return (
     <BasicLayout>
       <ProfileBox>
