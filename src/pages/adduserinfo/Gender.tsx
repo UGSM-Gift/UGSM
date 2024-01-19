@@ -4,7 +4,8 @@ import styled, { css } from 'styled-components';
 import { UserDataProps } from 'src/modules/@types/common';
 import Typography from '@components/common/Typography';
 import Input from '@components/common/Input';
-import Button from '@components/common/Button';
+import Button from '@components/common/button/Button';
+import InteractiveButton from '@components/common/button/InteractiveButton';
 
 const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
   const [selectedDate, setSelectedDate] = useState();
@@ -32,9 +33,10 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
       <Input label='생일'>
         <Input.TextField type='date' onChange={handleBirthdayChange} />
       </Input>
-      <label>성별</label>
+
+      <InteractiveButton label='성별' lContent={'남자'} rContent={'여자'} />
       {/* <ButtonBox>
-        <Button $variant={'outline'} radius='medium'>
+        <Button $variant={' outline'} radius='medium'>
           남
         </Button>
         <Button $variant={'outline'} radius='medium'>

@@ -99,7 +99,6 @@ const Button = ({
   radius = 'small',
   $block = true,
   $style,
-
   ...props
 }: PropsWithChildren<Props> & ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (

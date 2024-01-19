@@ -1,13 +1,13 @@
-import Button from '@components/common/Button';
+import Button from '@components/common/button/Button';
 import Typography from '@components/common/Typography';
 import React from 'react';
-import { userData } from 'src/api/userData';
 import { RADIUS } from 'src/constants/style';
 import { colors } from 'src/styles/colors';
 import styled from 'styled-components';
 import BasicLayout from '../layout/BasicLayout';
 import { ReactComponent as DownIcon } from '@assets/icons/downIcon.svg';
 import { common } from 'src/styles/common';
+import Input from '@components/common/Input';
 
 const AccountDelete = (userData: any) => {
   return (
@@ -26,6 +26,9 @@ const AccountDelete = (userData: any) => {
         </Typography>
         <DownIcon />
       </DeleteSelect>
+      <Input>
+        <Input.TextField placeholder='탈퇴 사유를 선택해주세요' />
+      </Input>
       <ButtonContainer>
         <Button $variant={'primary'} radius='small'>
           탈퇴하기
@@ -42,6 +45,7 @@ const AccountDelete = (userData: any) => {
 export default AccountDelete;
 
 const Title = styled.div``;
+
 const DeleteSelect = styled.div`
   ${common.flexCenterRow}
   justify-content: space-between;

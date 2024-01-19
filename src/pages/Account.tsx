@@ -5,7 +5,7 @@ import axios from 'axios';
 import { UserProfileData } from 'src/modules/@types/common';
 import { useNavigate } from 'react-router-dom';
 import BasicLayout from './layout/BasicLayout';
-import Button from '@components/common/Button';
+import Button from '@components/common/button/Button';
 import { phoneAuthPut } from 'src/api/account';
 
 import styled from 'styled-components';

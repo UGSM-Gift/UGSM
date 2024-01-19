@@ -1,13 +1,5 @@
-import React, {
-  ForwardedRef,
-  HTMLAttributes,
-  InputHTMLAttributes,
-  PropsWithChildren,
-  ReactElement,
-  ReactNode,
-  useId,
-} from 'react';
-import { Children, cloneElement, forwardRef } from 'react';
+import React, { ForwardedRef, InputHTMLAttributes, ReactElement, ReactNode, useId } from 'react';
+import { Children, forwardRef } from 'react';
 import { css, styled } from 'styled-components';
 import type { CSSProp } from 'styled-components';
 import Typography from './Typography';
@@ -20,7 +12,6 @@ type InputProps = {
   bottomText?: string;
   errorMessage?: string;
   successMessage?: string;
-  $style?: CSSProp;
   type?: string;
 };
 
@@ -30,16 +21,17 @@ const Input = ({
   bottomText,
   successMessage = '확인되었습니다',
   errorMessage = '다시 확인해주세요',
-  $style,
   type = 'text',
+
   ...props
-}: PropsWithChildren<InputProps> & HTMLAttributes<HTMLDivElement>) => {
+}: InputProps) => {
   const child =
     Children.only<ReactElement<{ error?: boolean; success?: boolean; id?: string }>>(children);
   const id = useId();
-  const isError: boolean = child.props.error ?? false;
-  const isSuccess: boolean = child.props.success ?? false;
-  const shouldRenderBottomText = !isSuccess && !isError && bottomText !== null;
+  const getStatus = (prop: boolean | undefined) => prop ?? false;
+  const isError = getStatus(child.props.error);
+  const isSuccess = getStatus(child.props.success);
+  const shouldRenderBottomText = !(isSuccess || isError) && bottomText !== null;
 
   const renderChild = (child: ReactElement) =>
     React.cloneElement(child, {
@@ -65,32 +57,8 @@ const Input = ({
 
 export default Input;
 
-const Layout = styled.div`
-  width: 100%;
-`;
-
-const StyledBottomText = styled.p<{ $error?: boolean; $success?: boolean }>`
-  margin-top: 10px;
-  font-size: 13px;
-  font-weight: 400;
-  color: ${colors.gray[40]};
-  ${({ $error, $success }) => css`
-    // 에러 상태 스타일
-    ${$error &&
-    css`
-      color: ${colors.errorColor};
-    `}
-
-    // 성공 상태 스타일
-    ${$success &&
-    css`
-      color: ${colors.successColor};
-    `}
-  `};
-`;
-
 type StyledInputProps = {
-  success?: boolean;
+  $success?: boolean;
   $error?: boolean;
   $style?: CSSProp;
   $iconStyle?: CSSProp;
@@ -100,33 +68,24 @@ type StyledInputProps = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const renderInput = (
-  { success, $error, icon, $style, $iconStyle, ...props }: StyledInputProps,
+  { $success, $error, $style, ...props }: StyledInputProps,
   ref: ForwardedRef<HTMLInputElement>
-) => <StyledInput ref={ref} $error={$error} success={success} $style={$style} {...props} />;
+) => <StyledInput ref={ref} $error={$error} $success={$success} $style={$style} {...props} />;
 
-// text input
-Input.TextField = forwardRef((props: StyledInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+// text
+Input.TextField = forwardRef<HTMLInputElement, StyledInputProps>((props, ref) => {
   return renderInput(props, ref);
 });
 
-// txt + content  input
-Input.TextInteractiveField = forwardRef(
-  (
-    { $iconStyle, icon, onClick, timer, ...props }: StyledInputProps,
-    ref: ForwardedRef<HTMLInputElement>
-  ) => {
+// text + icon
+Input.IconTextField = forwardRef<HTMLInputElement, StyledInputProps>(
+  ({ onClick, icon, $iconStyle, ...props }, ref) => {
     return (
       <InputWithIcon>
         {renderInput(props, ref)}
         <ContentBox>
-          {timer && timer > 0 ? (
-            <TimeBox>
-              <Typography $variant='caption1'>{`0:${timer.toString().padStart(2, '0')}`}</Typography>{' '}
-            </TimeBox>
-          ) : null}
-
           {icon && (
-            <IconBtnWrapper $iconStyle={$iconStyle} onClick={onClick}>
+            <IconBtnWrapper onClick={onClick} $iconStyle={$iconStyle}>
               {icon}
             </IconBtnWrapper>
           )}
@@ -136,10 +95,36 @@ Input.TextInteractiveField = forwardRef(
   }
 );
 
-// dateField
-Input.DateField = (props: StyledInputProps, ref: ForwardedRef<HTMLInputElement>) => {
-  return <DatePickerWrapper>{renderInput(props, ref)}</DatePickerWrapper>;
-};
+// text + timer
+Input.TimerTextField = forwardRef<HTMLInputElement, StyledInputProps>(({ timer, ...props }, ref) => {
+  return (
+    <InputWithIcon>
+      {renderInput(props, ref)}
+      <ContentBox>
+        {timer && timer > 0 ? (
+          <TimeBox>
+            <Typography $variant='caption1'>{`0:${timer.toString().padStart(2, '0')}`}</Typography>{' '}
+          </TimeBox>
+        ) : null}
+      </ContentBox>
+    </InputWithIcon>
+  );
+});
+
+const Layout = styled.div`
+  width: 100%;
+`;
+const BottomTextStyle = ({ $error, $success }: { $error?: boolean; $success?: boolean }) => css`
+  color: ${$error ? colors.errorColor : $success ? colors.successColor : colors.gray[20]};
+`;
+
+const StyledBottomText = styled.p<{ $error?: boolean; $success?: boolean }>`
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 400;
+  color: ${colors.gray[40]};
+  ${BottomTextStyle}
+`;
 
 const ContentBox = styled.div`
   position: absolute;
@@ -160,9 +145,11 @@ const InputWithIcon = styled.div`
   position: relative;
 `;
 
-const DatePickerWrapper = styled.div``;
+const applyStatusStyle = ({ $error, $success }: { $error?: boolean; $success?: boolean }) => css`
+  border: 1px solid ${$error ? colors.errorColor : $success ? colors.successColor : colors.gray[20]};
+`;
 
-const StyledInput = styled.input<StyledInputProps>`
+const StyledInput = styled.input<Omit<StyledInputProps, 'icon' | 'timer' | 'onClick'>>`
   &::placeholder {
     color: ${colors.gray[40]};
   }
@@ -175,23 +162,9 @@ const StyledInput = styled.input<StyledInputProps>`
   border-radius: 8px;
   border: 1px solid ${colors.gray[20]};
 
-  ${({ $error, success }) => css`
-    // 에러 상태 스타일
-    ${$error &&
-    css`
-      border: 1px solid ${colors.errorColor};
-    `}
-    // 성공 상태 스타일
-    ${success &&
-    css`
-      border: 1px solid ${colors.successColor};
-    `}
-  `};
+  ${applyStatusStyle}
 
   ${({ $style }) => css`
     ${$style}
-  `};
-  ${({ $iconStyle }) => css`
-    ${$iconStyle}
   `};
 `;

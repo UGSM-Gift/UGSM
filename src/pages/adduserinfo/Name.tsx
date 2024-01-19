@@ -11,6 +11,7 @@ const Name: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserData((prevUserData) => ({ ...prevUserData, name: event.target.value }));
   };
+
   const handleNameReset = () => {
     setUserData((prevUserData) => ({ ...prevUserData, name: '' }));
   };
@@ -26,9 +27,10 @@ const Name: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur 
         반가워요! <br />
         이름이 어떻게 되시나요?
       </Typography>
-      <Input onClick={handleNameReset}>
-        <Input.TextInteractiveField
+      <Input>
+        <Input.IconTextField
           onChange={handleNameChange}
+          onClick={handleNameReset}
           placeholder='이름을 입력해주세요'
           icon={<CloseIcon />}
           value={userData.name}

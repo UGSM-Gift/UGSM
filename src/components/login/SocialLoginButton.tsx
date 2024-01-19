@@ -1,4 +1,4 @@
-import Button from '@components/common/Button';
+import Button from '@components/common/button/Button';
 import Typography from '@components/common/Typography';
 import { common } from 'src/styles/common';
 import { SocialLoginType } from 'src/types/socialLogin';

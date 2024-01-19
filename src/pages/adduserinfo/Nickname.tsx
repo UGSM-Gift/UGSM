@@ -38,7 +38,7 @@ const Nickname: React.FC<UserDataProps> = ({
         bottomText='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'
         errorMessage='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'
       >
-        <Input.TextInteractiveField
+        <Input.IconTextField
           placeholder='닉네임을 입력해주세요'
           icon={<CloseIcon />}
           onChange={handleNicknameChange}

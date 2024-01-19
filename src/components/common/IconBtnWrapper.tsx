@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { colors } from 'src/styles/colors';
 import styled, { css } from 'styled-components';
 import { CSSProp } from 'styled-components/dist/types';
 

@@ -17,7 +17,6 @@ const socialLogins: SocialLogin[] = [
   {
     link: `https://www.ugsm.co.kr/api/login/oauth2/authorization/kakao`,
     platform: '카카오로 시작',
-
     icon: (
       <IconWrapper>
         <Kakao />
@@ -25,7 +24,6 @@ const socialLogins: SocialLogin[] = [
     ),
     $variant: 'primary',
     color: colors.black,
-
     style: { background: '#FEE500', color: colors.black },
   },
   {
@@ -116,6 +114,7 @@ const Login = () => {
 };
 
 export default Login;
+
 const SloganBox = styled.div`
   margin-top: 132px;
   ${common.flexCenterColumn}

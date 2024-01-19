@@ -49,7 +49,7 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({ phone, phoneAuth, onChange
         인증번호를 입력해주세요
       </Typography>
       <Input>
-        <Input.TextInteractiveField
+        <Input.TimerTextField
           placeholder={`${phone}로 보내드렸어요`}
           $error={false}
           onChange={onChange}
