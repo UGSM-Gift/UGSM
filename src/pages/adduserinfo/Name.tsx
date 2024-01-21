@@ -5,8 +5,6 @@ import Typography from '@components/common/Typography';
 import Input from '@components/common/Input';
 import { ReactComponent as CloseIcon } from '@assets/icons/closeIcon.svg';
 
-const NameBox = styled.div``;
-
 const Name: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur }) => {
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserData((prevUserData) => ({ ...prevUserData, name: event.target.value }));
@@ -43,3 +41,5 @@ const Name: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur 
 };
 
 export default Name;
+
+const NameBox = styled.div``;

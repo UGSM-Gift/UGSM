@@ -1,7 +1,8 @@
 'use client';
-import axios from 'axios';
+
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import instance from 'src/api/axios';
 
 const Ouath = () => {
   const navigate = useNavigate();
@@ -22,14 +23,8 @@ const Ouath = () => {
 
   //   인가 코드 전송
   async function getUser() {
-    const accessToken = window.localStorage.getItem('accessToken');
-
-    if (!accessToken) return alert('토큰 없음');
-
     try {
-      const response = await axios.get(`https://www.ugsm.co.kr/api/user/me`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+      const response = await instance.get(`https://www.ugsm.co.kr/api/user/me`);
       console.log(response.data.data.mobileVerified);
       const userChecked = response.data.data.mobileVerified;
 

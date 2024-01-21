@@ -7,12 +7,10 @@ import { common } from 'src/styles/common';
 import { UserData } from 'src/types/userData';
 import styled from 'styled-components';
 import BasicLayout from '../layout/BasicLayout';
-import axios from 'axios';
 import IconBtnWrapper from '@components/common/IconBtnWrapper';
+import instance from 'src/api/axios';
 
 const UserProfileEdit = () => {
-  const accessToken = window.localStorage.getItem('accessToken');
-
   const [userSettingData, setUserSettingData] = useState<UserData>({
     birthdate: '',
     name: '',
@@ -71,10 +69,9 @@ const UserProfileEdit = () => {
   const userDataPost = async (userSettingData: UserData) => {
     console.log(userSettingData, 'userSettingData');
     try {
-      const response = await axios.put(`https://www.ugsm.co.kr/api/user/me`, userSettingData, {
+      const response = await instance.put(`https://www.ugsm.co.kr/api/user/me`, userSettingData, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: `Bearer ${accessToken}`,
         },
       });
       console.log(response);
