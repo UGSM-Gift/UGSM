@@ -68,7 +68,7 @@ type StyledInputProps = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const renderInput = (
-  { $success, $error, $style, ...props }: StyledInputProps,
+  { $success = false, $error = false, $style, ...props }: StyledInputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) => <StyledInput ref={ref} $error={$error} $success={$success} $style={$style} {...props} />;
 
@@ -114,15 +114,15 @@ Input.TimerTextField = forwardRef<HTMLInputElement, StyledInputProps>(({ timer, 
 const Layout = styled.div`
   width: 100%;
 `;
-const BottomTextStyle = ({ $error, $success }: { $error?: boolean; $success?: boolean }) => css`
-  color: ${$error ? colors.errorColor : $success ? colors.successColor : colors.gray[20]};
+
+const BottomTextStyle = ({ $error, $success }: { $error?: boolean; $success?: boolean }) => `
+  color: ${$error ? colors.errorColor : $success ? colors.successColor : colors.gray[40]};
 `;
 
 const StyledBottomText = styled.p<{ $error?: boolean; $success?: boolean }>`
   margin-top: 10px;
   font-size: 13px;
   font-weight: 400;
-  color: ${colors.gray[40]};
   ${BottomTextStyle}
 `;
 

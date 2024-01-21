@@ -9,7 +9,6 @@ import Nickname from './adduserinfo/Nickname';
 import Gender from './adduserinfo/Gender';
 import PhoneNumber from './adduserinfo/PhoneNumber';
 import PhoneNumberAuth from './adduserinfo/PhoneNumberAuth';
-
 import useAccountForm from 'src/hooks/account/useAccountForm';
 
 const Account = () => {
@@ -25,13 +24,6 @@ const Account = () => {
   } = useAccountForm();
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const [isNicknameError, setIsNicknameError] = useState(false);
-
-  const handleNicknameErrorChange = () => {
-    const isNicknameValid = /^[가-힣a-zA-Z0-9]{2,16}$/.test(userData.nickname);
-    // 닉네임 유효성 검사 로직
-    setIsNicknameError(!isNicknameValid);
-  };
 
   // 키보드가 올라왔을 때 호출되는 함수
   const handleFocus = () => {
@@ -40,7 +32,6 @@ const Account = () => {
 
   // 키보드가 내려갔을 때 호출되는 함수
   const handleBlur = () => {
-    handleNicknameErrorChange();
     setKeyboardVisible(false);
   };
 
@@ -52,7 +43,6 @@ const Account = () => {
       )}
       {step === 2 && (
         <Nickname
-          isNicknameError={isNicknameError}
           userData={userData}
           setUserData={setUserData}
           onFocus={handleFocus}

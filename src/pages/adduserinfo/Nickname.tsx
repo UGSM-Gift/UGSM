@@ -1,26 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { UserDataProps } from 'src/modules/@types/common';
 import Typography from '@components/common/Typography';
 import Input from '@components/common/Input';
 import { ReactComponent as CloseIcon } from '@assets/icons/closeIcon.svg';
+import { checkNicknameDuplication } from 'src/api/account';
+import debounce from 'lodash/debounce';
+const Nickname: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur }) => {
+  const [isNicknameError, setIsNicknameError] = useState(false);
 
-const NicknameBox = styled.div``;
-
-const Nickname: React.FC<UserDataProps> = ({
-  userData,
-  setUserData,
-  onFocus,
-  onBlur,
-  isNicknameError,
-}) => {
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserData((prevUserData) => ({ ...prevUserData, nickname: event.target.value }));
+    debounceNicknameChange(userData.nickname);
   };
 
   const handleClickNicknameReset = () => {
     setUserData((prevUserData) => ({ ...prevUserData, nickname: '' }));
   };
+
+  const checkNicknameValidity = (nickname: string) => {
+    // 닉네임 유효성 검사
+    const isValid = /^[가-힣a-zA-Z0-9]{2,16}$/.test(userData.nickname);
+    setIsNicknameError(!isValid);
+
+    if (isValid) {
+      checkNicknameDuplication(nickname);
+    }
+  };
+
+  // 디바운싱 적용
+  const debounceNicknameChange = debounce((nickname) => {
+    checkNicknameValidity(nickname);
+  }, 500);
 
   return (
     <NicknameBox>
@@ -54,3 +65,4 @@ const Nickname: React.FC<UserDataProps> = ({
 };
 
 export default Nickname;
+const NicknameBox = styled.div``;

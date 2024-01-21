@@ -23,3 +23,15 @@ export const phoneAuthPut = async (phoneAuthNumber: string, phone: string, setTi
     console.log(error);
   }
 };
+
+// 닉네임 중복검사
+export const checkNicknameDuplication = async (nickname: string) => {
+  try {
+    const response = await instance.get(`api/user/check-nickname/${nickname}`);
+    console.log(response);
+    // 여기서 response를 바탕으로 중복 여부를 판단합니다.
+    // 예: setIsNicknameError(response.data.isDuplicated);
+  } catch (error) {
+    console.error('Nickname duplication check failed:', error);
+  }
+};
