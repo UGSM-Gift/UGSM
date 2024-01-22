@@ -31,6 +31,7 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onB
 
     try {
       const isNicknameUnique = await checkNicknameDuplication(nickname);
+      console.log(isNicknameUnique);
       setIsNicknameError(!isNicknameUnique); // 중복되지 않았다면 isNicknameUnique는 true, 중복되었다면 false
     } catch (error) {
       console.error('Error checking nickname duplication:', error);
