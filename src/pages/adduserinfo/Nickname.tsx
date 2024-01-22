@@ -18,20 +18,22 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onB
     setUserData((prevUserData) => ({ ...prevUserData, nickname: '' }));
   };
 
-  const checkNicknameValidity = (nickname: string) => {
+  const checkNicknameValidity = async (nickname: string) => {
     // 닉네임 유효성 검사
     const isValid = /^[가-힣a-zA-Z0-9]{2,16}$/.test(userData.nickname);
-    setIsNicknameError(!isValid);
 
     if (isValid) {
-      checkNicknameDuplication(nickname);
+      const validApi = await checkNicknameDuplication(nickname);
+      if (isValid && validApi) setIsNicknameError(false); // 중복되지 않았다면 validApi는 true, 중복되었다면 false
+    } else {
+      setIsNicknameError(true); // 유효성 검사에서 실패한 경우
     }
   };
 
   // 디바운싱 적용
   const debounceNicknameChange = debounce((nickname) => {
     checkNicknameValidity(nickname);
-  }, 500);
+  }, 300);
 
   return (
     <NicknameBox>
@@ -48,6 +50,7 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onB
       <Input
         bottomText='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'
         errorMessage='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'
+        error={isNicknameError}
       >
         <Input.IconTextField
           placeholder='닉네임을 입력해주세요'

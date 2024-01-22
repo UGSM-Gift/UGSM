@@ -1,3 +1,4 @@
+import axios from 'axios';
 import instance from './axios';
 
 // 번호인증 서버 전송
@@ -9,15 +10,11 @@ export const phoneAuthPut = async (phoneAuthNumber: string, phone: string, setTi
   }
 
   try {
-    const response = await instance.put(
-      `https://www.ugsm.co.kr/api/verification-code/${phoneAuthNumber}`,
-      phoneNumber,
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      }
-    );
+    const response = await instance.put(`/api/verification-code/${phoneAuthNumber}`, phoneNumber, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
     console.log(response);
   } catch (error) {
     console.log(error);
@@ -26,11 +23,14 @@ export const phoneAuthPut = async (phoneAuthNumber: string, phone: string, setTi
 
 // 닉네임 중복검사
 export const checkNicknameDuplication = async (nickname: string) => {
+  const token = localStorage.getItem('accessToken');
   try {
-    const response = await instance.get(`api/user/check-nickname/${nickname}`);
-    console.log(response);
-    // 여기서 response를 바탕으로 중복 여부를 판단합니다.
-    // 예: setIsNicknameError(response.data.isDuplicated);
+    const response = await axios.get(`https://www.ugsm.co.kr/api/user/check-nickname/${nickname}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data.data.valid;
   } catch (error) {
     console.error('Nickname duplication check failed:', error);
   }

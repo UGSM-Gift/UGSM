@@ -69,7 +69,7 @@ const UserProfileEdit = () => {
   const userDataPost = async (userSettingData: UserData) => {
     console.log(userSettingData, 'userSettingData');
     try {
-      const response = await instance.put(`https://www.ugsm.co.kr/api/user/me`, userSettingData, {
+      const response = await instance.put(`/api/user/me`, userSettingData, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },

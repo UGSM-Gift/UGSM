@@ -13,6 +13,8 @@ type InputProps = {
   errorMessage?: string;
   successMessage?: string;
   type?: string;
+  error?: boolean;
+  success?: boolean;
 };
 
 const Input = ({
@@ -21,16 +23,15 @@ const Input = ({
   bottomText,
   successMessage = '확인되었습니다',
   errorMessage = '다시 확인해주세요',
+  error,
+  success,
   type = 'text',
 
   ...props
 }: InputProps) => {
-  const child =
-    Children.only<ReactElement<{ error?: boolean; success?: boolean; id?: string }>>(children);
   const id = useId();
-  const getStatus = (prop: boolean | undefined) => prop ?? false;
-  const isError = getStatus(child.props.error);
-  const isSuccess = getStatus(child.props.success);
+  const isError = error ?? false;
+  const isSuccess = success ?? false;
   const shouldRenderBottomText = !(isSuccess || isError) && bottomText !== null;
 
   const renderChild = (child: ReactElement) =>

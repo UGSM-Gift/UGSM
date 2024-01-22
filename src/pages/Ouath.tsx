@@ -24,7 +24,7 @@ const Ouath = () => {
   //   인가 코드 전송
   async function getUser() {
     try {
-      const response = await instance.get(`https://www.ugsm.co.kr/api/user/me`);
+      const response = await instance.get(`/api/user/me`);
       console.log(response.data.data.mobileVerified);
       const userChecked = response.data.data.mobileVerified;
 
