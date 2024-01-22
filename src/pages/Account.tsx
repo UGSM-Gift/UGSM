@@ -22,6 +22,7 @@ const Account = () => {
     isFormValid,
     handleNextStep,
     handlePreviousStep,
+    isPhoneAuthValid,
   } = useAccountForm();
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
@@ -69,6 +70,7 @@ const Account = () => {
           setPhoneAuth={setPhoneAuthNumber}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          isPhoneAuthValid={isPhoneAuthValid}
         />
       )}
       <ButtonContainer $keyboardVisible={keyboardVisible}>

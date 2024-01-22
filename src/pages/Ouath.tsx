@@ -1,5 +1,6 @@
 'use client';
 
+import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import instance from 'src/api/axios';
@@ -11,7 +12,9 @@ const Ouath = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     const login = searchParams.get('login');
+
     const accessToken = searchParams.get('accessToken');
+    console.log(accessToken);
     const refreshToken = searchParams.get('refreshToken');
     if (!login || !accessToken || !refreshToken) return;
 
@@ -24,7 +27,7 @@ const Ouath = () => {
   //   인가 코드 전송
   async function getUser() {
     try {
-      const response = await instance.get(`/api/user/me`);
+      const response = await axios.get(`${process.env.REACT_APP_PUBLIC_BASE_URL}/api/user/me`);
       console.log(response.data.data.mobileVerified);
       const userChecked = response.data.data.mobileVerified;
 

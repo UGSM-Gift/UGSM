@@ -14,6 +14,7 @@ type PhoneNumberProp = {
   setPhoneAuth: any;
   onFocus: (event: React.FocusEvent) => void;
   onBlur: (event: React.FocusEvent) => void;
+  isPhoneAuthValid: boolean;
 };
 
 const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({
@@ -22,6 +23,7 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({
   setPhoneAuth,
   onFocus,
   onBlur,
+  isPhoneAuthValid,
 }) => {
   const [isAuthNumberError, setIsAuthNumberError] = useState(false);
 
@@ -66,7 +68,7 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({
         <br />
         인증번호를 입력해주세요
       </Typography>
-      <Input>
+      <Input errorMessage='* 인증번호가 다릅니다. 다시 입력해주세요'>
         <Input.TimerTextField
           placeholder={`${phone}로 보내드렸어요`}
           $error={isAuthNumberError}

@@ -15,9 +15,9 @@ export const phoneAuthPut = async (phoneAuthNumber: string, phone: string, setTi
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
-    console.log(response);
+    return true;
   } catch (error) {
-    console.log(error);
+    return false;
   }
 };
 

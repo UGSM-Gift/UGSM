@@ -22,6 +22,7 @@ const useAccountForm = () => {
   });
   const [step, setStep] = useState(1);
   const [phoneAuthNumber, setPhoneAuthNumber] = useState('');
+  const [isPhoneAuthValid, setIsPhoneAuthValid] = useState(false);
   // 폼 검사
   const [isFormValid, setIsFormValid] = useState(false);
   const navigator = useNavigate();
@@ -47,11 +48,12 @@ const useAccountForm = () => {
     setIsFormValid(!validateInput());
   }, [step, name, nickname, birth, gender, phone, phoneAuthNumber]);
 
-  const handleNextStep = () => {
+  const handleNextStep = async () => {
     if (step === 4) {
       phoneAuthPost(phone);
     } else if (step === 5) {
-      phoneAuthPut(phoneAuthNumber, phone);
+      const isValid = await phoneAuthPut(phoneAuthNumber, phone);
+      setIsPhoneAuthValid(isValid);
       userDataPost(userData, navigator);
     }
     updateStep(step + 1);
@@ -74,6 +76,7 @@ const useAccountForm = () => {
     isFormValid,
     handleNextStep,
     handlePreviousStep,
+    isPhoneAuthValid,
   };
 };
 
