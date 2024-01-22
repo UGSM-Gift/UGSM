@@ -6,7 +6,6 @@ import { colors } from 'src/styles/colors';
 import { phoneAuthPut } from 'src/api/account';
 import Input from '@components/common/Input';
 import { validatePhoneAuthNumber } from 'src/utils/account';
-import debounce from 'lodash/debounce';
 
 type PhoneNumberProp = {
   phone: string;
@@ -34,15 +33,11 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({
     setIsAuthNumberError(!isValid);
   };
 
-  const debounceNumberChange = debounce((phone) => {
-    checkPhoneAuthValidity(phone);
-  }, 300);
-
   // 휴대폰 인증번호 입력
   const handlePhoneAuthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newPhone = event.target.value;
     setPhoneAuth(newPhone);
-    debounceNumberChange(newPhone);
+    checkPhoneAuthValidity(newPhone);
   };
 
   // 인증번호 작성 시간 타이머
@@ -68,7 +63,7 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({
         <br />
         인증번호를 입력해주세요
       </Typography>
-      <Input errorMessage='* 인증번호가 다릅니다. 다시 입력해주세요'>
+      <Input error={isPhoneAuthValid ? '' : 'phoneAuth'}>
         <Input.TimerTextField
           placeholder={`${phone}로 보내드렸어요`}
           $error={isAuthNumberError}

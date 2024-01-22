@@ -65,7 +65,7 @@ const Account = () => {
       )}
       {step === 5 && (
         <PhoneNumberAuth
-          phone={userData.phone}
+          phone={userData.mobile}
           phoneAuth={phoneAuthNumber}
           setPhoneAuth={setPhoneAuthNumber}
           onFocus={handleFocus}

@@ -9,6 +9,7 @@ import debounce from 'lodash/debounce';
 import { validateNickname } from 'src/utils/account';
 const Nickname: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur }) => {
   const [isNicknameError, setIsNicknameError] = useState(false);
+  const [nicknameAlert, setNicknameAlert] = useState('default');
 
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newNickname = event.target.value;
@@ -26,15 +27,16 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onB
 
     if (!isValid) {
       setIsNicknameError(true);
-      return; // 유효하지 않은 경우 여기서 함수 종료
+      setNicknameAlert('regexError');
+      return;
     }
-
+    setNicknameAlert('default');
     try {
       const isNicknameUnique = await checkNicknameDuplication(nickname);
-      console.log(isNicknameUnique);
       setIsNicknameError(!isNicknameUnique); // 중복되지 않았다면 isNicknameUnique는 true, 중복되었다면 false
     } catch (error) {
       console.error('Error checking nickname duplication:', error);
+      setNicknameAlert('duplicationError');
       setIsNicknameError(true); // 에러 발생 시에도 에러 상태를 true로 설정
     }
   };
@@ -56,11 +58,7 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onB
         <br />
         어떤 닉네임으로 부를까요?
       </Typography>
-      <Input
-        bottomText='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'
-        errorMessage='* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요'
-        error={isNicknameError}
-      >
+      <Input error={nicknameAlert}>
         <Input.IconTextField
           placeholder='닉네임을 입력해주세요'
           icon={<CloseIcon />}

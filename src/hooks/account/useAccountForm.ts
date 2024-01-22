@@ -16,9 +16,9 @@ const useAccountForm = () => {
   const [userData, setUserData] = useState<UserProfileData>({
     name: '',
     nickname: '',
-    birth: '',
+    birthdate: '',
     gender: '',
-    phone: '',
+    mobile: '',
   });
   const [step, setStep] = useState(1);
   const [phoneAuthNumber, setPhoneAuthNumber] = useState('');
@@ -26,7 +26,7 @@ const useAccountForm = () => {
   // 폼 검사
   const [isFormValid, setIsFormValid] = useState(false);
   const navigator = useNavigate();
-  const { name, nickname, birth, gender, phone } = userData;
+  const { name, nickname, birthdate, gender, mobile } = userData;
 
   useEffect(() => {
     const validateInput = () => {
@@ -36,9 +36,9 @@ const useAccountForm = () => {
         case 2:
           return validateNickname(nickname);
         case 3:
-          return validateBirthAndGender(birth, gender);
+          return validateBirthAndGender(birthdate, gender);
         case 4:
-          return validatePhoneNumber(phone);
+          return validatePhoneNumber(mobile);
         case 5:
           return validatePhoneAuthNumber(phoneAuthNumber);
         default:
@@ -46,13 +46,14 @@ const useAccountForm = () => {
       }
     };
     setIsFormValid(!validateInput());
-  }, [step, name, nickname, birth, gender, phone, phoneAuthNumber]);
+  }, [step, name, nickname, birthdate, gender, mobile, phoneAuthNumber]);
 
   const handleNextStep = async () => {
     if (step === 4) {
-      phoneAuthPost(phone);
+      phoneAuthPost(mobile);
     } else if (step === 5) {
-      const isValid = await phoneAuthPut(phoneAuthNumber, phone);
+      const isValid = await phoneAuthPut(phoneAuthNumber, mobile);
+
       setIsPhoneAuthValid(isValid);
       userDataPost(userData, navigator);
     }

@@ -1,38 +1,35 @@
 import React, { ForwardedRef, InputHTMLAttributes, ReactElement, ReactNode, useId } from 'react';
-import { Children, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { css, styled } from 'styled-components';
 import type { CSSProp } from 'styled-components';
 import Typography from './Typography';
 import { colors } from 'src/styles/colors';
 import IconBtnWrapper from './IconBtnWrapper';
 
+const aertMessages: { [key: string]: string } = {
+  default: '* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요',
+  regexError: '* 이름 외 2~16자의 한글, 영문, 숫자만 사용해주세요',
+  duplicationError: '사용중인 닉네임입니다. 다른 닉네임을 사용해주세요',
+  phoneAuth: '* 인증번호가 다릅니다. 다시 입력해주세요',
+};
+
 type InputProps = {
   label?: ReactNode;
   children: ReactElement;
-  bottomText?: string;
-  errorMessage?: string;
-  successMessage?: string;
   type?: string;
-  error?: boolean;
-  success?: boolean;
+  error?: string;
 };
 
 const Input = ({
   label,
   children,
-  bottomText,
-  successMessage = '확인되었습니다',
-  errorMessage = '다시 확인해주세요',
   error,
-  success,
   type = 'text',
 
   ...props
 }: InputProps) => {
   const id = useId();
-  const isError = error ?? false;
-  const isSuccess = success ?? false;
-  const shouldRenderBottomText = !(isSuccess || isError) && bottomText !== null;
+  const isError = Boolean(error);
 
   const renderChild = (child: ReactElement) =>
     React.cloneElement(child, {
@@ -49,9 +46,12 @@ const Input = ({
         </Typography>
       )}
       {React.Children.map(children, renderChild)}
-      {isSuccess && <StyledBottomText $success={isSuccess}>{successMessage}</StyledBottomText>}
-      {isError && <StyledBottomText $error={isError}>{errorMessage}</StyledBottomText>}
-      {shouldRenderBottomText && <StyledBottomText>{bottomText}</StyledBottomText>}
+
+      {isError ? (
+        <StyledBottomText $error={error === 'default' ? false : true}>
+          {aertMessages[error || 'default']}
+        </StyledBottomText>
+      ) : null}
     </Layout>
   );
 };
@@ -116,11 +116,11 @@ const Layout = styled.div`
   width: 100%;
 `;
 
-const BottomTextStyle = ({ $error, $success }: { $error?: boolean; $success?: boolean }) => `
-  color: ${$error ? colors.errorColor : $success ? colors.successColor : colors.gray[40]};
+const BottomTextStyle = ({ $error }: { $error?: boolean }) => `
+  color: ${$error ? colors.errorColor : colors.gray[40]};
 `;
 
-const StyledBottomText = styled.p<{ $error?: boolean; $success?: boolean }>`
+const StyledBottomText = styled.p<{ $error?: boolean }>`
   margin-top: 10px;
   font-size: 13px;
   font-weight: 400;
@@ -146,8 +146,8 @@ const InputWithIcon = styled.div`
   position: relative;
 `;
 
-const applyStatusStyle = ({ $error, $success }: { $error?: boolean; $success?: boolean }) => css`
-  border: 1px solid ${$error ? colors.errorColor : $success ? colors.successColor : colors.gray[20]};
+const applyStatusStyle = ({ $error }: { $error?: boolean }) => css`
+  border: 1px solid ${$error ? colors.errorColor : colors.gray[20]};
 `;
 
 const StyledInput = styled.input<Omit<StyledInputProps, 'icon' | 'timer' | 'onClick'>>`

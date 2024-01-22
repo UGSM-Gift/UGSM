@@ -9,7 +9,7 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
   const [selectedGender, setSelectedGender] = useState(userData.gender || null);
 
   const handleBirthdayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserData({ ...userData, birth: event.target.value });
+    setUserData({ ...userData, birthdate: event.target.value });
   };
 
   const handleGenderChange = (selectedGender: string) => {
@@ -29,7 +29,7 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
         생일과 성별을 확인해주세요
       </Typography>
       <Input label='생일'>
-        <Input.TextField value={userData.birth} type='date' onChange={handleBirthdayChange} />
+        <Input.TextField value={userData.birthdate} type='date' onChange={handleBirthdayChange} />
       </Input>
       <Typography $variant='subtitle2'>
         <Label>성별</Label>
