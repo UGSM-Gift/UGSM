@@ -1,20 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import Typography from '@components/common/Typography';
 import Input from '@components/common/Input';
-import { formatPhoneNumber } from 'src/utils/account';
+import { formatPhoneNumber, validatePhoneNumber } from 'src/utils/account';
 import { UserDataProps } from 'src/modules/@types/common';
-
-const NumberBox = styled.div``;
-
+import debounce from 'lodash/debounce';
 const PhoneNumber: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur }) => {
+  const [isNumberError, setIsNumberError] = useState(false);
+
+  const checkPhoneValidity = async (phone: string) => {
+    const isValid = validatePhoneNumber(phone);
+    console.log(isValid);
+    setIsNumberError(!isValid);
+  };
+
+  const debounceNumberChange = debounce((phone) => {
+    checkPhoneValidity(phone);
+  }, 300);
+
   // 휴대폰 번호 입력
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newPhone = event.target.value;
     setUserData((prevUserData) => ({ ...prevUserData, phone: event.target.value }));
+    debounceNumberChange(newPhone);
   };
 
   // 입력값이 변경될 때 호출되는 함수
   const numberhandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //
     const formattedPhone = formatPhoneNumber(event.target.value);
     if (formattedPhone) {
       // 포맷된 전화번호를 입력 필드에 설정
@@ -38,7 +51,7 @@ const PhoneNumber: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, 
       <Input>
         <Input.TextField
           placeholder='숫자만 입력해주세요'
-          $error={false}
+          $error={isNumberError}
           value={userData.phone}
           onChange={numberhandleChange}
           onFocus={onFocus}
@@ -50,3 +63,4 @@ const PhoneNumber: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, 
 };
 
 export default PhoneNumber;
+const NumberBox = styled.div``;

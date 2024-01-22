@@ -6,12 +6,14 @@ import Input from '@components/common/Input';
 import { ReactComponent as CloseIcon } from '@assets/icons/closeIcon.svg';
 import { checkNicknameDuplication } from 'src/api/account';
 import debounce from 'lodash/debounce';
+import { validateNickname } from 'src/utils/account';
 const Nickname: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur }) => {
   const [isNicknameError, setIsNicknameError] = useState(false);
 
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserData((prevUserData) => ({ ...prevUserData, nickname: event.target.value }));
-    debounceNicknameChange(userData.nickname);
+    const newNickname = event.target.value;
+    setUserData((prevUserData) => ({ ...prevUserData, nickname: newNickname }));
+    debounceNicknameChange(newNickname);
   };
 
   const handleClickNicknameReset = () => {
@@ -20,13 +22,19 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onB
 
   const checkNicknameValidity = async (nickname: string) => {
     // 닉네임 유효성 검사
-    const isValid = /^[가-힣a-zA-Z0-9]{2,16}$/.test(userData.nickname);
+    const isValid = validateNickname(nickname);
 
-    if (isValid) {
-      const validApi = await checkNicknameDuplication(nickname);
-      if (isValid && validApi) setIsNicknameError(false); // 중복되지 않았다면 validApi는 true, 중복되었다면 false
-    } else {
-      setIsNicknameError(true); // 유효성 검사에서 실패한 경우
+    if (!isValid) {
+      setIsNicknameError(true);
+      return; // 유효하지 않은 경우 여기서 함수 종료
+    }
+
+    try {
+      const isNicknameUnique = await checkNicknameDuplication(nickname);
+      setIsNicknameError(!isNicknameUnique); // 중복되지 않았다면 isNicknameUnique는 true, 중복되었다면 false
+    } catch (error) {
+      console.error('Error checking nickname duplication:', error);
+      setIsNicknameError(true); // 에러 발생 시에도 에러 상태를 true로 설정
     }
   };
 

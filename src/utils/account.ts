@@ -22,7 +22,8 @@ export const formatPhoneNumber = (value: string) => {
 export const validatePhoneNumber = (phone: string) => {
   // 전화번호 유효성 검증 로직
   const phoneNumber = phone.replace(/-/g, '');
-  return phoneNumber.length === 11;
+  const regex = /^010\d{8}$/;
+  return regex.test(phoneNumber);
 };
 
 // validateInput
