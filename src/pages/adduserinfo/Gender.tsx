@@ -5,18 +5,16 @@ import { UserDataProps } from 'src/modules/@types/common';
 import Typography from '@components/common/Typography';
 import Input from '@components/common/Input';
 import Button from '@components/common/button/Button';
-import InteractiveButton from '@components/common/button/InteractiveButton';
-
 const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
-  const [selectedDate, setSelectedDate] = useState();
-  const [gender, setGender] = useState<string>(userData.gender || '');
+  const [selectedGender, setSelectedGender] = useState(userData.gender || null);
+  // male female
   const handleBirthdayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, birth: event.target.value });
   };
 
   const handleGenderChange = (selectedGender: string) => {
+    setSelectedGender(selectedGender);
     setUserData({ ...userData, gender: selectedGender });
-    setGender(selectedGender);
   };
 
   return (
@@ -33,20 +31,27 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
       <Input label='생일'>
         <Input.TextField type='date' onChange={handleBirthdayChange} />
       </Input>
-
-      <InteractiveButton label='성별' lContent={'남자'} rContent={'여자'} />
-      {/* <ButtonBox>
-        <Button $variant={' outline'} radius='medium'>
+      <Typography $variant='subtitle2'>
+        <Label>성별</Label>
+      </Typography>
+      <ButtonBox>
+        <Button
+          $variant={selectedGender === 'male' ? 'lightPrimary' : 'grayOutline'}
+          radius='medium'
+          size='small'
+          onClick={() => handleGenderChange('male')}
+        >
           남
         </Button>
-        <Button $variant={'outline'} radius='medium'>
+        <Button
+          $variant={selectedGender === 'female' ? 'lightPrimary' : 'grayOutline'}
+          radius='medium'
+          size='small'
+          onClick={() => handleGenderChange('female')}
+        >
           여
         </Button>
-      </ButtonBox> */}
-      <TypeButtonBox>
-        <TypeButton type='남자' setType={(type) => handleGenderChange(type)} selectedType={gender} />
-        <TypeButton type='여자' setType={(type) => handleGenderChange(type)} selectedType={gender} />
-      </TypeButtonBox>
+      </ButtonBox>
     </GenderBox>
   );
 };
@@ -54,11 +59,10 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
 export default Gender;
 
 const GenderBox = styled.div``;
-const ButtonBox = styled.div``;
-
-const TypeButtonBox = styled.div`
+const ButtonBox = styled.div`
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
-  margin-bottom: 30px;
+  gap: 9px;
+`;
+const Label = styled.div`
+  margin: 24px 0 10px;
 `;
