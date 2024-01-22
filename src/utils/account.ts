@@ -40,5 +40,6 @@ export const validateBirthAndGender = (birth: string, gender: string) => {
 };
 
 export const validatePhoneAuthNumber = (phoneAuthNumber: string) => {
-  return phoneAuthNumber.trim().length > 0;
+  const regexp = /\d{6}$/;
+  return regexp.test(phoneAuthNumber);
 };

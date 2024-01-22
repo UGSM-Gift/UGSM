@@ -10,6 +10,7 @@ import Gender from './adduserinfo/Gender';
 import PhoneNumber from './adduserinfo/PhoneNumber';
 import PhoneNumberAuth from './adduserinfo/PhoneNumberAuth';
 import useAccountForm from 'src/hooks/account/useAccountForm';
+import { common } from 'src/styles/common';
 
 const Account = () => {
   const {
@@ -34,7 +35,10 @@ const Account = () => {
   const handleBlur = () => {
     setKeyboardVisible(false);
   };
-
+  // 번호 재입력
+  const handleReset = () => {
+    setPhoneAuthNumber('');
+  };
   return (
     <BasicLayout>
       <PreviousButton onClick={handlePreviousStep} step={step} />
@@ -62,20 +66,35 @@ const Account = () => {
         <PhoneNumberAuth
           phone={userData.phone}
           phoneAuth={phoneAuthNumber}
-          setPhoneAuthNumber={setPhoneAuthNumber}
+          setPhoneAuth={setPhoneAuthNumber}
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
       )}
       <ButtonContainer $keyboardVisible={keyboardVisible}>
         <ButtonBox>
-          <Button
-            $variant={isFormValid ? 'disabled' : 'primary'}
-            onClick={handleNextStep}
-            disabled={isFormValid}
-          >
-            다음
-          </Button>
+          {step === 5 ? (
+            <ButtonContent>
+              <Button $variant={'outline'} onClick={handleReset}>
+                번호 재입력
+              </Button>
+              <Button
+                $variant={isFormValid ? 'disabled' : 'primary'}
+                onClick={handleNextStep}
+                disabled={isFormValid}
+              >
+                완료
+              </Button>
+            </ButtonContent>
+          ) : (
+            <Button
+              $variant={isFormValid ? 'disabled' : 'primary'}
+              onClick={handleNextStep}
+              disabled={isFormValid}
+            >
+              다음
+            </Button>
+          )}
         </ButtonBox>
       </ButtonContainer>
     </BasicLayout>
@@ -100,4 +119,9 @@ const ButtonBox = styled.div`
   position: absolute;
   right: 16px;
   bottom: 16px;
+`;
+
+const ButtonContent = styled.div`
+  ${common.flexCenterRow}
+  gap: 10px;
 `;

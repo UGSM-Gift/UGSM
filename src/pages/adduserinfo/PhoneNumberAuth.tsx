@@ -1,41 +1,49 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Typography from '@components/common/Typography';
 import { common } from 'src/styles/common';
 import { colors } from 'src/styles/colors';
 import { phoneAuthPut } from 'src/api/account';
 import Input from '@components/common/Input';
-
-const NumberBox = styled.div``;
-
-const Response = styled.div`
-  ${common.flexCenterRow}
-  gap: 10px;
-  margin-bottom: 20px;
-`;
+import { validatePhoneAuthNumber } from 'src/utils/account';
+import debounce from 'lodash/debounce';
 
 type PhoneNumberProp = {
   phone: string;
   phoneAuth: string;
+  setPhoneAuth: any;
   onFocus: (event: React.FocusEvent) => void;
   onBlur: (event: React.FocusEvent) => void;
-  setPhoneAuthNumber: Dispatch<SetStateAction<string>>;
 };
 
 const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({
   phone,
   phoneAuth,
+  setPhoneAuth,
   onFocus,
   onBlur,
-  setPhoneAuthNumber,
 }) => {
-  const [timer, setTimer] = useState(60);
+  const [isAuthNumberError, setIsAuthNumberError] = useState(false);
 
-  // 인증 번호 입력
-  const handlePhoneAuthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneAuthNumber(event.target.value);
+  const [timer, setTimer] = useState(60);
+  // 인증번호 유효성 검사
+  const checkPhoneAuthValidity = async (phone: string) => {
+    const isValid = validatePhoneAuthNumber(phone);
+    setIsAuthNumberError(!isValid);
   };
 
+  const debounceNumberChange = debounce((phone) => {
+    checkPhoneAuthValidity(phone);
+  }, 300);
+
+  // 휴대폰 인증번호 입력
+  const handlePhoneAuthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newPhone = event.target.value;
+    setPhoneAuth(newPhone);
+    debounceNumberChange(newPhone);
+  };
+
+  // 인증번호 작성 시간 타이머
   useEffect(() => {
     if (timer === 0) return;
 
@@ -61,7 +69,8 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({
       <Input>
         <Input.TimerTextField
           placeholder={`${phone}로 보내드렸어요`}
-          $error={false}
+          $error={isAuthNumberError}
+          value={phoneAuth}
           onChange={handlePhoneAuthChange}
           onFocus={onFocus}
           onBlur={onBlur}
@@ -91,3 +100,10 @@ const PhoneNumberAuth: React.FC<PhoneNumberProp> = ({
 };
 
 export default PhoneNumberAuth;
+const NumberBox = styled.div``;
+
+const Response = styled.div`
+  ${common.flexCenterRow}
+  gap: 10px;
+  margin-top: 20px;
+`;
