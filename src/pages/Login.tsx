@@ -15,7 +15,7 @@ import IconWrapper from '@components/common/IconWrapper';
 
 const socialLogins: SocialLogin[] = [
   {
-    link: `${process.env.REACT_APP_PUBLIC_BASE_URL}/kakao`,
+    link: `${process.env.REACT_APP_SNS_BASE_URL}/kakao`,
     platform: '카카오로 시작',
     icon: (
       <IconWrapper>
@@ -27,7 +27,7 @@ const socialLogins: SocialLogin[] = [
     style: { background: '#FEE500', color: colors.black },
   },
   {
-    link: `${process.env.REACT_APP_PUBLIC_BASE_URL}/naver`,
+    link: `${process.env.REACT_APP_SNS_BASE_URL}/naver`,
     platform: '네이버로 시작',
     icon: (
       <IconWrapper>
@@ -39,7 +39,7 @@ const socialLogins: SocialLogin[] = [
     style: { background: '#03C75A', color: colors.white },
   },
   {
-    link: `${process.env.REACT_APP_PUBLIC_BASE_URL}/google`,
+    link: `${process.env.REACT_APP_SNS_BASE_URL}/google`,
     platform: '구글로 시작',
     icon: (
       <IconWrapper>
