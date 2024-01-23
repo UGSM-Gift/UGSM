@@ -33,11 +33,14 @@ const Nickname: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onB
     setNicknameAlert('default');
     try {
       const isNicknameUnique = await checkNicknameDuplication(nickname);
-      setIsNicknameError(!isNicknameUnique); // 중복되지 않았다면 isNicknameUnique는 true, 중복되었다면 false
+      setIsNicknameError(!isNicknameUnique);
+      if (!isNicknameUnique) {
+        setNicknameAlert('duplicationError');
+      }
     } catch (error) {
       console.error('Error checking nickname duplication:', error);
       setNicknameAlert('duplicationError');
-      setIsNicknameError(true); // 에러 발생 시에도 에러 상태를 true로 설정
+      setIsNicknameError(true);
     }
   };
 

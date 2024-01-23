@@ -19,7 +19,6 @@ export const userData = async () => {
 export const phoneAuthPost = async (phone: string) => {
   try {
     const phoneAuth = { phoneNumber: phone.replace(/-/g, '') };
-    console.log(phoneAuth);
     await instance.post('/api/verification-code', phoneAuth, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -37,7 +36,7 @@ export const userDataPost = async (userData: UserProfileData, navigator: Navigat
   console.log(updatedUserData);
   try {
     await instance.put(`/api/user/me`, updatedUserData);
-    // navigator('/');
+    navigator('/');
   } catch (error) {
     console.log(error);
   }

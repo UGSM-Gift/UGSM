@@ -36,10 +36,12 @@ const Account = () => {
   const handleBlur = () => {
     setKeyboardVisible(false);
   };
+
   // 번호 재입력
   const handleReset = () => {
     setPhoneAuthNumber('');
   };
+
   return (
     <BasicLayout>
       <PreviousButton onClick={handlePreviousStep} step={step} />
