@@ -4,10 +4,10 @@ import UserProfileIcon from 'src/assets/icons/UserProfileIcon';
 const Profile = ({ userData }: { userData: any }) => {
   return (
     <>
-      {userData.userProfileUrl === null ? (
+      {userData.profileImgFile === null ? (
         <UserProfileIcon />
       ) : (
-        <img src={userData.userProfileUrl} alt='userImg' />
+        <img src={userData.profileImgFile} alt='userImg' />
       )}
     </>
   );

@@ -60,6 +60,10 @@ const VARIANT_TYPE = {
     color: ${colors.primary[400]};
     border: 1px solid ${colors.primary[400]};
   `,
+  grayOutline: css`
+    color: ${colors.gray[60]};
+    border: 1px solid ${colors.gray[20]};
+  `,
 
   ghost: css`
     color: ${colors.gray[30]};
@@ -67,7 +71,7 @@ const VARIANT_TYPE = {
   `,
   lightPrimary: css`
     color: ${colors.primary[800]};
-    background-color: #ffe4ee;
+    background-color: rgba(255, 228, 238, 0.4);
     border: 1px solid ${colors.primary[100]};
   `,
   lightGhost: css`
@@ -83,7 +87,7 @@ const VARIANT_TYPE = {
 } as const;
 
 type Props = {
-  variant: keyof typeof VARIANT_TYPE;
+  $variant: keyof typeof VARIANT_TYPE;
   size?: ButtonSizeType;
   radius?: ButtonRadiusType;
   $block?: boolean;
@@ -91,7 +95,7 @@ type Props = {
 };
 
 const Button = ({
-  variant,
+  $variant,
   children,
   onClick,
   disabled,
@@ -99,13 +103,12 @@ const Button = ({
   radius = 'small',
   $block = true,
   $style,
-
   ...props
 }: PropsWithChildren<Props> & ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
     <StyledButton
       onClick={onClick}
-      variant={variant}
+      $variant={$variant}
       size={size}
       radius={radius}
       disabled={disabled}
@@ -130,8 +133,8 @@ const StyledButton = styled.button<Props>`
   /* &:hover {
     border: none;
   } */
-  ${({ $block, $style, size = 'medium', variant, radius = 'small' }) => css`
-    ${VARIANT_TYPE[variant]}
+  ${({ $block, $style, size = 'medium', $variant, radius = 'small' }) => css`
+    ${VARIANT_TYPE[$variant]}
     ${SIZE_TYPE[size]}
     ${RADIUS_TYPE[radius]}
     width: ${$block ? '100%' : 'fit-content'};

@@ -6,7 +6,7 @@ import DataBox from './DataBox';
 
 const Anniversary = ({ userData }: { userData: UserProfile }) => {
   const originalDate = userData.birthdata;
-  const formattedDate = originalDate.slice(2).replace(/-/g, '.');
+  const formattedDate = originalDate?.slice(2).replace(/-/g, '.');
 
   return (
     <AnniversaryBox>

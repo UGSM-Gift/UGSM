@@ -1,8 +1,8 @@
 export const ROUTES_PATH = {
   home: '/',
   login: '/login',
-  addUserInfo: '/addUserInfo',
-  oauth: '/oauth/callback',
+  account: '/account',
+  oauth: '/oauth/callback/',
   myPage: '/mypage',
   setting: '/mypage/setting',
   userProfileEdit: '/mypage/setting/userProfileEdit',

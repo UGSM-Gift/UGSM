@@ -13,7 +13,9 @@ const Setting = () => {
     if (path) {
       navigate(path);
     } else {
-      // 로그아웃 로직을 여기에 구현
+      alert('로그인하시겠습니까?');
+      localStorage.removeItem('accessToken');
+      navigate('/login');
       console.log('로그아웃 처리');
     }
   };
@@ -21,14 +23,14 @@ const Setting = () => {
     <BasicLayout>
       <List>
         {settings.map((setting, index) => (
-          <>
-            <ListItem key={setting.name}>
-              <Typography variant='button2' onClick={() => handleMenuClick(setting.path)}>
+          <div key={index}>
+            <ListItem>
+              <Typography $variant='button2' onClick={() => handleMenuClick(setting.path)}>
                 {setting.name}
               </Typography>
             </ListItem>
             {index === 1 && <Divider />}
-          </>
+          </div>
         ))}
       </List>
     </BasicLayout>

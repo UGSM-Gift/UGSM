@@ -16,7 +16,7 @@ const DataBox: React.FC<Anniversary> = ({ children, birthdata, anniversaryCount 
         )}
       </ContentImg>
 
-      <Typography variant='body1'>
+      <Typography $variant='body1'>
         {birthdata ? children : `${children}(${anniversaryCount})`}
       </Typography>
     </DataContainer>

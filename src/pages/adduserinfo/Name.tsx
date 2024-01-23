@@ -5,12 +5,11 @@ import Typography from '@components/common/Typography';
 import Input from '@components/common/Input';
 import { ReactComponent as CloseIcon } from '@assets/icons/closeIcon.svg';
 
-const NameBox = styled.div``;
-
 const Name: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur }) => {
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserData((prevUserData) => ({ ...prevUserData, name: event.target.value }));
   };
+
   const handleNameReset = () => {
     setUserData((prevUserData) => ({ ...prevUserData, name: '' }));
   };
@@ -18,7 +17,7 @@ const Name: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur 
   return (
     <NameBox>
       <Typography
-        variant={'title1'}
+        $variant={'title1'}
         $style={css`
           margin-bottom: 100px;
         `}
@@ -26,9 +25,10 @@ const Name: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur 
         반가워요! <br />
         이름이 어떻게 되시나요?
       </Typography>
-      <Input onClick={handleNameReset}>
-        <Input.TextInteractiveField
+      <Input>
+        <Input.IconTextField
           onChange={handleNameChange}
+          onClick={handleNameReset}
           placeholder='이름을 입력해주세요'
           icon={<CloseIcon />}
           value={userData.name}
@@ -41,3 +41,5 @@ const Name: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, onBlur 
 };
 
 export default Name;
+
+const NameBox = styled.div``;

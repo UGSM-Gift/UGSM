@@ -23,19 +23,19 @@ const Header: React.FC<HeaderElementProps> = ({
       <LeftElement>
         {/* 1번 영역: 아이콘 또는 텍스트 */}
         {typeof leftContent1 === 'string' ? (
-          <Typography variant='subtitle1' style={{ padding: '16px' }}>
+          <Typography $variant='subtitle1' style={{ padding: '16px' }}>
             {leftContent1}
           </Typography>
         ) : (
           <BtnWrapper onClick={leftContentOnClick}>{leftContent1}</BtnWrapper>
         )}
         {/* 2번 영역: 텍스트 */}
-        {leftContent2 && <Typography variant='subtitle1'>{leftContent2}</Typography>}
+        {leftContent2 && <Typography $variant='subtitle1'>{leftContent2}</Typography>}
       </LeftElement>
 
       {/* 3번 영역: 제목 */}
       {title && (
-        <Typography variant='subtitle1' style={{ padding: '16px', flex: 2 }}>
+        <Typography $variant='subtitle1' style={{ padding: '16px', flex: 2 }}>
           {title}
         </Typography>
       )}
@@ -45,7 +45,7 @@ const Header: React.FC<HeaderElementProps> = ({
         {/* 5번 영역: 텍스트 버튼 또는 아이콘 */}
         {typeof rightContent2 === 'string' ? (
           <IconBtnWrapper onClick={rightContentOnClick2}>
-            <Typography variant='button2' style={{ padding: '16px' }}>
+            <Typography $variant='button2' style={{ padding: '16px' }}>
               {rightContent2}
             </Typography>
           </IconBtnWrapper>

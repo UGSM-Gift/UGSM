@@ -11,6 +11,7 @@ export type UserProfileData = {
   nickname: string;
   birth: string;
   gender: string;
+  phone: string;
 };
 
 export interface UserDataProps {

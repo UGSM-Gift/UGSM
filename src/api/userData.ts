@@ -1,16 +1,39 @@
-import axios from 'axios';
+import { NavigateFunction } from 'react-router-dom';
+import { UserProfileData } from 'src/modules/@types/common';
+import instance from './axios';
 
 export const userData = async () => {
-  const accessToken = window.localStorage.getItem('accessToken');
-  if (!accessToken) return alert('토큰 없음');
   try {
-    const response = await axios.get('https://www.ugsm.co.kr/api/user/me', {
+    const response = await instance.get('/api/user/me', {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${accessToken}`,
       },
     });
     return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 전화번호 서버 전송
+export const phoneAuthPost = async (phone: string) => {
+  try {
+    const phoneAuth = { phoneNumber: phone.replace(/-/g, '') };
+    await instance.post('/api/verification-code', phoneAuth, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 유저데이터 전송
+export const userDataPost = async (userData: UserProfileData, navigator: NavigateFunction) => {
+  try {
+    await instance.put(`/api/user/me`, userData);
+    navigator('/');
   } catch (error) {
     console.log(error);
   }
