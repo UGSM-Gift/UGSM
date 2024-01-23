@@ -31,8 +31,11 @@ export const phoneAuthPost = async (phone: string) => {
 
 // 유저데이터 전송
 export const userDataPost = async (userData: UserProfileData, navigator: NavigateFunction) => {
+  const formattedPhone = userData.mobile.replace(/-/g, '');
+  const updatedUserData = { ...userData, mobile: formattedPhone };
+  console.log(updatedUserData);
   try {
-    await instance.put(`/api/user/me`, userData);
+    await instance.put(`/api/user/me`, updatedUserData);
     navigator('/');
   } catch (error) {
     console.log(error);

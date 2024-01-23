@@ -21,7 +21,7 @@ const PhoneNumber: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, 
   // 휴대폰 번호 입력
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newPhone = event.target.value;
-    setUserData((prevUserData) => ({ ...prevUserData, phone: newPhone }));
+    setUserData((prevUserData) => ({ ...prevUserData, mobile: newPhone }));
     debounceNumberChange(newPhone);
   };
 
@@ -48,7 +48,7 @@ const PhoneNumber: React.FC<UserDataProps> = ({ userData, setUserData, onFocus, 
         <Input.TextField
           placeholder='숫자만 입력해주세요'
           $error={isNumberError}
-          value={userData.phone}
+          value={userData.mobile}
           onChange={numberhandleChange}
           onFocus={onFocus}
           onBlur={onBlur}
