@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import DataBox from './DataBox';
 
 const Anniversary = ({ userData }: { userData: UserProfile }) => {
-  const originalDate = userData.birthdata;
+  const originalDate = userData.birthdate;
   const formattedDate = originalDate?.slice(2).replace(/-/g, '.');
 
   return (

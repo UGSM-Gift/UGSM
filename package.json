@@ -44,6 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+    ,
+    "proxy":"https://www.ugsm.co.kr"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.202",
@@ -52,4 +54,5 @@
     "prop-types": "^15.8.1",
     "webpack": "^5.89.0"
   }
+
 }

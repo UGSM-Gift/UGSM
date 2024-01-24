@@ -1,7 +1,7 @@
 import Input from '@components/common/Input';
 import Profile from '@components/mypage/Profile';
 import React, { useEffect, useState } from 'react';
-import { userData } from 'src/api/userData';
+import { userData, userDataPost } from 'src/api/userData';
 import { ReactComponent as EditIcon } from '@assets/icons/editIcon.svg';
 import { common } from 'src/styles/common';
 import { UserData } from 'src/types/userData';
@@ -10,6 +10,14 @@ import BasicLayout from '../layout/BasicLayout';
 import IconBtnWrapper from '@components/common/IconBtnWrapper';
 import instance from 'src/api/axios';
 
+const mockData = {
+  name: '양양',
+  nickname: '최주희',
+  gender: 'male',
+  mobile: '01032986409',
+  birthdate: '1998-12-25',
+};
+//  + 성별
 const UserProfileEdit = () => {
   const [userSettingData, setUserSettingData] = useState<UserData>({
     birthdate: '',
@@ -17,7 +25,7 @@ const UserProfileEdit = () => {
     gender: '',
     nickname: '',
     mobile: '',
-    profileImgFile: '',
+    profileImageUrl: '',
   });
   // function PhoneNumber(phoneNumber: string) {
   //   return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7)}`;
@@ -26,15 +34,14 @@ const UserProfileEdit = () => {
   const fetchUserData = async () => {
     try {
       const response = await userData();
-
       const user = response.data;
       const userSettingData = {
-        birthdate: user.birthdate,
-        gender: user.gender,
-        name: user.name,
-        nickname: user.nickname,
-        mobile: user.mobile,
-        profileImgFile: user.profileImageUrl,
+        birthdate: user.birthdate || '',
+        gender: user.gender || '',
+        name: user.name || '',
+        nickname: user.nickname || '',
+        mobile: user.mobile || '',
+        profileImageUrl: user.profileImageUrl || null,
       };
       console.log('데이터가져오기', userSettingData);
       setUserSettingData(userSettingData);
@@ -65,23 +72,9 @@ const UserProfileEdit = () => {
     setUserSettingData((prevUserData) => ({ ...prevUserData, birthdate: event.target.value }));
   };
 
-  // 유저데이터 전송
-  const userDataPost = async (userSettingData: UserData) => {
-    console.log(userSettingData, 'userSettingData');
-    try {
-      const response = await instance.put(`/api/user/me`, userSettingData, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleEdit = (userData: UserData) => {
-    userDataPost(userData);
+  const handleEdit = async (userData: UserData) => {
+    const user = await userDataPost(userData);
+    console.log(user);
   };
 
   return (
@@ -107,10 +100,7 @@ const UserProfileEdit = () => {
             onChange={handleBirthdayChange}
           />
         </Input>
-        {/* <TypeButtonBox>
-          <TypeButton type='남자' setType={(type) => handleGenderChange(type)} selectedType={gender} />
-          <TypeButton type='여자' setType={(type) => handleGenderChange(type)} selectedType={gender} />
-        </TypeButtonBox> */}
+
         <Input label='전화번호'>
           <Input.TextField value={userSettingData.mobile} onChange={handlePhoneChange} />
         </Input>
