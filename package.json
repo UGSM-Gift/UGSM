@@ -10,6 +10,7 @@
     "axios": "^1.6.2",
     "craco-alias": "^3.0.1",
     "date-fns": "^3.2.0",
+    "http-proxy-middleware": "^2.0.6",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-datepicker": "^4.25.0",
@@ -43,9 +44,8 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-    ,
-    "proxy":"https://www.ugsm.co.kr"
+    ],
+    "proxy": "https://www.ugsm.co.kr"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.202",
@@ -54,5 +54,4 @@
     "prop-types": "^15.8.1",
     "webpack": "^5.89.0"
   }
-
 }

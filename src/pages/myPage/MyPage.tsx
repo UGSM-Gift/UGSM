@@ -44,7 +44,7 @@ const MyPage = () => {
       details: null,
     };
     try {
-      const response = await instance.delete(`/api/user/me`, {
+      const response = await axios.delete(`/api/user/me`, {
         data: reason,
       });
       console.log(response);
