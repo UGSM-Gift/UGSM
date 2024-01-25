@@ -1,6 +1,6 @@
 import Input from '@components/common/Input';
 import Profile from '@components/mypage/Profile';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { userData, userDataPost } from 'src/api/userData';
 import { ReactComponent as EditIcon } from '@assets/icons/editIcon.svg';
 import { common } from 'src/styles/common';
@@ -12,6 +12,8 @@ import instance from 'src/api/axios';
 import Typography from '@components/common/Typography';
 import Button from '@components/common/button/Button';
 import { colors } from 'src/styles/colors';
+import { RADIUS } from 'src/constants/style';
+import { fetchImg, imgSize } from 'src/api/fetchImg';
 
 const mockData = {
   name: '양양',
@@ -22,6 +24,10 @@ const mockData = {
 };
 //  + 성별
 const UserProfileEdit = () => {
+  const [imgResize, setImgResize] = useState(84);
+  const [uploadImgUrl, setUploadImgUrl] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const [userSettingData, setUserSettingData] = useState<UserData>({
     birthdate: '',
     name: '',
@@ -31,7 +37,10 @@ const UserProfileEdit = () => {
     profileImageUrl: '',
   });
   const [selectedGender, setSelectedGender] = useState(userSettingData.gender || null);
-
+  useEffect(() => {
+    const size = imgSize();
+    setImgResize(size);
+  }, [window.innerWidth]);
   // function PhoneNumber(phoneNumber: string) {
   //   return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7)}`;
   // }
@@ -87,16 +96,41 @@ const UserProfileEdit = () => {
     console.log(user);
   };
 
+  const onchangeImageUpload = (e: { target: { files: any } }) => {
+    const { files } = e.target;
+    const uploadFile = files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(uploadFile);
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        setUploadImgUrl(reader.result);
+      }
+    };
+  };
+
+  const handleIconClick = () => {
+    fileInputRef.current?.click(); // 파일 입력 요소의 클릭 이벤트 트리거
+  };
+
   return (
     <BasicLayout>
       <ContentContainer>
         <ProfileEditBox>
-          <Profile userData={userSettingData} />
-          <IconBtnWrapper>
-            <EditIcon />
-          </IconBtnWrapper>
+          <Profile userData={userSettingData} img={uploadImgUrl} />
+          <IconBox>
+            <input
+              type='file'
+              accept='image/*'
+              style={{ display: 'none' }}
+              onChange={onchangeImageUpload}
+              ref={fileInputRef}
+            />
+            <IconBtnWrapper onClick={handleIconClick}>
+              <EditIcon />
+            </IconBtnWrapper>
+          </IconBox>
         </ProfileEditBox>
-        <div onClick={() => handleEdit(userSettingData)}>수정하기</div>
+
         <InputContainer>
           <Input label='이름'>
             <Input.TextField value={userSettingData.name} onChange={handleNameChange} />
@@ -140,6 +174,14 @@ const UserProfileEdit = () => {
             <Input.TextField value={userSettingData.mobile} onChange={handlePhoneChange} />
           </Input>
         </InputContainer>
+        <div
+          onClick={() => {
+            handleEdit(userSettingData);
+            fetchImg(imgResize, uploadImgUrl);
+          }}
+        >
+          수정하기
+        </div>
       </ContentContainer>
     </BasicLayout>
   );
@@ -154,6 +196,18 @@ const ContentContainer = styled.div`
 
 const ProfileEditBox = styled.div`
   position: relative;
+`;
+
+const IconBox = styled.div`
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  ${common.flexCenterColumn}
+  width: 31px;
+  height: 31px;
+  border: 3px solid ${colors.white};
+  border-radius: ${RADIUS.large};
+  background-color: ${colors.sub[900]};
 `;
 
 const InputContainer = styled.div`
