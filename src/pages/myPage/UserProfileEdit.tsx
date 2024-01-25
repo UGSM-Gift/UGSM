@@ -9,6 +9,9 @@ import styled from 'styled-components';
 import BasicLayout from '../layout/BasicLayout';
 import IconBtnWrapper from '@components/common/IconBtnWrapper';
 import instance from 'src/api/axios';
+import Typography from '@components/common/Typography';
+import Button from '@components/common/button/Button';
+import { colors } from 'src/styles/colors';
 
 const mockData = {
   name: '양양',
@@ -27,10 +30,12 @@ const UserProfileEdit = () => {
     mobile: '',
     profileImageUrl: '',
   });
+  const [selectedGender, setSelectedGender] = useState(userSettingData.gender || null);
+
   // function PhoneNumber(phoneNumber: string) {
   //   return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7)}`;
   // }
-
+  const { birthdate, name, gender, nickname, mobile, profileImageUrl } = userSettingData;
   const fetchUserData = async () => {
     try {
       const response = await userData();
@@ -72,6 +77,11 @@ const UserProfileEdit = () => {
     setUserSettingData((prevUserData) => ({ ...prevUserData, birthdate: event.target.value }));
   };
 
+  const handleGenderChange = (selectedGender: string) => {
+    setSelectedGender(selectedGender);
+    setUserSettingData((prevUserData) => ({ ...prevUserData, gender: selectedGender }));
+  };
+
   const handleEdit = async (userData: UserData) => {
     const user = await userDataPost(userData);
     console.log(user);
@@ -94,6 +104,7 @@ const UserProfileEdit = () => {
           <Input label='닉네임'>
             <Input.TextField value={userSettingData.nickname} onChange={handleNicknameChange} />
           </Input>
+          <Divider />
           <Input label='생일'>
             <Input.TextField
               type='date'
@@ -101,6 +112,29 @@ const UserProfileEdit = () => {
               onChange={handleBirthdayChange}
             />
           </Input>
+          <GenderInput>
+            <Typography $variant='subtitle2'>
+              <Label>성별</Label>
+            </Typography>
+            <ButtonBox>
+              <Button
+                $variant={userSettingData.gender === 'MALE' ? 'lightPrimary' : 'grayOutline'}
+                radius='medium'
+                size='small'
+                onClick={() => handleGenderChange('MALE')}
+              >
+                남
+              </Button>
+              <Button
+                $variant={userSettingData.gender === 'FEMALE' ? 'lightPrimary' : 'grayOutline'}
+                radius='medium'
+                size='small'
+                onClick={() => handleGenderChange('FEMALE')}
+              >
+                여
+              </Button>
+            </ButtonBox>
+          </GenderInput>
 
           <Input label='전화번호'>
             <Input.TextField value={userSettingData.mobile} onChange={handlePhoneChange} />
@@ -114,6 +148,7 @@ const UserProfileEdit = () => {
 export default UserProfileEdit;
 
 const ContentContainer = styled.div`
+  padding-bottom: 76px;
   ${common.flexCenterColumn}
 `;
 
@@ -127,9 +162,22 @@ const InputContainer = styled.div`
   gap:12px;
 `;
 
-// const TypeButtonBox = styled.div`
-//   display: flex;
-//   gap: 10px;
-//   margin-top: 10px;
-//   margin-bottom: 30px;
-// `;
+const GenderInput = styled.div`
+  width: 100%;
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  gap: 9px;
+`;
+
+const Label = styled.div`
+  margin-bottom: 10px;
+`;
+
+const Divider = styled.div`
+  width: 100%;
+  height: 2px;
+  background: ${colors.gray[10]};
+  margin: 24px 0;
+`;
