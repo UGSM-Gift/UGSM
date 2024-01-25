@@ -1,3 +1,4 @@
+import axios from 'axios';
 import instance from './axios';
 
 export const imgSize = () => {
@@ -17,10 +18,8 @@ export const imgSize = () => {
 
 export const fetchImg = async (width: number, imgUrl: string) => {
   try {
-    const response = await instance.get(
-      `https://cloudfront.ugsm.co.kr/user-profile/${imgUrl}3bafd507745-update.gif?w=${width}&f=webp`
-    );
-    return response.data;
+    const response = await axios.get(`/${imgUrl}?w=${width}&f=webp`);
+    console.log(response);
   } catch (error) {
     console.log(error);
   }
