@@ -45,6 +45,9 @@ const MyPage = () => {
     };
     try {
       const response = await axios.delete(`/api/user/me`, {
+        headers: {
+          'Content-Type': `application/json`,
+        },
         data: reason,
       });
       console.log(response);

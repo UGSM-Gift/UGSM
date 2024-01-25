@@ -87,23 +87,25 @@ const UserProfileEdit = () => {
           </IconBtnWrapper>
         </ProfileEditBox>
         <div onClick={() => handleEdit(userSettingData)}>수정하기</div>
-        <Input label='이름'>
-          <Input.TextField value={userSettingData.name} onChange={handleNameChange} />
-        </Input>
-        <Input label='닉네임'>
-          <Input.TextField value={userSettingData.nickname} onChange={handleNicknameChange} />
-        </Input>
-        <Input label='생일'>
-          <Input.TextField
-            type='date'
-            value={userSettingData.birthdate}
-            onChange={handleBirthdayChange}
-          />
-        </Input>
+        <InputContainer>
+          <Input label='이름'>
+            <Input.TextField value={userSettingData.name} onChange={handleNameChange} />
+          </Input>
+          <Input label='닉네임'>
+            <Input.TextField value={userSettingData.nickname} onChange={handleNicknameChange} />
+          </Input>
+          <Input label='생일'>
+            <Input.TextField
+              type='date'
+              value={userSettingData.birthdate}
+              onChange={handleBirthdayChange}
+            />
+          </Input>
 
-        <Input label='전화번호'>
-          <Input.TextField value={userSettingData.mobile} onChange={handlePhoneChange} />
-        </Input>
+          <Input label='전화번호'>
+            <Input.TextField value={userSettingData.mobile} onChange={handlePhoneChange} />
+          </Input>
+        </InputContainer>
       </ContentContainer>
     </BasicLayout>
   );
@@ -114,8 +116,15 @@ export default UserProfileEdit;
 const ContentContainer = styled.div`
   ${common.flexCenterColumn}
 `;
+
 const ProfileEditBox = styled.div`
   position: relative;
+`;
+
+const InputContainer = styled.div`
+  width: 100%;
+  ${common.flexColumn}
+  gap:12px;
 `;
 
 // const TypeButtonBox = styled.div`
