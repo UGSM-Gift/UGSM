@@ -78,13 +78,13 @@ const OuterDiv = styled.div`
             background: center / contain no-repeat url(${HomeDIcon});
         }
         a.active:first-child .menu-icon::before{
-            background: center / 100% no-repeat url(${HomeIcon});
+            background: center / contain no-repeat url(${HomeIcon});
         }
         a:nth-child(2) .menu-icon::before{
             background: center / contain no-repeat url(${ListDIcon});
         }
         a.active:nth-child(2) .menu-icon::before{
-            background: center / 100% no-repeat url(${ListIcon});
+            background: center / contain no-repeat url(${ListIcon});
         }
         a:nth-child(3) .menu-icon::before{
             background: center / contain no-repeat url(${UserDIcon});
