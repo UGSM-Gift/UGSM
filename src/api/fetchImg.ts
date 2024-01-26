@@ -16,11 +16,25 @@ export const imgSize = () => {
   return maxWidth;
 };
 
-export const fetchImg = async (width: number, imgUrl: string) => {
+export const fetchQueryStringImg = async (width: number, imgUrl: string) => {
   try {
-    const response = await axios.get(`/${imgUrl}?w=${width}&f=webp`);
+    const response = await axios.get(
+      `https://cloudfront.ugsm.co.kr/user-profile/${imgUrl}?w=${width}&f=webp`
+    );
     console.log(response);
   } catch (error) {
-    console.log(error);
+    console.log(error, 'img fetch 실패');
+  }
+};
+
+export const fetchImg = async (img: any) => {
+  const data = new FormData();
+  data.append('image', img);
+  data.append('type', 'PROFILE');
+  try {
+    const response = await instance.post(`/api/image`, data);
+    return response.data.data.imageUrl;
+  } catch (error) {
+    console.log(error, 'img fetch 실패');
   }
 };

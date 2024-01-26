@@ -17,4 +17,5 @@ export type Anniversary = {
   children: string;
   birthdata: boolean;
   anniversaryCount?: number;
+  onClick?: () => void;
 };

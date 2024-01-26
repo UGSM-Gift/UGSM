@@ -40,7 +40,7 @@ export const userDataPost = async (userData: UserProfileData) => {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
+    console.log(response, 'response');
     return response;
   } catch (error) {
     console.log(error);

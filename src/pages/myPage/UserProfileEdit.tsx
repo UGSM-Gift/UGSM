@@ -13,7 +13,7 @@ import Typography from '@components/common/Typography';
 import Button from '@components/common/button/Button';
 import { colors } from 'src/styles/colors';
 import { RADIUS } from 'src/constants/style';
-import { fetchImg, imgSize } from 'src/api/fetchImg';
+import { fetchImg, fetchQueryStringImg, imgSize } from 'src/api/fetchImg';
 
 const mockData = {
   name: '양양',
@@ -25,7 +25,7 @@ const mockData = {
 //  + 성별
 const UserProfileEdit = () => {
   const [imgResize, setImgResize] = useState(84);
-  const [uploadImgUrl, setUploadImgUrl] = useState('');
+  const [uploadImgUrl, setUploadImgUrl] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [userSettingData, setUserSettingData] = useState<UserData>({
@@ -57,7 +57,7 @@ const UserProfileEdit = () => {
         mobile: user.mobile || '',
         profileImageUrl: user.profileImageUrl || null,
       };
-      console.log('데이터가져오기', userSettingData);
+      // console.log('데이터가져오기', userSettingData);
       setUserSettingData(userSettingData);
     } catch (error) {
       console.error('데이터 가져오기에 실패했습니다.', error);
@@ -92,24 +92,23 @@ const UserProfileEdit = () => {
   };
 
   const handleEdit = async (userData: UserData) => {
+    console.log(userData, '보내는 데이터');
     const user = await userDataPost(userData);
-    console.log(user);
+    console.log(user, '응답데이터');
   };
 
-  const onchangeImageUpload = (e: { target: { files: any } }) => {
-    const { files } = e.target;
-    const uploadFile = files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(uploadFile);
-    reader.onloadend = () => {
-      if (typeof reader.result === 'string') {
-        setUploadImgUrl(reader.result);
-      }
-    };
+  // img upload
+  const onchangeImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const imgUrl = e.target.files[0].name;
+      const img = await fetchQueryStringImg(imgResize, imgUrl);
+
+      // setUploadImgUrl(`${img}?w=50`);
+    }
   };
 
   const handleIconClick = () => {
-    fileInputRef.current?.click(); // 파일 입력 요소의 클릭 이벤트 트리거
+    fileInputRef.current?.click();
   };
 
   return (
@@ -177,7 +176,6 @@ const UserProfileEdit = () => {
         <div
           onClick={() => {
             handleEdit(userSettingData);
-            fetchImg(imgResize, uploadImgUrl);
           }}
         >
           수정하기

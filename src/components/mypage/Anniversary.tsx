@@ -4,14 +4,14 @@ import { UserProfile } from 'src/types/userData';
 import styled from 'styled-components';
 import DataBox from './DataBox';
 
-const Anniversary = ({ userData }: { userData: UserProfile }) => {
+const Anniversary = ({ userData, onClick }: { userData: UserProfile; onClick: () => void }) => {
   const originalDate = userData.birthdate;
   const formattedDate = originalDate?.slice(2).replace(/-/g, '.');
 
   return (
     <AnniversaryBox>
       <DataBox children={formattedDate} birthdata />
-      <DataBox children={'기념일'} birthdata={false} anniversaryCount={0} />
+      <DataBox onClick={onClick} children={'기념일'} birthdata={false} anniversaryCount={0} />
     </AnniversaryBox>
   );
 };

@@ -10,6 +10,7 @@ import MyPage from 'src/pages/myPage/MyPage';
 import UserProfileEdit from 'src/pages/myPage/UserProfileEdit';
 import NotificationSetting from 'src/pages/myPage/NotificationSetting';
 import AccountDelete from 'src/pages/myPage/AccountDelete';
+import Anniversary from 'src/pages/myPage/Anniversary';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: ROUTES_PATH.myPage,
     element: <MyPage />,
+  },
+  {
+    path: ROUTES_PATH.anniversary,
+    element: <Anniversary />,
   },
   {
     path: ROUTES_PATH.setting,

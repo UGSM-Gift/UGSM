@@ -3,8 +3,11 @@ import Anniversary from '@components/mypage/Anniversary';
 import Profile from '@components/mypage/Profile';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import instance from 'src/api/axios';
 import { userData } from 'src/api/userData';
+import { notice } from 'src/constants/setting';
+import { colors } from 'src/styles/colors';
 import { common } from 'src/styles/common';
 import { UserProfile } from 'src/types/userData';
 import styled from 'styled-components';
@@ -20,7 +23,7 @@ const MyPage = () => {
     profileImageUrl: '',
     birthdate: '',
   });
-
+  const navigator = useNavigate();
   const { nickname } = userProfileData;
 
   const fetchUserData = async () => {
@@ -39,15 +42,14 @@ const MyPage = () => {
   };
 
   const deleteUserData = async () => {
+    
     const reason: deleteType = {
       deletionReasonId: 1,
       details: null,
     };
+
     try {
-      const response = await axios.delete(`/api/user/me`, {
-        headers: {
-          'Content-Type': `application/json`,
-        },
+      const response = await instance.delete(`/api/user/me`, {
         data: reason,
       });
       console.log(response);
@@ -67,7 +69,17 @@ const MyPage = () => {
         <Profile userData={userProfileData} />
         <Typography $variant='title3'>{nickname}</Typography>
       </ProfileBox>
-      <Anniversary userData={userProfileData} />
+      <Anniversary userData={userProfileData} onClick={() => navigator('/mypage/setting/anniversary')} />
+      <Divider />
+      <List>
+        {notice.map((setting, index) => (
+          <div key={index}>
+            <ListItem>
+              <Typography $variant='button2'>{setting.name}</Typography>
+            </ListItem>
+          </div>
+        ))}
+      </List>
     </BasicLayout>
   );
 };
@@ -77,4 +89,25 @@ export default MyPage;
 const ProfileBox = styled.div`
   ${common.flexCenterColumn}
   gap: 10px;
+`;
+
+const Divider = styled.hr`
+  height: 8px;
+  background: ${colors.gray[10]};
+  margin-left: -16px;
+  margin-right: -16px;
+`;
+
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const ListItem = styled.li`
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid ${colors.gray[10]};
+  cursor: pointer;
 `;

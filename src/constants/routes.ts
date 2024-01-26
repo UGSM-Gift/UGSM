@@ -5,6 +5,7 @@ export const ROUTES_PATH = {
   oauth: '/oauth/callback/',
   myPage: '/mypage',
   setting: '/mypage/setting',
+  anniversary: '/mypage/setting/anniversary',
   userProfileEdit: '/mypage/setting/userProfileEdit',
   notificationSetting: '/mypage/setting/notificationSetting',
   accountDelete: '/mypage/setting/accountDelete',
