@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import BasicLayout from "./layout/BasicLayout";
 
 const Home = () => {
   // const fetchUserData = async () => {
@@ -14,7 +15,9 @@ const Home = () => {
   // useEffect(() => {
   //   fetchUserData();
   // }, []);
-  return <div>home</div>;
+  return <BasicLayout>
+    <div>home</div>;
+  </BasicLayout>
 };
 
 export default Home;
