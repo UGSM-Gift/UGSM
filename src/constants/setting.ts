@@ -4,7 +4,10 @@ export type SettingItem = {
   name: string;
   path?: string; // `path`는 `ROUTES_PATH`의 키 중 하나거나 없을 수 있습니다.
 };
-
+export type NoticeItem = {
+  name: string;
+  path?: string; // `path`는 `ROUTES_PATH`의 키 중 하나거나 없을 수 있습니다.
+};
 export const settings: SettingItem[] = [
   {
     name: '회원 정보 수정',
@@ -21,5 +24,19 @@ export const settings: SettingItem[] = [
   {
     name: '회원 탈퇴',
     path: ROUTES_PATH.accountDelete,
+  },
+];
+
+export const notice: NoticeItem[] = [
+  {
+    name: '공지사항',
+    path: ROUTES_PATH.userProfileEdit,
+  },
+  {
+    name: '고객센터',
+    path: ROUTES_PATH.notificationSetting,
+  },
+  {
+    name: 'FAQ',
   },
 ];

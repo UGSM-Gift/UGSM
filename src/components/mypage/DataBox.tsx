@@ -5,9 +5,9 @@ import { common } from 'src/styles/common';
 import { Anniversary } from 'src/types/userData';
 import styled from 'styled-components';
 
-const DataBox: React.FC<Anniversary> = ({ children, birthdata, anniversaryCount }) => {
+const DataBox: React.FC<Anniversary> = ({ children, birthdata, anniversaryCount, onClick }) => {
   return (
-    <DataContainer>
+    <DataContainer onClick={onClick}>
       <ContentImg>
         {birthdata ? (
           <img src={`${process.env.PUBLIC_URL}/assets/images/cake.png`} alt='cake' />
@@ -31,6 +31,7 @@ const DataContainer = styled.div`
   ${common.flexCenterColumn}
   border: 1px solid ${colors.gray[30]};
   border-radius: 12px;
+  cursor: pointer;
 `;
 
 const ContentImg = styled.div`
