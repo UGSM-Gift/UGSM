@@ -11,6 +11,7 @@ import UserProfileEdit from 'src/pages/myPage/UserProfileEdit';
 import NotificationSetting from 'src/pages/myPage/NotificationSetting';
 import AccountDelete from 'src/pages/myPage/AccountDelete';
 import Anniversary from 'src/pages/myPage/Anniversary';
+import GiftList from "src/pages/GiftList";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: ROUTES_PATH.myPage,
     element: <MyPage />,
+  },
+  {
+    path: ROUTES_PATH.giftList,
+    element: <GiftList />,
   },
   {
     path: ROUTES_PATH.anniversary,

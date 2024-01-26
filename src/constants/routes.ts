@@ -1,5 +1,6 @@
 export const ROUTES_PATH = {
   home: '/',
+  giftList: '/gift-list',
   login: '/login',
   account: '/account',
   oauth: '/oauth/callback/',
