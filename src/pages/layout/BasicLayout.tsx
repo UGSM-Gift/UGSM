@@ -4,8 +4,10 @@ import React, { useEffect } from 'react';
 import { colors } from 'src/styles/colors';
 import { BasicLayoutProps } from 'src/types/layout';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 
 const BasicLayout = ({ children, style }: BasicLayoutProps) => {
+  const location = useLocation();
   const setScreenSize = () => {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -21,7 +23,7 @@ const BasicLayout = ({ children, style }: BasicLayoutProps) => {
         <Heading.Content />
       </Heading>
       <ContentsContainer>{children}</ContentsContainer>
-      <NavBar/>
+      {location.pathname !== '/login' && location.pathname !== '/account' && <NavBar />}
     </Layout>
   );
 };
