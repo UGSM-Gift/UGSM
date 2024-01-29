@@ -1,9 +1,9 @@
 import React from "react";
-import VerticalDatepicker from "@components/datepicker/VerticalDatepicker";
+import YearWheel from "@components/datepicker/YearWheel";
 
 const Home = () => {
   return <div>
-    <VerticalDatepicker/>
+    <YearWheel/>
     Home
   </div>;
 };
