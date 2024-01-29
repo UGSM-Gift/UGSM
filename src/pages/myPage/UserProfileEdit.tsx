@@ -1,8 +1,10 @@
 import Input from '@components/common/Input';
 import Profile from '@components/mypage/Profile';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { userData, userDataPost } from 'src/api/userData';
-import { ReactComponent as EditIcon } from '@assets/icons/editIcon.svg';
+import { ReactComponent as EditIcon } from '@assets/icons/Editicon.svg';
+
 import { common } from 'src/styles/common';
 import { UserData } from 'src/types/userData';
 import styled from 'styled-components';
