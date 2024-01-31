@@ -127,7 +127,7 @@ export default CalendarForm;
 
 const CalendarContainer = styled.div`
   .Calendar {
-    border: 1px solid #ddd;
+    margin: 0 auto;
     box-shadow: none;
   }
   .Calendar__yearText {
