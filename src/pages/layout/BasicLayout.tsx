@@ -1,4 +1,4 @@
-import { Heading } from '@components/Header';
+import { Heading } from '@components/header';
 import NavBar from '@components/common/NavBar';
 import React, { useEffect } from 'react';
 import { colors } from 'src/styles/colors';
@@ -23,7 +23,9 @@ const BasicLayout = ({ children, style }: BasicLayoutProps) => {
         <Heading.Content />
       </Heading>
       <ContentsContainer>{children}</ContentsContainer>
-      {location.pathname !== '/login' && location.pathname !== '/account' && <NavBar />}
+      {location.pathname !== '/login' &&
+        location.pathname !== '/account' &&
+        location.pathname !== '/mypage/setting/userProfileEdit' && <NavBar />}
     </Layout>
   );
 };

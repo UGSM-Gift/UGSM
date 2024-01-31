@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, WheelEventHandler } from 'react';
 const YEAR = Array.from({ length: 1000 }, (_, i) => i + 2024);
 const MONTHS = Array.from({ length: 1 }, (_, i) => i + 1);
 
-const YearWheel = () => {
+const MothWheel = () => {
   const [selectableWheel, setSelectableWheel] = useState({
     years: [0, 0].concat(YEAR).concat([0, 0]),
     months: MONTHS,
@@ -148,4 +148,4 @@ const OuterDiv = styled.div`
   }
 `;
 
-export default YearWheel;
+export default MothWheel;
