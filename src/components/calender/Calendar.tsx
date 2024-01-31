@@ -1,74 +1,56 @@
 import React, { useState } from 'react';
+import 'react-modern-calendar-datepicker/lib/DatePicker.css';
+import { Calendar } from 'react-modern-calendar-datepicker';
+
 import styled from 'styled-components';
+import { colors } from 'src/styles/colors';
+type valueType = {
+  year: number;
+  month: number;
+  day: number;
+};
+const CalendarForm = () => {
+  const [selectedDay, setSelectedDay] = useState({
+    year: 2024,
+    month: 1,
+    day: 1,
+  });
 
-const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-
+  const handleDayChange = (value: valueType) => {
+    console.log(value);
+    if (value) {
+      setSelectedDay({
+        year: value.year,
+        month: value.month,
+        day: value.day,
+      });
+    }
+  };
   return (
     <CalendarContainer>
-      <Header>
-        <button onClick={handlePrevMonth}>{'<'}</button>
-        <span>{formatDate(currentDate)}</span>
-        <button onClick={handleNextMonth}>{'>'}</button>
-      </Header>
-      <Weekdays>
-        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((weekday, index) => (
-          <Day key={index}>{weekday}</Day>
-        ))}
-      </Weekdays>
-      <DaysGrid>{renderDays()}</DaysGrid>
+      <Calendar
+        value={selectedDay}
+        onChange={handleDayChange}
+        colorPrimary={`${colors.white}`}
+        calendarClassName='custom-calendar' // and this
+        calendarTodayClassName='custom-today-day' // also this
+      />
     </CalendarContainer>
   );
 };
 
-export default Calendar;
+export default CalendarForm;
 
 const CalendarContainer = styled.div`
-  width: 100%;
-  max-width: 400px;
-  background: #fff;
-  border: 1px solid #ddd;
-  text-align: center;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  font-weight: bold;
-`;
-
-const Weekdays = styled.div`
-  display: flex;
-`;
-
-const Day = styled.div`
-  width: 14.28%;
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-  &:nth-child(7n + 1) {
-    color: #e74c3c; // 일요일 색상
+  .Calendar__day.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)::after {
+    content: none;
   }
-`;
-
-const DaysGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const DayNumber = styled.div`
-  width: 14.28%;
-  padding: 10px 0;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #f0f0f0;
+  .custom-today-day {
+    background-color: ${colors.gray[10]};
+    border: none;
   }
-
-  &.selected {
-    background-color: #ecf0f1;
-    border-radius: 50%;
+  .custom-calendar .-selected {
+    color: ${colors.primary[400]};
+    border: 1px solid ${colors.primary[400]};
   }
 `;
