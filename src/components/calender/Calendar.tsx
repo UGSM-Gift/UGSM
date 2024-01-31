@@ -1,6 +1,28 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+const Calendar = () => {
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  return (
+    <CalendarContainer>
+      <Header>
+        <button onClick={handlePrevMonth}>{'<'}</button>
+        <span>{formatDate(currentDate)}</span>
+        <button onClick={handleNextMonth}>{'>'}</button>
+      </Header>
+      <Weekdays>
+        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((weekday, index) => (
+          <Day key={index}>{weekday}</Day>
+        ))}
+      </Weekdays>
+      <DaysGrid>{renderDays()}</DaysGrid>
+    </CalendarContainer>
+  );
+};
+
+export default Calendar;
+
 const CalendarContainer = styled.div`
   width: 100%;
   max-width: 400px;
@@ -50,61 +72,3 @@ const DayNumber = styled.div`
     border-radius: 50%;
   }
 `;
-
-const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-
-  const renderDays = () => {
-    const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-    const days = [];
-    for (let i = 1; i <= daysInMonth; i++) {
-      days.push(<DayNumber key={i}>{i}</DayNumber>);
-    }
-    return days;
-  };
-
-  const handlePrevMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
-  };
-
-  const handleNextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
-  };
-
-  // 달과 연도를 렌더링하기 위한 포맷 함수
-  const formatDate = (date: Date) => {
-    const months = [
-      '1월',
-      '2월',
-      '3월',
-      '4월',
-      '5월',
-      '6월',
-      '7월',
-      '8월',
-      '9월',
-      '10월',
-      '11월',
-      '12월',
-    ];
-    return `${months[date.getMonth()]} ${date.getFullYear()}`;
-  };
-
-  return (
-    <CalendarContainer>
-      <Header>
-        <button onClick={handlePrevMonth}>{'<'}</button>
-        <span>{formatDate(currentDate)}</span>
-        <button onClick={handleNextMonth}>{'>'}</button>
-      </Header>
-      <Weekdays>
-        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((weekday, index) => (
-          <Day key={index}>{weekday}</Day>
-        ))}
-      </Weekdays>
-      <DaysGrid>{renderDays()}</DaysGrid>
-    </CalendarContainer>
-  );
-};
-
-export default Calendar;
