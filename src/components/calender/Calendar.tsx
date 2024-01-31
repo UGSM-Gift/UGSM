@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import { Calendar } from 'react-modern-calendar-datepicker';
-
+import ArrowIcon from '@assets/icons/arrowIcon.svg';
 import styled from 'styled-components';
 import { colors } from 'src/styles/colors';
 
@@ -126,6 +126,10 @@ const CalendarForm = () => {
 export default CalendarForm;
 
 const CalendarContainer = styled.div`
+  .Calendar {
+    border: 1px solid #ddd;
+    box-shadow: none;
+  }
   .Calendar__yearText {
     display: none;
   }
@@ -155,5 +159,8 @@ const CalendarContainer = styled.div`
     :last-child {
       color: ${colors.primary[400]};
     }
+  }
+  .Calendar__monthArrow {
+    background-image: url(${ArrowIcon});
   }
 `;
