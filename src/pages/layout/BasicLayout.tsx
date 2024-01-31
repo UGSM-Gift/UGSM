@@ -8,6 +8,8 @@ import { useLocation } from 'react-router-dom';
 
 const BasicLayout = ({ children, style }: BasicLayoutProps) => {
   const location = useLocation();
+  const shouldHideNavBar = location.pathname.startsWith('/mypage/');
+
   const setScreenSize = () => {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -23,9 +25,9 @@ const BasicLayout = ({ children, style }: BasicLayoutProps) => {
         <Heading.Content />
       </Heading>
       <ContentsContainer>{children}</ContentsContainer>
-      {location.pathname !== '/login' &&
-        location.pathname !== '/account' &&
-        location.pathname !== '/mypage/setting/userProfileEdit' && <NavBar />}
+      {location.pathname !== '/login' && location.pathname !== '/account' && !shouldHideNavBar && (
+        <NavBar />
+      )}
     </Layout>
   );
 };

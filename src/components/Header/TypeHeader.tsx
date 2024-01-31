@@ -28,6 +28,16 @@ export const SettingHeader = () => {
     />
   );
 };
+export const AnniversaryHeader = () => {
+  const navigator = useNavigate();
+  return (
+    <Header
+      leftContent1={<BackIcon />}
+      leftContentOnClick={() => navigator(ROUTES_PATH.myPage)}
+      title='기념일'
+    />
+  );
+};
 
 const handleEdit = async (userData: UserData) => {
   const user = await userDataPost(userData);
