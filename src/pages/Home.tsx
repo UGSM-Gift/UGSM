@@ -16,9 +16,8 @@ const Home = () => {
 
   return (
     <BasicLayout>
-      <div onClick={() => openModal('exampleType', <Modal />)}>모달창 열기</div>
-
-      {isOpen && <Modal />}
+      <div onClick={() => openModal('card', <Modal />)}>모달창 열기</div>
+      {isOpen && <Modal type={'card'} />}
     </BasicLayout>
   );
 };

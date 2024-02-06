@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
 import { usePreventScroll } from 'src/hooks/usePreventScroll';
 import { useModalStore } from 'src/zustand/useModalStore';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Modal = () => {
+type IsModalContainerProps = {
+  type?: string;
+};
+
+const Modal = ({ type }: { type?: string }) => {
   const closeModal = useModalStore((state) => state.closeModal);
   const handleModalClick = (event: { stopPropagation: () => void }) => {
     event.stopPropagation();
@@ -11,7 +15,7 @@ const Modal = () => {
   usePreventScroll();
   return (
     <Backdrop onClick={closeModal}>
-      <ModalContainer onClick={handleModalClick}>
+      <ModalContainer type={type} onClick={handleModalClick}>
         modal <div onClick={closeModal}>모달창 닫기</div>
       </ModalContainer>
     </Backdrop>
@@ -19,6 +23,26 @@ const Modal = () => {
 };
 
 export default Modal;
+
+const modalStyleByType = (type?: string) => {
+  switch (type) {
+    case 'card':
+      return css`
+        width: 500px;
+        height: 500px;
+      `;
+    case 'slide':
+      return css`
+        width: 100vw;
+        height: 500px;
+      `;
+    case 'full':
+      return css`
+        width: 100vw;
+        height: 100vh;
+      `;
+  }
+};
 
 const Backdrop = styled.div`
   position: fixed;
@@ -34,9 +58,8 @@ const Backdrop = styled.div`
   z-index: 1;
 `;
 
-const ModalContainer = styled.div`
-  width: 400px;
-  height: 400px;
+const ModalContainer = styled.div<IsModalContainerProps>`
+  ${(props) => modalStyleByType(props.type)}
   background-color: #fff;
   z-index: 2;
 `;
