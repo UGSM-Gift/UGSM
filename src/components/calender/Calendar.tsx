@@ -1,4 +1,5 @@
 'use client';
+import { addMonths, subMonths } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import useCalendar from 'src/hooks/calendar/useCalendar';
@@ -13,13 +14,27 @@ interface DayContainerProps {
 const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
 const CalendarForm = () => {
-  const { weeks } = useCalendar();
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const handlePrevMonth = () => {
+    setCurrentMonth(subMonths(currentMonth, 1));
+  };
+  const handleNextMonth = () => {
+    setCurrentMonth(addMonths(currentMonth, 1));
+  };
+  const { weeks } = useCalendar(currentMonth);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const today = new Date();
 
-  const isToday = (day: Date) => day.getDate() === today.getDate();
-  const isSelected = (day: Date) => selectedDate && day.getDate() === selectedDate.getDate();
-  const isCurrentMonth = (day: Date) => day.getMonth() === today.getMonth();
+  const isToday = (day: Date) =>
+    day.getDate() === today.getDate() &&
+    day.getMonth() === today.getMonth() &&
+    day.getFullYear() === today.getFullYear();
+  const isSelected = (day: Date) =>
+    selectedDate &&
+    day.getDate() === selectedDate.getDate() &&
+    day.getMonth() === selectedDate.getMonth() &&
+    day.getFullYear() === selectedDate.getFullYear();
+  const isCurrentMonth = (day: Date) => day.getMonth() === currentMonth.getMonth();
 
   const handleDayClick = (day: React.SetStateAction<Date | null>) => {
     setSelectedDate(day);
@@ -27,6 +42,11 @@ const CalendarForm = () => {
 
   return (
     <>
+      <Month>
+        <button onClick={handlePrevMonth}>{'<'}</button>
+        <span>{`${currentMonth.getMonth() + 1}월`}</span>
+        <button onClick={handleNextMonth}>{'>'}</button>
+      </Month>
       <CalendarHeader>
         {WEEK_DAYS.map((day, index) => (
           <DayTitle key={index} $isWeekend={[0, 6].includes(index)}>
@@ -57,6 +77,7 @@ const CalendarForm = () => {
 
 export default CalendarForm;
 
+const Month = styled.div``;
 const CalendarContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -80,7 +101,7 @@ const DayContainer = styled.div<DayContainerProps>`
   background-color: ${(props) => (props.$isToday ? `${colors.gray[10]}` : 'none')};
   border: 1px solid ${(props) => (props.$isSelected ? `${colors.primary[400]}` : 'none')};
   color: ${(props) => (props.$isSelected ? `${colors.primary[400]}` : `${colors.black}`)};
-  visibility: ${(props) => (!props.$isCurrentMonth ? 'hidden' : '')};
+  //visibility: ${(props) => (!props.$isCurrentMonth ? 'hidden' : '')};
 `;
 
 const CalendarHeader = styled.div`
