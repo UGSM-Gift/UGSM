@@ -8,9 +8,9 @@ import styled from 'styled-components';
 interface DayContainerProps {
   $isToday: boolean;
   $isSelected?: boolean;
-  $isWeekend: boolean;
   $isCurrentMonth: boolean;
 }
+const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
 const CalendarForm = () => {
   const { weeks } = useCalendar();
@@ -19,7 +19,6 @@ const CalendarForm = () => {
 
   const isToday = (day: Date) => day.getDate() === today.getDate();
   const isSelected = (day: Date) => selectedDate && day.getDate() === selectedDate.getDate();
-  const isWeekend = (day: Date) => [0, 6].includes(day.getDay());
   const isCurrentMonth = (day: Date) => day.getMonth() === today.getMonth();
 
   const handleDayClick = (day: React.SetStateAction<Date | null>) => {
@@ -27,24 +26,32 @@ const CalendarForm = () => {
   };
 
   return (
-    <CalendarContainer>
-      {weeks.map((week, weekIndex) => (
-        <WeekRow key={weekIndex}>
-          {week.map((day, dayIndex) => (
-            <DayContainer
-              key={dayIndex}
-              $isToday={isToday(day)}
-              $isSelected={isSelected(day) ?? false}
-              $isWeekend={isWeekend(day)}
-              $isCurrentMonth={isCurrentMonth(day)}
-              onClick={() => handleDayClick(day)}
-            >
-              {day.getDate()}
-            </DayContainer>
-          ))}
-        </WeekRow>
-      ))}
-    </CalendarContainer>
+    <>
+      <CalendarHeader>
+        {WEEK_DAYS.map((day, index) => (
+          <DayTitle key={index} $isWeekend={[0, 6].includes(index)}>
+            {day}
+          </DayTitle>
+        ))}
+      </CalendarHeader>
+      <CalendarContainer>
+        {weeks.map((week, weekIndex) => (
+          <WeekRow key={weekIndex}>
+            {week.map((day, dayIndex) => (
+              <DayContainer
+                key={dayIndex}
+                $isToday={isToday(day)}
+                $isSelected={isSelected(day) ?? false}
+                $isCurrentMonth={isCurrentMonth(day)}
+                onClick={() => handleDayClick(day)}
+              >
+                {day.getDate()}
+              </DayContainer>
+            ))}
+          </WeekRow>
+        ))}
+      </CalendarContainer>
+    </>
   );
 };
 
@@ -69,8 +76,25 @@ const DayContainer = styled.div<DayContainerProps>`
   align-items: center;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 15px;
   background-color: ${(props) => (props.$isToday ? `${colors.gray[10]}` : 'none')};
   border: 1px solid ${(props) => (props.$isSelected ? `${colors.primary[400]}` : 'none')};
   color: ${(props) => (props.$isSelected ? `${colors.primary[400]}` : `${colors.black}`)};
-  opacity: ${(props) => (!props.$isCurrentMonth ? '0' : '1')};
+  visibility: ${(props) => (!props.$isCurrentMonth ? 'hidden' : '')};
+`;
+
+const CalendarHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  padding: 10px 0;
+  margin-bottom: 5px;
+`;
+
+const DayTitle = styled.div<{ $isWeekend: boolean }>`
+  font-size: 15px;
+  font-weight: 400;
+  flex: 1;
+  text-align: center;
+  color: ${(props) => (props.$isWeekend ? `${colors.primary[400]}` : `${colors.gray[60]}`)};
 `;
