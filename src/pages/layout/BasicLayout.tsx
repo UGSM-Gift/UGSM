@@ -1,4 +1,5 @@
 import { Heading } from '@components/Header';
+import NavBar from '@components/common/NavBar';
 import React, { useEffect } from 'react';
 import { colors } from 'src/styles/colors';
 import { BasicLayoutProps } from 'src/types/layout';
@@ -20,6 +21,7 @@ const BasicLayout = ({ children, style }: BasicLayoutProps) => {
         <Heading.Content />
       </Heading>
       <ContentsContainer>{children}</ContentsContainer>
+      <NavBar/>
     </Layout>
   );
 };

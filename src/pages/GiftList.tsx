@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import BasicLayout from "./layout/BasicLayout";
 
-const Home = () => {
+const GiftList = () => {
   // const fetchUserData = async () => {
   //   try {
   //     const response = await userData();
@@ -16,8 +16,8 @@ const Home = () => {
   //   fetchUserData();
   // }, []);
   return <BasicLayout>
-    <div>home</div>;
+    <div>GiftList</div>;
   </BasicLayout>
 };
 
-export default Home;
+export default GiftList;

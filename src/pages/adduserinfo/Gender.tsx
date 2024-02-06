@@ -36,18 +36,18 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
       </Typography>
       <ButtonBox>
         <Button
-          $variant={selectedGender === 'male' ? 'lightPrimary' : 'grayOutline'}
+          $variant={selectedGender === 'MALE' ? 'lightPrimary' : 'grayOutline'}
           radius='medium'
           size='small'
-          onClick={() => handleGenderChange('male')}
+          onClick={() => handleGenderChange('MALE')}
         >
           남
         </Button>
         <Button
-          $variant={selectedGender === 'female' ? 'lightPrimary' : 'grayOutline'}
+          $variant={selectedGender === 'FEMALE' ? 'lightPrimary' : 'grayOutline'}
           radius='medium'
           size='small'
-          onClick={() => handleGenderChange('female')}
+          onClick={() => handleGenderChange('FEMALE')}
         >
           여
         </Button>
