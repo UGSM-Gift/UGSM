@@ -1,110 +1,166 @@
 import React, { useState } from 'react';
+import 'react-modern-calendar-datepicker/lib/DatePicker.css';
+import { Calendar } from 'react-modern-calendar-datepicker';
+import ArrowIcon from '@assets/icons/arrowIcon.svg';
 import styled from 'styled-components';
+import { colors } from 'src/styles/colors';
 
-const CalendarContainer = styled.div`
-  width: 100%;
-  max-width: 400px;
-  background: #fff;
-  border: 1px solid #ddd;
-  text-align: center;
-`;
+const myCustomLocale = {
+  // Months list by order
+  months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  font-weight: bold;
-`;
+  // Week days by order
+  weekDays: [
+    {
+      name: 'Sunday', // used for accessibility
+      short: 'S', // displayed at the top of days' rows
+      isWeekend: true, // is it a formal weekend or not?
+    },
+    {
+      name: 'Monday',
+      short: 'M',
+    },
+    {
+      name: 'Tuesday',
+      short: 'T',
+    },
+    {
+      name: 'Wednesday',
+      short: 'W',
+    },
+    {
+      name: 'Thursday',
+      short: 'T',
+    },
+    {
+      name: 'Friday',
+      short: 'F',
+    },
+    {
+      name: 'Saturday',
+      short: 'S',
+      isWeekend: true,
+    },
+  ],
 
-const Weekdays = styled.div`
-  display: flex;
-`;
+  // Just play around with this number between 0 and 6
+  weekStartingIndex: 0,
 
-const Day = styled.div`
-  width: 14.28%;
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-  &:nth-child(7n + 1) {
-    color: #e74c3c; // 일요일 색상
-  }
-`;
+  // Return a { year: number, month: number, day: number } object
+  getToday(gregorainTodayObject: any) {
+    return gregorainTodayObject; // You may want to convert this to your locale
+  },
 
-const DaysGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
+  // Return a native JavaScript date here
+  toNativeDate(date: { year: number; month: number; day: number | undefined }) {
+    return new Date(date.year, date.month - 1, date.day);
+  },
 
-const DayNumber = styled.div`
-  width: 14.28%;
-  padding: 10px 0;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  // Return a number for date's month length
+  getMonthLength(date: { year: number; month: number }) {
+    return new Date(date.year, date.month, 0).getDate();
+  },
 
-  &:hover {
-    background-color: #f0f0f0;
-  }
+  // Transform a digit to your locale
+  transformDigit(digit: any) {
+    return digit; // Here you might want to transform digits to a different script
+  },
 
-  &.selected {
-    background-color: #ecf0f1;
-    border-radius: 50%;
-  }
-`;
+  // Texts in the date picker
+  nextMonth: '다음 달',
+  previousMonth: '이전 달',
+  openMonthSelector: '월 선택자 열기',
+  openYearSelector: '년 선택자 열기',
+  closeMonthSelector: '월 선택자 닫기',
+  closeYearSelector: '년 선택자 닫기',
+  from: '시작',
+  to: '끝',
+  defaultPlaceholder: '선택...',
 
-const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  // For input range value
+  digitSeparator: ',',
 
-  const renderDays = () => {
-    const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-    const days = [];
-    for (let i = 1; i <= daysInMonth; i++) {
-      days.push(<DayNumber key={i}>{i}</DayNumber>);
+  // If your provide -2 for example, year will be 2 digited
+  yearLetterSkip: 0,
+
+  // Is your language rtl or ltr?
+  isRtl: false,
+};
+
+type valueType = {
+  year: number;
+  month: number;
+  day: number;
+};
+const CalendarForm = () => {
+  const [selectedDay, setSelectedDay] = useState({
+    year: 2024,
+    month: 1,
+    day: 1,
+  });
+
+  const handleDayChange = (value: valueType) => {
+    console.log(value);
+    if (value) {
+      setSelectedDay({
+        year: value.year,
+        month: value.month,
+        day: value.day,
+      });
     }
-    return days;
   };
-
-  const handlePrevMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
-  };
-
-  const handleNextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
-  };
-
-  // 달과 연도를 렌더링하기 위한 포맷 함수
-  const formatDate = (date: Date) => {
-    const months = [
-      '1월',
-      '2월',
-      '3월',
-      '4월',
-      '5월',
-      '6월',
-      '7월',
-      '8월',
-      '9월',
-      '10월',
-      '11월',
-      '12월',
-    ];
-    return `${months[date.getMonth()]} ${date.getFullYear()}`;
-  };
-
   return (
     <CalendarContainer>
-      <Header>
-        <button onClick={handlePrevMonth}>{'<'}</button>
-        <span>{formatDate(currentDate)}</span>
-        <button onClick={handleNextMonth}>{'>'}</button>
-      </Header>
-      <Weekdays>
-        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((weekday, index) => (
-          <Day key={index}>{weekday}</Day>
-        ))}
-      </Weekdays>
-      <DaysGrid>{renderDays()}</DaysGrid>
+      <Calendar
+        value={selectedDay}
+        onChange={handleDayChange}
+        colorPrimary={`${colors.white}`}
+        locale={myCustomLocale}
+        calendarClassName='custom-calendar' // and this
+        calendarTodayClassName='custom-today-day' // also this
+      />
     </CalendarContainer>
   );
 };
 
-export default Calendar;
+export default CalendarForm;
+
+const CalendarContainer = styled.div`
+  .Calendar {
+    margin: 0 auto;
+    box-shadow: none;
+  }
+  .Calendar__yearText {
+    display: none;
+  }
+
+  .Calendar__day.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)::after {
+    content: none;
+  }
+
+  .custom-today-day {
+    background-color: ${colors.gray[10]};
+    border: none;
+  }
+
+  .custom-calendar .-selected {
+    color: ${colors.primary[400]};
+    border: 1px solid ${colors.primary[400]};
+  }
+
+  .Calendar__weekDays {
+    color: ${colors.gray[60]};
+    font-weight: 600;
+  }
+  .Calendar__weekDays {
+    :first-child {
+      color: ${colors.primary[400]};
+    }
+    :last-child {
+      color: ${colors.primary[400]};
+    }
+  }
+  .Calendar__monthArrow {
+    background-image: url(${ArrowIcon});
+  }
+`;

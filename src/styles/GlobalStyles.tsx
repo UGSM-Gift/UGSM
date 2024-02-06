@@ -134,6 +134,11 @@ textarea {
   margin: 0;
   border: none;
 }
+
+
+
+
+
 `;
 
 export default GlobalStyles;

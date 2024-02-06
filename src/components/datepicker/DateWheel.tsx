@@ -17,6 +17,22 @@ const DateWheelPicker = () => {
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
   useEffect(() => {
+    // 각 휠에 대한 초기 중앙 위치 설정
+    const setInitialScrollPosition = (
+      ref: React.RefObject<HTMLDivElement>,
+      index: number,
+      itemHeight: number
+    ) => {
+      if (ref.current) {
+        const centerPosition = (index - 1) * itemHeight; // index - 1은 배열이 0부터 시작하기 때문
+        ref.current.scrollTop = centerPosition;
+      }
+    };
+    // 초기 렌더링시 각 휠을 현재 선택된 연도, 월, 일의 중앙 위치로 스크롤
+    setInitialScrollPosition(yearWheelRef, 30, selectedYear - years[0]);
+    setInitialScrollPosition(monthWheelRef, 30, selectedMonth - 1);
+    setInitialScrollPosition(dayWheelRef, 30, selectedDay - 1);
+
     const calculateCenterItemIndex = (ref: React.RefObject<HTMLDivElement>) => {
       if (!ref.current || !ref.current.firstChild) return null;
 
@@ -77,7 +93,12 @@ const DateWheelPicker = () => {
     const newScrollTop = index * itemHeight - ref.current.clientHeight / 2 + itemHeight / 2;
     ref.current.scrollTo({ top: newScrollTop, behavior: 'smooth' });
   };
-
+  const handleItemClick = (ref: React.RefObject<HTMLDivElement>, index: number, itemHeight: number) => {
+    if (ref.current) {
+      const centerPosition = (index - 1) * itemHeight;
+      ref.current.scrollTop = centerPosition;
+    }
+  };
   return (
     <DateWheelPickerContainer>
       <Wheel ref={yearWheelRef}>
@@ -88,7 +109,7 @@ const DateWheelPicker = () => {
               className={year === selectedYear ? 'selected' : ''}
               onClick={() => {
                 setSelectedYear(index);
-                centerSelectedItem(yearWheelRef, index, 30);
+                handleItemClick(yearWheelRef, index, 30);
               }}
             >
               {year}
@@ -105,7 +126,7 @@ const DateWheelPicker = () => {
             className={month === selectedMonth ? 'selected' : ''}
             onClick={() => {
               setSelectedMonth(month);
-              centerSelectedItem(monthWheelRef, month - 1, 30);
+              handleItemClick(monthWheelRef, month - 1, 30);
             }}
           >
             {month}
@@ -120,7 +141,7 @@ const DateWheelPicker = () => {
             className={day === selectedDay ? 'selected' : ''}
             onClick={() => {
               setSelectedDay(day);
-              centerSelectedItem(dayWheelRef, day - 1, 30);
+              handleItemClick(dayWheelRef, day - 1, 30);
             }}
           >
             {day}
