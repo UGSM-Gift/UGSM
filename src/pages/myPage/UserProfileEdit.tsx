@@ -1,19 +1,20 @@
 import Input from '@components/common/Input';
 import Profile from '@components/mypage/Profile';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { userData, userDataPost } from 'src/api/userData';
-import { ReactComponent as EditIcon } from '@assets/icons/Editicon.svg';
+import { ReactComponent as EditIcon } from '@assets/icons/editIcon.svg';
+
 import { common } from 'src/styles/common';
 import { UserData } from 'src/types/userData';
 import styled from 'styled-components';
 import BasicLayout from '../layout/BasicLayout';
 import IconBtnWrapper from '@components/common/IconBtnWrapper';
-import instance from 'src/api/axios';
 import Typography from '@components/common/Typography';
 import Button from '@components/common/button/Button';
 import { colors } from 'src/styles/colors';
 import { RADIUS } from 'src/constants/style';
-import { fetchImg, fetchQueryStringImg, imgSize } from 'src/api/fetchImg';
+import { fetchImg, imgSize } from 'src/api/fetchImg';
 
 const mockData = {
   name: '양양',
@@ -72,6 +73,7 @@ const UserProfileEdit = () => {
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserSettingData((prevUserData) => ({ ...prevUserData, name: event.target.value }));
   };
+
   // 닉네임
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserSettingData((prevUserData) => ({ ...prevUserData, nickname: event.target.value }));
@@ -101,9 +103,10 @@ const UserProfileEdit = () => {
   const onchangeImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const imgUrl = e.target.files[0].name;
-      const img = await fetchQueryStringImg(imgResize, imgUrl);
-
-      // setUploadImgUrl(`${img}?w=50`);
+      const type = 'PROFILE';
+      const img = await fetchImg(imgUrl, type);
+      console.log(img);
+      setUploadImgUrl(img);
     }
   };
 

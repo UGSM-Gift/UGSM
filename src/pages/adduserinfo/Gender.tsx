@@ -5,6 +5,8 @@ import { UserDataProps } from 'src/modules/@types/common';
 import Typography from '@components/common/Typography';
 import Input from '@components/common/Input';
 import Button from '@components/common/button/Button';
+import DateWheelPicker from '@components/datepicker/DateWheel';
+
 const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
   const [selectedGender, setSelectedGender] = useState(userData.gender || null);
 
@@ -28,6 +30,7 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
         {userData.nickname}님의 <br />
         생일과 성별을 확인해주세요
       </Typography>
+      <DateWheelPicker />
       <Input label='생일'>
         <Input.TextField value={userData.birthdate} type='date' onChange={handleBirthdayChange} />
       </Input>

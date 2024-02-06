@@ -1,4 +1,3 @@
-import axios from 'axios';
 import instance from './axios';
 
 export const imgSize = () => {
@@ -16,21 +15,10 @@ export const imgSize = () => {
   return maxWidth;
 };
 
-export const fetchQueryStringImg = async (width: number, imgUrl: string) => {
-  try {
-    const response = await axios.get(
-      `https://cloudfront.ugsm.co.kr/user-profile/${imgUrl}?w=${width}&f=webp`
-    );
-    console.log(response);
-  } catch (error) {
-    console.log(error, 'img fetch 실패');
-  }
-};
-
-export const fetchImg = async (img: any) => {
+export const fetchImg = async (img: any, type: string) => {
   const data = new FormData();
   data.append('image', img);
-  data.append('type', 'PROFILE');
+  data.append('type', type);
   try {
     const response = await instance.post(`/api/image`, data);
     return response.data.data.imageUrl;

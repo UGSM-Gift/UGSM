@@ -33,9 +33,9 @@ const Ouath = () => {
       const userChecked = response.data.data.mobileVerified;
 
       if (userChecked) {
-        navigate('/');
+        navigate('/', { replace: true });
       } else {
-        navigate('/account');
+        navigate('/account', { replace: true });
       }
     } catch (error) {
       console.error(error);
