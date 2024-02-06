@@ -1,28 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { usePreventScroll } from 'src/hooks/usePreventScroll';
 import { useModalStore } from 'src/zustand/useModalStore';
 import styled from 'styled-components';
-import Typography from '../Typography';
 
-const Modal = (title: string, child: React.ReactNode, footerContent: string) => {
+const Modal = () => {
+  const closeModal = useModalStore((state) => state.closeModal);
+  const handleModalClick = (event: { stopPropagation: () => void }) => {
+    event.stopPropagation();
+  };
   usePreventScroll();
   return (
-    <ModalContainer>
-      <Header>
-        <Typography $variant='title3'>{title}</Typography>
-      </Header>
-      <Content>{child}</Content>
-      <Footer>{footerContent}</Footer>
-    </ModalContainer>
+    <Backdrop onClick={closeModal}>
+      <ModalContainer onClick={handleModalClick}>
+        modal <div onClick={closeModal}>모달창 닫기</div>
+      </ModalContainer>
+    </Backdrop>
   );
 };
 
 export default Modal;
 
-const ModalContainer = styled.div``;
+const Backdrop = styled.div`
+  position: fixed;
+  min-width: 100vw;
+  min-height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  z-index: 1;
+`;
 
-const Header = styled.div``;
-
-const Content = styled.div``;
-
-const Footer = styled.div``;
+const ModalContainer = styled.div`
+  width: 400px;
+  height: 400px;
+  background-color: #fff;
+  z-index: 2;
+`;
