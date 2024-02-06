@@ -1,7 +1,7 @@
 // dateUtils.js 또는 유틸리티 폴더 내의 별도 파일로 분리합니다.
 export const isSameDay = (
-  firstDate: { getDate: () => any; getMonth: () => any; getFullYear: () => any },
-  secondDate: { getDate: () => any; getMonth: () => any; getFullYear: () => any }
+  firstDate: { getDate: () => Date; getMonth: () => Date; getFullYear: () => Date },
+  secondDate: { getDate: () => Date; getMonth: () => Date; getFullYear: () => Date }
 ) => {
   return (
     firstDate.getDate() === secondDate.getDate() &&
@@ -10,6 +10,9 @@ export const isSameDay = (
   );
 };
 
-export const isSameMonth = (firstDate: { getMonth: () => any }, secondDate: { getMonth: () => any }) => {
+export const isSameMonth = (
+  firstDate: { getMonth: () => Date },
+  secondDate: { getMonth: () => Date }
+) => {
   return firstDate.getMonth() === secondDate.getMonth();
 };

@@ -8,6 +8,7 @@ import { colors } from 'src/styles/colors';
 import { common } from 'src/styles/common';
 import styled from 'styled-components';
 import Typography from '@components/common/Typography';
+import { useDateComparison } from 'src/hooks/calendar/useDateComparison';
 
 interface DayContainerProps {
   $isToday: boolean;
@@ -17,8 +18,10 @@ interface DayContainerProps {
 const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
 const CalendarForm = () => {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-
+  const { isToday, isSelected, isCurrentMonth } = useDateComparison(currentMonth, selectedDate);
+  const { weeks } = useCalendar(currentMonth);
   const handlePrevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
@@ -26,21 +29,6 @@ const CalendarForm = () => {
   const handleNextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
-
-  const { weeks } = useCalendar(currentMonth);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const today = new Date();
-
-  const isToday = (day: Date) =>
-    day.getDate() === today.getDate() &&
-    day.getMonth() === today.getMonth() &&
-    day.getFullYear() === today.getFullYear();
-  const isSelected = (day: Date) =>
-    selectedDate &&
-    day.getDate() === selectedDate.getDate() &&
-    day.getMonth() === selectedDate.getMonth() &&
-    day.getFullYear() === selectedDate.getFullYear();
-  const isCurrentMonth = (day: Date) => day.getMonth() === currentMonth.getMonth();
 
   const handleDayClick = (day: React.SetStateAction<Date | null>) => {
     setSelectedDate(day);
