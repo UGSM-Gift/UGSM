@@ -1,166 +1,128 @@
-import React, { useState } from 'react';
+'use client';
+import { addMonths, subMonths } from 'date-fns';
+import { ReactComponent as ArrowIcon } from '@assets/icons/arrowIcon.svg';
+import React, { useEffect, useState } from 'react';
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
-import { Calendar } from 'react-modern-calendar-datepicker';
-import ArrowIcon from '@assets/icons/arrowIcon.svg';
-import styled from 'styled-components';
+import useCalendar from 'src/hooks/calendar/useCalendar';
 import { colors } from 'src/styles/colors';
+import { common } from 'src/styles/common';
+import styled from 'styled-components';
+import Typography from '@components/common/Typography';
+import { useDateComparison } from 'src/hooks/calendar/useDateComparison';
 
-const myCustomLocale = {
-  // Months list by order
-  months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+interface DayContainerProps {
+  $isToday: boolean;
+  $isSelected?: boolean;
+  $isCurrentMonth: boolean;
+}
+const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
-  // Week days by order
-  weekDays: [
-    {
-      name: 'Sunday', // used for accessibility
-      short: 'S', // displayed at the top of days' rows
-      isWeekend: true, // is it a formal weekend or not?
-    },
-    {
-      name: 'Monday',
-      short: 'M',
-    },
-    {
-      name: 'Tuesday',
-      short: 'T',
-    },
-    {
-      name: 'Wednesday',
-      short: 'W',
-    },
-    {
-      name: 'Thursday',
-      short: 'T',
-    },
-    {
-      name: 'Friday',
-      short: 'F',
-    },
-    {
-      name: 'Saturday',
-      short: 'S',
-      isWeekend: true,
-    },
-  ],
-
-  // Just play around with this number between 0 and 6
-  weekStartingIndex: 0,
-
-  // Return a { year: number, month: number, day: number } object
-  getToday(gregorainTodayObject: any) {
-    return gregorainTodayObject; // You may want to convert this to your locale
-  },
-
-  // Return a native JavaScript date here
-  toNativeDate(date: { year: number; month: number; day: number | undefined }) {
-    return new Date(date.year, date.month - 1, date.day);
-  },
-
-  // Return a number for date's month length
-  getMonthLength(date: { year: number; month: number }) {
-    return new Date(date.year, date.month, 0).getDate();
-  },
-
-  // Transform a digit to your locale
-  transformDigit(digit: any) {
-    return digit; // Here you might want to transform digits to a different script
-  },
-
-  // Texts in the date picker
-  nextMonth: '다음 달',
-  previousMonth: '이전 달',
-  openMonthSelector: '월 선택자 열기',
-  openYearSelector: '년 선택자 열기',
-  closeMonthSelector: '월 선택자 닫기',
-  closeYearSelector: '년 선택자 닫기',
-  from: '시작',
-  to: '끝',
-  defaultPlaceholder: '선택...',
-
-  // For input range value
-  digitSeparator: ',',
-
-  // If your provide -2 for example, year will be 2 digited
-  yearLetterSkip: 0,
-
-  // Is your language rtl or ltr?
-  isRtl: false,
-};
-
-type valueType = {
-  year: number;
-  month: number;
-  day: number;
-};
 const CalendarForm = () => {
-  const [selectedDay, setSelectedDay] = useState({
-    year: 2024,
-    month: 1,
-    day: 1,
-  });
-
-  const handleDayChange = (value: valueType) => {
-    console.log(value);
-    if (value) {
-      setSelectedDay({
-        year: value.year,
-        month: value.month,
-        day: value.day,
-      });
-    }
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const { isToday, isSelected, isCurrentMonth } = useDateComparison(currentMonth, selectedDate);
+  const { weeks } = useCalendar(currentMonth);
+  const handlePrevMonth = () => {
+    setCurrentMonth(subMonths(currentMonth, 1));
   };
+
+  const handleNextMonth = () => {
+    setCurrentMonth(addMonths(currentMonth, 1));
+  };
+
+  const handleDayClick = (day: React.SetStateAction<Date | null>) => {
+    setSelectedDate(day);
+    console.log(day);
+  };
+
   return (
-    <CalendarContainer>
-      <Calendar
-        value={selectedDay}
-        onChange={handleDayChange}
-        colorPrimary={`${colors.white}`}
-        locale={myCustomLocale}
-        calendarClassName='custom-calendar' // and this
-        calendarTodayClassName='custom-today-day' // also this
-      />
-    </CalendarContainer>
+    <>
+      <Month>
+        <ArrowIcon className='arrow-left' onClick={handlePrevMonth} />
+        <Typography $variant='title3'>{`${currentMonth.getMonth() + 1}월`}</Typography>
+        <ArrowIcon className='arrow-right' onClick={handleNextMonth} />
+      </Month>
+      <CalendarHeader>
+        {WEEK_DAYS.map((day, index) => (
+          <DayTitle key={index} $isWeekend={[0, 6].includes(index)}>
+            {day}
+          </DayTitle>
+        ))}
+      </CalendarHeader>
+      <CalendarContainer>
+        {weeks.map((week, weekIndex) => (
+          <WeekRow key={weekIndex}>
+            {week.map((day, dayIndex) => (
+              <DayContainer
+                key={dayIndex}
+                $isToday={isToday(day)}
+                $isSelected={isSelected(day) ?? false}
+                $isCurrentMonth={isCurrentMonth(day)}
+                onClick={() => handleDayClick(day)}
+              >
+                {day.getDate()}
+              </DayContainer>
+            ))}
+          </WeekRow>
+        ))}
+      </CalendarContainer>
+    </>
   );
 };
 
 export default CalendarForm;
 
+const Month = styled.div`
+  ${common.flexCenter}
+  gap:20px;
+  width: 100%;
+  margin-bottom: 10px;
+  .arrow-left {
+    transform: rotate(-90deg);
+  }
+  .arrow-right {
+    transform: rotate(90deg);
+  }
+`;
+
 const CalendarContainer = styled.div`
-  .Calendar {
-    margin: 0 auto;
-    box-shadow: none;
-  }
-  .Calendar__yearText {
-    display: none;
-  }
+  display: flex;
+  flex-direction: column;
+`;
 
-  .Calendar__day.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)::after {
-    content: none;
-  }
+const WeekRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 4px 0;
+`;
 
-  .custom-today-day {
-    background-color: ${colors.gray[10]};
-    border: none;
-  }
+const DayContainer = styled.div<DayContainerProps>`
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  background-color: ${(props) => (props.$isToday ? `${colors.gray[10]}` : 'none')};
+  border: 1px solid ${(props) => (props.$isSelected ? `${colors.primary[400]}` : 'none')};
+  color: ${(props) => (props.$isSelected ? `${colors.primary[400]}` : `${colors.black}`)};
+  visibility: ${(props) => (!props.$isCurrentMonth ? 'hidden' : '')};
+`;
 
-  .custom-calendar .-selected {
-    color: ${colors.primary[400]};
-    border: 1px solid ${colors.primary[400]};
-  }
+const CalendarHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  padding: 10px 0;
+  margin-bottom: 5px;
+`;
 
-  .Calendar__weekDays {
-    color: ${colors.gray[60]};
-    font-weight: 600;
-  }
-  .Calendar__weekDays {
-    :first-child {
-      color: ${colors.primary[400]};
-    }
-    :last-child {
-      color: ${colors.primary[400]};
-    }
-  }
-  .Calendar__monthArrow {
-    background-image: url(${ArrowIcon});
-  }
+const DayTitle = styled.div<{ $isWeekend: boolean }>`
+  font-size: 15px;
+  font-weight: 400;
+  flex: 1;
+  text-align: center;
+  color: ${(props) => (props.$isWeekend ? `${colors.primary[400]}` : `${colors.gray[60]}`)};
 `;

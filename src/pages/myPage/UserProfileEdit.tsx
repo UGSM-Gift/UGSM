@@ -100,12 +100,14 @@ const UserProfileEdit = () => {
   };
 
   // img upload
+
   const onchangeImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const imgUrl = e.target.files[0].name;
       const type = 'PROFILE';
+      console.log(imgUrl, 'imgUrl');
       const img = await fetchImg(imgUrl, type);
-      console.log(img);
+      // setUserSettingData((prevUserData) => ({ ...prevUserData, profileImageUrl: img.fileName }));
       setUploadImgUrl(img);
     }
   };
@@ -118,7 +120,7 @@ const UserProfileEdit = () => {
     <BasicLayout>
       <ContentContainer>
         <ProfileEditBox>
-          <Profile userData={userSettingData} img={uploadImgUrl} />
+          <Profile userData={userSettingData} img={`${profileImageUrl}?w=${imgSize()}`} />
           <IconBox>
             <input
               type='file'
