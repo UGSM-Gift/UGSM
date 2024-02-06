@@ -1,10 +1,13 @@
 'use client';
 import { addMonths, subMonths } from 'date-fns';
+import { ReactComponent as ArrowIcon } from '@assets/icons/arrowIcon.svg';
 import React, { useEffect, useState } from 'react';
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import useCalendar from 'src/hooks/calendar/useCalendar';
 import { colors } from 'src/styles/colors';
+import { common } from 'src/styles/common';
 import styled from 'styled-components';
+import Typography from '@components/common/Typography';
 
 interface DayContainerProps {
   $isToday: boolean;
@@ -15,12 +18,15 @@ const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
 const CalendarForm = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+
   const handlePrevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
+
   const handleNextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
+
   const { weeks } = useCalendar(currentMonth);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const today = new Date();
@@ -38,14 +44,15 @@ const CalendarForm = () => {
 
   const handleDayClick = (day: React.SetStateAction<Date | null>) => {
     setSelectedDate(day);
+    console.log(day);
   };
 
   return (
     <>
       <Month>
-        <button onClick={handlePrevMonth}>{'<'}</button>
-        <span>{`${currentMonth.getMonth() + 1}월`}</span>
-        <button onClick={handleNextMonth}>{'>'}</button>
+        <ArrowIcon className='arrow-left' onClick={handlePrevMonth} />
+        <Typography $variant='title3'>{`${currentMonth.getMonth() + 1}월`}</Typography>
+        <ArrowIcon className='arrow-right' onClick={handleNextMonth} />
       </Month>
       <CalendarHeader>
         {WEEK_DAYS.map((day, index) => (
@@ -77,7 +84,19 @@ const CalendarForm = () => {
 
 export default CalendarForm;
 
-const Month = styled.div``;
+const Month = styled.div`
+  ${common.flexCenter}
+  gap:20px;
+  width: 100%;
+  margin-bottom: 10px;
+  .arrow-left {
+    transform: rotate(-90deg);
+  }
+  .arrow-right {
+    transform: rotate(90deg);
+  }
+`;
+
 const CalendarContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -101,7 +120,7 @@ const DayContainer = styled.div<DayContainerProps>`
   background-color: ${(props) => (props.$isToday ? `${colors.gray[10]}` : 'none')};
   border: 1px solid ${(props) => (props.$isSelected ? `${colors.primary[400]}` : 'none')};
   color: ${(props) => (props.$isSelected ? `${colors.primary[400]}` : `${colors.black}`)};
-  //visibility: ${(props) => (!props.$isCurrentMonth ? 'hidden' : '')};
+  visibility: ${(props) => (!props.$isCurrentMonth ? 'hidden' : '')};
 `;
 
 const CalendarHeader = styled.div`
