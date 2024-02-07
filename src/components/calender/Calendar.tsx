@@ -30,7 +30,9 @@ const mockDate = {
   date: '2024-11-03',
 };
 const CalendarForm = () => {
-  const [anniversary, setAnniversary] = useState<AnniversaryProps>({
+  const [anniversaries, setAnniversaries] = useState([]);
+
+  const [anniversaryUserData, setAnniversaryUserData] = useState<AnniversaryProps>({
     name: '',
     imageId: 0,
     date: '',
@@ -50,7 +52,7 @@ const CalendarForm = () => {
   const handleDayClick = async (day: React.SetStateAction<Date | null>) => {
     setSelectedDate(day);
 
-    setAnniversary((prev) => {
+    setAnniversaryUserData((prev) => {
       if (day instanceof Date) {
         const formattedDate = formatDate(day);
         return { ...prev, date: formattedDate };
@@ -81,6 +83,20 @@ const CalendarForm = () => {
       console.log(err);
     }
   };
+
+  const fetchAnniversaries = async () => {
+    try {
+      const response = await instance.get(`/api/user/me/anniversary?yearMonth=2024-11`);
+      setAnniversaries(response.data.data);
+      console.log(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchAnniversaries();
+  }, []);
   return (
     <>
       <Month>
@@ -113,6 +129,7 @@ const CalendarForm = () => {
         ))}
       </CalendarContainer>
       <div onClick={addAnniversary}>완료하기</div>
+      <div onClick={fetchAnniversaries}>년월 정보 가져오기</div>
     </>
   );
 };
