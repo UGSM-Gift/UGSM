@@ -43,7 +43,7 @@ const CalendarForm = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
 
-  const handleDayClick = (day: React.SetStateAction<Date | null>) => {
+  const handleDayClick = async (day: React.SetStateAction<Date | null>) => {
     setSelectedDate(day);
 
     setAnniversary((prev) => {
@@ -53,6 +53,7 @@ const CalendarForm = () => {
       }
       return prev;
     });
+    await fetchAnniversaryImg();
   };
 
   const addAnniversary = async (date: any) => {
@@ -64,6 +65,14 @@ const CalendarForm = () => {
     }
   };
 
+  const fetchAnniversaryImg = async () => {
+    try {
+      const response = await instance.get(`/api/anniversary-images`);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <Month>
