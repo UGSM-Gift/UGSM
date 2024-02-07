@@ -1,5 +1,5 @@
 'use client';
-import { addMonths, subMonths } from 'date-fns';
+import { addMonths, getDate, subMonths } from 'date-fns';
 import { ReactComponent as ArrowIcon } from '@assets/icons/arrowIcon.svg';
 import React, { useEffect, useState } from 'react';
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
@@ -9,15 +9,28 @@ import { common } from 'src/styles/common';
 import styled from 'styled-components';
 import Typography from '@components/common/Typography';
 import { useDateComparison } from 'src/hooks/calendar/useDateComparison';
+import instance from 'src/api/axios';
+import { formatDate } from 'src/utils/dateUtil';
 
-interface DayContainerProps {
+type DayContainerProps = {
   $isToday: boolean;
   $isSelected?: boolean;
   $isCurrentMonth: boolean;
-}
+};
+
+type AnniversaryProps = {
+  name: string;
+  imageId: number;
+  date: string;
+};
 const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
 const CalendarForm = () => {
+  const [anniversary, setAnniversary] = useState<AnniversaryProps>({
+    name: '',
+    imageId: 0,
+    date: '',
+  });
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const { isToday, isSelected, isCurrentMonth } = useDateComparison(currentMonth, selectedDate);
@@ -32,7 +45,23 @@ const CalendarForm = () => {
 
   const handleDayClick = (day: React.SetStateAction<Date | null>) => {
     setSelectedDate(day);
-    console.log(day);
+
+    setAnniversary((prev) => {
+      if (day instanceof Date) {
+        const formattedDate = formatDate(day);
+        return { ...prev, date: formattedDate };
+      }
+      return prev;
+    });
+  };
+
+  const addAnniversary = async (date: any) => {
+    try {
+      const response = await instance.post(`/api/imgae`, date);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
