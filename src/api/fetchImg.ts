@@ -16,12 +16,13 @@ export const imgSize = () => {
 };
 
 export const fetchImg = async (img: any, type: string) => {
+  console.log(img);
   const data = new FormData();
   data.append('image', img);
   data.append('type', type);
 
   try {
-    const response = await instance.post(`/api/image`, data, {});
+    const response = await instance.post(`/api/image`, data);
     console.log(response.data.data);
     return response.data.data;
   } catch (error) {

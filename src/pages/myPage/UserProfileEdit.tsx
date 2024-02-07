@@ -103,15 +103,16 @@ const UserProfileEdit = () => {
 
   const onchangeImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const imgUrl = e.target.files[0].name;
+      const imgUrl = e.target.files[0];
       const type = 'PROFILE';
-      console.log(imgUrl, type);
+
       const img = await fetchImg(imgUrl, type);
-      // setUploadImgUrl(img.imageUrl);
+      console.log(img.imageUrl);
+      setUploadImgUrl(img.imageUrl);
       // put 요청할 fileName userData에 담기
       setUserSettingData((prevUserData) => ({
         ...prevUserData,
-        profileImageUrl: '61414d10-018e-4d40-b2e7-3d9416f106ea',
+        profileImageUrl: img.fileName,
       }));
     }
   };
@@ -124,7 +125,7 @@ const UserProfileEdit = () => {
     <BasicLayout>
       <ContentContainer>
         <ProfileEditBox>
-          <Profile userData={userSettingData} />
+          <Profile userData={userSettingData} img={uploadImgUrl} />
           <IconBox>
             <input
               type='file'

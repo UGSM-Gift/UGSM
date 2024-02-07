@@ -34,7 +34,7 @@ const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 const mockDate = {
   name: '생일',
   imageId: 1,
-  date: '2024-02-03',
+  date: '2024-02-15',
 };
 const CalendarForm = () => {
   const [anniversaries, setAnniversaries] = useState<AnniversariesProps[]>([]);
@@ -83,6 +83,7 @@ const CalendarForm = () => {
           'Content-Type': 'application/json',
         },
       });
+      console.log(response, '기념일 추가');
     } catch (err) {
       console.log(err);
     }
@@ -91,6 +92,7 @@ const CalendarForm = () => {
   const fetchAnniversaryImg = async () => {
     try {
       const response = await instance.get(`/api/anniversary-images`);
+      console.log(response, '날짜 선택');
       return response.data.data[0].imageUrl;
     } catch (err) {
       console.log(err);
@@ -99,8 +101,9 @@ const CalendarForm = () => {
 
   const fetchAnniversaries = async () => {
     try {
-      const response = await instance.get(`/api/user/me/anniversary?yearMonth=2024-11`);
+      const response = await instance.get(`/api/user/me/anniversary?yearMonth=2024-02`);
       setAnniversaries(response.data.data);
+      console.log(response);
     } catch (err) {
       console.log(err);
     }
@@ -111,8 +114,7 @@ const CalendarForm = () => {
   }, [currentMonth]);
 
   const isAnniversary = (day: Date) => {
-    // day는 Date 객체, '2024-11-03'와 같은 날짜 문자열을 Date 객체로 변환해 비교 필요
-    const dayStr = day.toISOString().slice(0, 10); // '2024-11-03' 형태로 변환
+    const dayStr = day.toISOString().slice(0, 10);
     return anniversaries.some((anniversary) => anniversary.date === dayStr);
   };
 

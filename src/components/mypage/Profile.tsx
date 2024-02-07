@@ -21,7 +21,11 @@ const Profile = ({ userData, img }: { userData: any; img?: string }) => {
   return (
     <ProfileBox>
       {userData.profileImageUrl === null ? (
-        <UserProfileIcon />
+        img ? (
+          <img src={img} alt='userImg' />
+        ) : (
+          <UserProfileIcon />
+        )
       ) : (
         <img src={`${userData.profileImageUrl}?w=${width}&f=webp`} alt='userImg' />
       )}
