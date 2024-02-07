@@ -24,7 +24,11 @@ type AnniversaryProps = {
   date: string;
 };
 const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-
+const mockDate = {
+  name: '생일',
+  imageId: 1,
+  date: '2024-11-03',
+};
 const CalendarForm = () => {
   const [anniversary, setAnniversary] = useState<AnniversaryProps>({
     name: '',
@@ -56,9 +60,13 @@ const CalendarForm = () => {
     await fetchAnniversaryImg();
   };
 
-  const addAnniversary = async (date: any) => {
+  const addAnniversary = async () => {
     try {
-      const response = await instance.post(`/api/imgae`, date);
+      const response = await instance.post(`/api/user/me/anniversary`, mockDate, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -68,7 +76,7 @@ const CalendarForm = () => {
   const fetchAnniversaryImg = async () => {
     try {
       const response = await instance.get(`/api/anniversary-images`);
-      console.log(response);
+      return response.data.data[0].imageUrl;
     } catch (err) {
       console.log(err);
     }
@@ -104,6 +112,7 @@ const CalendarForm = () => {
           </WeekRow>
         ))}
       </CalendarContainer>
+      <div onClick={addAnniversary}>완료하기</div>
     </>
   );
 };
