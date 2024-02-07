@@ -42,7 +42,6 @@ const MyPage = () => {
   };
 
   const deleteUserData = async () => {
-    
     const reason: deleteType = {
       deletionReasonId: 1,
       details: null,

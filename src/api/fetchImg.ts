@@ -19,8 +19,9 @@ export const fetchImg = async (img: any, type: string) => {
   const data = new FormData();
   data.append('image', img);
   data.append('type', type);
+
   try {
-    const response = await instance.post(`/api/image`, data);
+    const response = await instance.post(`/api/image`, data, {});
     console.log(response.data.data.imageUrl);
     return response.data.data.imageUrl;
   } catch (error) {

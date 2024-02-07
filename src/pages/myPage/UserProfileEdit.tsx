@@ -94,7 +94,6 @@ const UserProfileEdit = () => {
   };
 
   const handleEdit = async (userData: UserData) => {
-    console.log(userData, '보내는 데이터');
     const user = await userDataPost(userData);
     console.log(user, '응답데이터');
   };
@@ -105,10 +104,11 @@ const UserProfileEdit = () => {
     if (e.target.files) {
       const imgUrl = e.target.files[0].name;
       const type = 'PROFILE';
-      console.log(imgUrl, 'imgUrl');
+
       const img = await fetchImg(imgUrl, type);
-      // setUserSettingData((prevUserData) => ({ ...prevUserData, profileImageUrl: img.fileName }));
       setUploadImgUrl(img);
+      // put 요청할 fileName userData에 담기
+      // setUserSettingData((prevUserData) => ({ ...prevUserData, profileImageUrl: img.fileName }));
     }
   };
 
@@ -120,7 +120,7 @@ const UserProfileEdit = () => {
     <BasicLayout>
       <ContentContainer>
         <ProfileEditBox>
-          <Profile userData={userSettingData} img={`${profileImageUrl}?w=${imgSize()}`} />
+          <Profile userData={userSettingData} />
           <IconBox>
             <input
               type='file'
