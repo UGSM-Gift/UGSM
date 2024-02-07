@@ -1,5 +1,5 @@
 'use client';
-import { addMonths, subMonths } from 'date-fns';
+import { addMonths, getDate, subMonths } from 'date-fns';
 import { ReactComponent as ArrowIcon } from '@assets/icons/arrowIcon.svg';
 import React, { useEffect, useState } from 'react';
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
@@ -9,19 +9,46 @@ import { common } from 'src/styles/common';
 import styled from 'styled-components';
 import Typography from '@components/common/Typography';
 import { useDateComparison } from 'src/hooks/calendar/useDateComparison';
+import instance from 'src/api/axios';
+import { formatDate } from 'src/utils/dateUtil';
+import SelectedAnniversaryInfo from './SelectedAnniversaryInfo';
 
-interface DayContainerProps {
+type DayContainerProps = {
   $isToday: boolean;
   $isSelected?: boolean;
   $isCurrentMonth: boolean;
-}
-const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+};
 
+type AnniversaryUserProps = {
+  name: string;
+  imageId: number;
+  date: string;
+};
+type AnniversariesProps = {
+  id: number;
+  name: string;
+  date: string;
+  imageUrl: number;
+};
+const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+const mockDate = {
+  name: '생일',
+  imageId: 1,
+  date: '2024-02-03',
+};
 const CalendarForm = () => {
+  const [anniversaries, setAnniversaries] = useState<AnniversariesProps[]>([]);
+  const [anniversaryUserData, setAnniversaryUserData] = useState<AnniversaryUserProps>({
+    name: '',
+    imageId: 0,
+    date: '',
+  });
+  const [selectedAnniversary, setSelectedAnniversary] = useState<AnniversariesProps | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const { isToday, isSelected, isCurrentMonth } = useDateComparison(currentMonth, selectedDate);
   const { weeks } = useCalendar(currentMonth);
+
   const handlePrevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
@@ -30,9 +57,69 @@ const CalendarForm = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
 
-  const handleDayClick = (day: React.SetStateAction<Date | null>) => {
+  const handleDayClick = async (day: React.SetStateAction<Date | null>) => {
     setSelectedDate(day);
-    console.log(day);
+    if (day instanceof Date) {
+      // 선택한 날짜 데이터 가지고오기
+      const dateString = day.toISOString().slice(0, 10);
+      const anniversaryInfo = getAnniversaryInfo(dateString);
+      setSelectedAnniversary(anniversaryInfo);
+    }
+    // 선택한 날짜 기념일 데이터에 저장
+    setAnniversaryUserData((prev) => {
+      if (day instanceof Date) {
+        const formattedDate = formatDate(day);
+        return { ...prev, date: formattedDate };
+      }
+      return prev;
+    });
+    await fetchAnniversaryImg();
+  };
+
+  const addAnniversary = async () => {
+    try {
+      const response = await instance.post(`/api/user/me/anniversary`, mockDate, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchAnniversaryImg = async () => {
+    try {
+      const response = await instance.get(`/api/anniversary-images`);
+      return response.data.data[0].imageUrl;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchAnniversaries = async () => {
+    try {
+      const response = await instance.get(`/api/user/me/anniversary?yearMonth=2024-11`);
+      setAnniversaries(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchAnniversaries();
+  }, [currentMonth]);
+
+  const isAnniversary = (day: Date) => {
+    // day는 Date 객체, '2024-11-03'와 같은 날짜 문자열을 Date 객체로 변환해 비교 필요
+    const dayStr = day.toISOString().slice(0, 10); // '2024-11-03' 형태로 변환
+    return anniversaries.some((anniversary) => anniversary.date === dayStr);
+  };
+
+  //기념일 정보를 가져오는 함수
+  const getAnniversaryInfo = (dateString: string) => {
+    const anniversary = anniversaries.find((a) => a.date === dateString);
+    return anniversary || null;
   };
 
   return (
@@ -59,6 +146,7 @@ const CalendarForm = () => {
                 $isSelected={isSelected(day) ?? false}
                 $isCurrentMonth={isCurrentMonth(day)}
                 onClick={() => handleDayClick(day)}
+                className={`${isAnniversary(day) ? 'anniversary' : ''}`}
               >
                 {day.getDate()}
               </DayContainer>
@@ -66,6 +154,8 @@ const CalendarForm = () => {
           </WeekRow>
         ))}
       </CalendarContainer>
+      {selectedAnniversary && <SelectedAnniversaryInfo selectedAnniversary={selectedAnniversary} />}
+      <div onClick={addAnniversary}>완료하기</div>
     </>
   );
 };
@@ -94,6 +184,9 @@ const WeekRow = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 4px 0;
+  .anniversary {
+    border: 1px solid ${colors.primary[400]};
+  }
 `;
 
 const DayContainer = styled.div<DayContainerProps>`
