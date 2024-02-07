@@ -105,10 +105,10 @@ const UserProfileEdit = () => {
     if (e.target.files) {
       const imgUrl = e.target.files[0];
       const type = 'PROFILE';
-
       const img = await fetchImg(imgUrl, type);
-      console.log(img.imageUrl);
+
       setUploadImgUrl(img.imageUrl);
+      console.log(img.imageUrl, '1');
       // put 요청할 fileName userData에 담기
       setUserSettingData((prevUserData) => ({
         ...prevUserData,

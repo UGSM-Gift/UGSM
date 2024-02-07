@@ -9,6 +9,7 @@ const Profile = ({ userData, img }: { userData: any; img?: string }) => {
   const [width, setWidth] = useState(imgSize());
 
   useEffect(() => {
+    console.log(img, '2');
     const handleResize = debounce(() => setWidth(imgSize()), 300); // 300ms 동안 debounce
     window.addEventListener('resize', handleResize);
 
