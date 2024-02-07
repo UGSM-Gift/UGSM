@@ -1,6 +1,6 @@
 import Button from '@components/common/button/Button';
 import Typography from '@components/common/Typography';
-import React from 'react';
+import React, { useState } from 'react';
 import { RADIUS } from 'src/constants/style';
 import { colors } from 'src/styles/colors';
 import styled from 'styled-components';
@@ -8,8 +8,19 @@ import BasicLayout from '../layout/BasicLayout';
 import { ReactComponent as DownIcon } from '@assets/icons/downIcon.svg';
 import { common } from 'src/styles/common';
 import Input from '@components/common/Input';
+import instance from 'src/api/axios';
 
 const AccountDelete = (userData: any) => {
+  const [reason, setReason] = useState('');
+  const deleteReason = async () => {
+    try {
+      const response = await instance.get('/api/my-page/account-deletion-reasons');
+      setReason(response.data);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <BasicLayout>
       <Title>
@@ -21,7 +32,7 @@ const AccountDelete = (userData: any) => {
         </Typography>
       </Title>
       <DeleteSelect>
-        <Typography $variant={'body2'} color={colors.gray[40]}>
+        <Typography $variant={'body2'} color={colors.gray[40]} onClick={deleteReason}>
           탈퇴 사유를 선택해주세요
         </Typography>
         <DownIcon />
