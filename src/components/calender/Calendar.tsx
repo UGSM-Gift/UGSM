@@ -18,21 +18,27 @@ type DayContainerProps = {
   $isCurrentMonth: boolean;
 };
 
-type AnniversaryProps = {
+type AnniversaryUserProps = {
   name: string;
   imageId: number;
   date: string;
+};
+type AnniversariesProps = {
+  id: number;
+  name: string;
+  date: string;
+  imageUrl: number;
 };
 const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 const mockDate = {
   name: '생일',
   imageId: 1,
-  date: '2024-11-03',
+  date: '2024-02-03',
 };
 const CalendarForm = () => {
-  const [anniversaries, setAnniversaries] = useState([]);
+  const [anniversaries, setAnniversaries] = useState<AnniversariesProps[]>([]);
 
-  const [anniversaryUserData, setAnniversaryUserData] = useState<AnniversaryProps>({
+  const [anniversaryUserData, setAnniversaryUserData] = useState<AnniversaryUserProps>({
     name: '',
     imageId: 0,
     date: '',
@@ -88,7 +94,6 @@ const CalendarForm = () => {
     try {
       const response = await instance.get(`/api/user/me/anniversary?yearMonth=2024-11`);
       setAnniversaries(response.data.data);
-      console.log(response.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -97,6 +102,14 @@ const CalendarForm = () => {
   useEffect(() => {
     fetchAnniversaries();
   }, []);
+
+  const isAnniversary = (day: Date) => {
+    // day는 Date 객체, '2024-11-03'와 같은 날짜 문자열을 Date 객체로 변환해 비교 필요
+    const dayStr = day.toISOString().slice(0, 10); // '2024-11-03' 형태로 변환
+    console.log(dayStr, anniversaries);
+    return anniversaries.some((anniversary) => anniversary.date === dayStr);
+  };
+
   return (
     <>
       <Month>
@@ -121,6 +134,7 @@ const CalendarForm = () => {
                 $isSelected={isSelected(day) ?? false}
                 $isCurrentMonth={isCurrentMonth(day)}
                 onClick={() => handleDayClick(day)}
+                className={`${isAnniversary(day) ? 'anniversary' : ''}`}
               >
                 {day.getDate()}
               </DayContainer>
@@ -158,6 +172,9 @@ const WeekRow = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 4px 0;
+  .anniversary {
+    border: 1px solid ${colors.primary[400]};
+  }
 `;
 
 const DayContainer = styled.div<DayContainerProps>`
