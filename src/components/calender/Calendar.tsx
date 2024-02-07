@@ -108,7 +108,7 @@ const CalendarForm = () => {
 
   useEffect(() => {
     fetchAnniversaries();
-  }, []);
+  }, [currentMonth]);
 
   const isAnniversary = (day: Date) => {
     // day는 Date 객체, '2024-11-03'와 같은 날짜 문자열을 Date 객체로 변환해 비교 필요

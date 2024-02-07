@@ -1,7 +1,18 @@
 import React, { useEffect } from 'react';
+import instance from 'src/api/axios';
 import styled from 'styled-components';
 
 const SelectedAnniversaryInfo = (selectedAnniversary: any) => {
+  const deleteAnniversaries = async () => {
+    try {
+      const response = await instance.delete(
+        `/api/user/me/anniversary/${selectedAnniversary.selectedAnniversary.id}`
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   if (!selectedAnniversary) return null;
   return (
     <AnniversaryInfoContainer>
@@ -13,6 +24,7 @@ const SelectedAnniversaryInfo = (selectedAnniversary: any) => {
       )}
       <h3>{selectedAnniversary.selectedAnniversary.name}</h3>
       <p>{selectedAnniversary.selectedAnniversary.date}</p>
+      <div onClick={deleteAnniversaries}>삭제하기</div>
     </AnniversaryInfoContainer>
   );
 };
