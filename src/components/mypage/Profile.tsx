@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 const Profile = ({ userData, img }: { userData: any; img?: string }) => {
   const [width, setWidth] = useState(imgSize());
+
   useEffect(() => {
     const handleResize = debounce(() => setWidth(imgSize()), 300); // 300ms 동안 debounce
     window.addEventListener('resize', handleResize);
@@ -17,7 +18,6 @@ const Profile = ({ userData, img }: { userData: any; img?: string }) => {
     };
   }, []);
 
-  console.log(`${userData.profileImageUrl}?w=${width}&f=webp`);
   return (
     <ProfileBox>
       {userData.profileImageUrl === null ? (

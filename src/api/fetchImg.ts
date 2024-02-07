@@ -22,8 +22,8 @@ export const fetchImg = async (img: any, type: string) => {
 
   try {
     const response = await instance.post(`/api/image`, data, {});
-    console.log(response.data.data.imageUrl);
-    return response.data.data.imageUrl;
+    console.log(response.data.data);
+    return response.data.data;
   } catch (error) {
     console.log(error, 'img fetch 실패');
   }
