@@ -11,6 +11,7 @@ import Typography from '@components/common/Typography';
 import { useDateComparison } from 'src/hooks/calendar/useDateComparison';
 import instance from 'src/api/axios';
 import { formatDate } from 'src/utils/dateUtil';
+import SelectedAnniversaryInfo from './SelectedAnniversaryInfo';
 
 type DayContainerProps = {
   $isToday: boolean;
@@ -37,16 +38,17 @@ const mockDate = {
 };
 const CalendarForm = () => {
   const [anniversaries, setAnniversaries] = useState<AnniversariesProps[]>([]);
-
   const [anniversaryUserData, setAnniversaryUserData] = useState<AnniversaryUserProps>({
     name: '',
     imageId: 0,
     date: '',
   });
+  const [selectedAnniversary, setSelectedAnniversary] = useState<AnniversariesProps | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const { isToday, isSelected, isCurrentMonth } = useDateComparison(currentMonth, selectedDate);
   const { weeks } = useCalendar(currentMonth);
+
   const handlePrevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
@@ -57,7 +59,13 @@ const CalendarForm = () => {
 
   const handleDayClick = async (day: React.SetStateAction<Date | null>) => {
     setSelectedDate(day);
-
+    if (day instanceof Date) {
+      // 선택한 날짜 데이터 가지고오기
+      const dateString = day.toISOString().slice(0, 10);
+      const anniversaryInfo = getAnniversaryInfo(dateString);
+      setSelectedAnniversary(anniversaryInfo);
+    }
+    // 선택한 날짜 기념일 데이터에 저장
     setAnniversaryUserData((prev) => {
       if (day instanceof Date) {
         const formattedDate = formatDate(day);
@@ -75,7 +83,6 @@ const CalendarForm = () => {
           'Content-Type': 'application/json',
         },
       });
-      console.log(response);
     } catch (err) {
       console.log(err);
     }
@@ -106,8 +113,13 @@ const CalendarForm = () => {
   const isAnniversary = (day: Date) => {
     // day는 Date 객체, '2024-11-03'와 같은 날짜 문자열을 Date 객체로 변환해 비교 필요
     const dayStr = day.toISOString().slice(0, 10); // '2024-11-03' 형태로 변환
-    console.log(dayStr, anniversaries);
     return anniversaries.some((anniversary) => anniversary.date === dayStr);
+  };
+
+  //기념일 정보를 가져오는 함수
+  const getAnniversaryInfo = (dateString: string) => {
+    const anniversary = anniversaries.find((a) => a.date === dateString);
+    return anniversary || null;
   };
 
   return (
@@ -142,8 +154,8 @@ const CalendarForm = () => {
           </WeekRow>
         ))}
       </CalendarContainer>
+      {selectedAnniversary && <SelectedAnniversaryInfo selectedAnniversary={selectedAnniversary} />}
       <div onClick={addAnniversary}>완료하기</div>
-      <div onClick={fetchAnniversaries}>년월 정보 가져오기</div>
     </>
   );
 };
