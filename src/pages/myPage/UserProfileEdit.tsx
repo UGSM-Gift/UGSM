@@ -15,10 +15,12 @@ import Button from '@components/common/button/Button';
 import { colors } from 'src/styles/colors';
 import { RADIUS } from 'src/constants/style';
 import { fetchImg, imgSize } from 'src/api/fetchImg';
+import { formatPhoneNumber } from 'src/utils/account';
 
 const UserProfileEdit = () => {
   const [imgResize, setImgResize] = useState(84);
   const [uploadImgUrl, setUploadImgUrl] = useState<string>('');
+  const [currentImgUrl, setCurrentImgUrl] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [userSettingData, setUserSettingData] = useState<UserData>({
@@ -34,14 +36,12 @@ const UserProfileEdit = () => {
     const size = imgSize();
     setImgResize(size);
   }, [window.innerWidth]);
-  function PhoneNumber(phoneNumber: string) {
-    return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7)}`;
-  }
 
   const fetchUserData = async () => {
     try {
       const response = await userData();
       const user = response.data;
+      console.log(user, 'user');
       const userSettingData = {
         birthdate: user.birthdate || '',
         gender: user.gender || '',
@@ -51,6 +51,7 @@ const UserProfileEdit = () => {
         profileImageName: user.profileImageUrl || null,
       };
       // console.log('데이터가져오기', userSettingData);
+      setCurrentImgUrl(user.profileImageUrl);
       setUserSettingData(userSettingData);
     } catch (error) {
       console.error('데이터 가져오기에 실패했습니다.', error);
@@ -115,7 +116,7 @@ const UserProfileEdit = () => {
     <BasicLayout>
       <ContentContainer>
         <ProfileEditBox>
-          <Profile userData={userSettingData} img={uploadImgUrl} />
+          <Profile userData={currentImgUrl} img={uploadImgUrl} />
           <IconBox>
             <input
               type='file'
@@ -170,7 +171,10 @@ const UserProfileEdit = () => {
           </GenderInput>
 
           <Input label='전화번호'>
-            <Input.TextField value={PhoneNumber(userSettingData.mobile)} onChange={handlePhoneChange} />
+            <Input.TextField
+              value={formatPhoneNumber(userSettingData.mobile)}
+              onChange={handlePhoneChange}
+            />
           </Input>
         </InputContainer>
         <div

@@ -65,7 +65,7 @@ const MyPage = () => {
     <BasicLayout>
       <div onClick={deleteUserData}>탈퇴</div>
       <ProfileBox>
-        <Profile userData={userProfileData} />
+        <Profile userData={userProfileData.profileImageUrl} />
         <Typography $variant='title3'>{nickname}</Typography>
       </ProfileBox>
       <Anniversary userData={userProfileData} onClick={() => navigator('/mypage/setting/anniversary')} />
