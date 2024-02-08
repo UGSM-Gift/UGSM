@@ -16,14 +16,6 @@ import { colors } from 'src/styles/colors';
 import { RADIUS } from 'src/constants/style';
 import { fetchImg, imgSize } from 'src/api/fetchImg';
 
-const mockData = {
-  name: '양양',
-  nickname: '최주희',
-  gender: 'male',
-  mobile: '01032986409',
-  birthdate: '1998-12-25',
-};
-//  + 성별
 const UserProfileEdit = () => {
   const [imgResize, setImgResize] = useState(84);
   const [uploadImgUrl, setUploadImgUrl] = useState<string>('');
@@ -35,17 +27,17 @@ const UserProfileEdit = () => {
     gender: '',
     nickname: '',
     mobile: '',
-    profileImageUrl: '',
+    profileImageName: '',
   });
   const [selectedGender, setSelectedGender] = useState(userSettingData.gender || null);
   useEffect(() => {
     const size = imgSize();
     setImgResize(size);
   }, [window.innerWidth]);
-  // function PhoneNumber(phoneNumber: string) {
-  //   return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7)}`;
-  // }
-  const { birthdate, name, gender, nickname, mobile, profileImageUrl } = userSettingData;
+  function PhoneNumber(phoneNumber: string) {
+    return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7)}`;
+  }
+
   const fetchUserData = async () => {
     try {
       const response = await userData();
@@ -56,7 +48,7 @@ const UserProfileEdit = () => {
         name: user.name || '',
         nickname: user.nickname || '',
         mobile: user.mobile || '',
-        profileImageUrl: user.profileImageUrl || null,
+        profileImageName: user.profileImageUrl || null,
       };
       // console.log('데이터가져오기', userSettingData);
       setUserSettingData(userSettingData);
@@ -94,9 +86,7 @@ const UserProfileEdit = () => {
   };
 
   const handleEdit = async (userData: UserData) => {
-    console.log(userData);
-    const user = await userDataPost(userData);
-    console.log(user, '응답데이터');
+    await userDataPost(userData);
   };
 
   // img upload
@@ -106,14 +96,14 @@ const UserProfileEdit = () => {
       const imgUrl = e.target.files[0];
       const type = 'PROFILE';
       const img = await fetchImg(imgUrl, type);
-
-      setUploadImgUrl(img.imageUrl);
-      console.log(img.imageUrl, '1');
-      // put 요청할 fileName userData에 담기
-      setUserSettingData((prevUserData) => ({
-        ...prevUserData,
-        profileImageUrl: img.fileName,
-      }));
+      if (img && img.fileName) {
+        setUploadImgUrl(img.imageUrl);
+        // put 요청할 fileName userData에 담기
+        setUserSettingData((prevUserData) => ({
+          ...prevUserData,
+          profileImageName: img.fileName,
+        }));
+      }
     }
   };
 
@@ -180,7 +170,7 @@ const UserProfileEdit = () => {
           </GenderInput>
 
           <Input label='전화번호'>
-            <Input.TextField value={userSettingData.mobile} onChange={handlePhoneChange} />
+            <Input.TextField value={PhoneNumber(userSettingData.mobile)} onChange={handlePhoneChange} />
           </Input>
         </InputContainer>
         <div

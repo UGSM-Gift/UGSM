@@ -4,7 +4,7 @@ export type UserData = {
   name: string;
   nickname: string;
   mobile: string;
-  profileImageUrl: string | null;
+  profileImageName: string | null;
 };
 
 export type UserProfile = {

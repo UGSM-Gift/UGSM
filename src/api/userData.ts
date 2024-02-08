@@ -33,6 +33,7 @@ export const phoneAuthPost = async (phone: string) => {
 export const userDataPost = async (userData: UserProfileData) => {
   const formattedPhone = userData.mobile.replace(/-/g, '');
   const updatedUserData = { ...userData, mobile: formattedPhone };
+  console.log(updatedUserData);
   try {
     const response = await instance.put(`/api/user/me`, updatedUserData, {
       headers: {

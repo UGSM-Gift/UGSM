@@ -9,7 +9,6 @@ const Profile = ({ userData, img }: { userData: any; img?: string }) => {
   const [width, setWidth] = useState(imgSize());
 
   useEffect(() => {
-    console.log(img, '2');
     const handleResize = debounce(() => setWidth(imgSize()), 300); // 300ms 동안 debounce
     window.addEventListener('resize', handleResize);
 
@@ -17,18 +16,16 @@ const Profile = ({ userData, img }: { userData: any; img?: string }) => {
       handleResize.cancel(); // debounce된 함수의 대기 중인 호출을 취소
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [img]);
 
   return (
     <ProfileBox>
-      {userData.profileImageUrl === null ? (
-        img ? (
-          <img src={img} alt='userImg' />
-        ) : (
-          <UserProfileIcon />
-        )
-      ) : (
+      {img ? (
+        <img src={img} alt='userImg' />
+      ) : userData.profileImageUrl ? (
         <img src={`${userData.profileImageUrl}?w=${width}&f=webp`} alt='userImg' />
+      ) : (
+        <UserProfileIcon />
       )}
     </ProfileBox>
   );
