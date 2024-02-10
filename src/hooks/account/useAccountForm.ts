@@ -20,7 +20,7 @@ const useAccountForm = () => {
     gender: '',
     mobile: '',
   });
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const [phoneAuthNumber, setPhoneAuthNumber] = useState('');
   const [isPhoneAuthValid, setIsPhoneAuthValid] = useState(false);
   // 폼 검사
