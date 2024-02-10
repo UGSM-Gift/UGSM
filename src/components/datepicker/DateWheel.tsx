@@ -183,8 +183,6 @@ const DateWheelPicker = ({onDateChanged}:DateWheelPickerProps) => {
                         className={index === selectedDateIdx.month ? 'selected' : ''}
                         onClick={(e) => {
                             if (month === -1) return
-
-                            setSelectedDateIdx(prev => ({...prev, month: index}));
                             handleItemClick(monthWheelRef, index, 40);
                         }}
                     >
@@ -202,7 +200,6 @@ const DateWheelPicker = ({onDateChanged}:DateWheelPickerProps) => {
                         className={index === selectedDateIdx.day ? 'selected' : ''}
                         onClick={(e) => {
                             if (day === -1) return
-                            setSelectedDateIdx(prev => ({...prev, day: index}));
                             handleItemClick(dayWheelRef, index, 40);
                         }}
                     >
@@ -287,6 +284,7 @@ const Wheel = styled.div`
     overflow-y: scroll;
     height: 200px;
     scroll-snap-type: y mandatory;
+    overscroll-behavior: contain;
 
     &::-webkit-scrollbar {
         display: none;
