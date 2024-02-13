@@ -16,7 +16,7 @@ const NavBar = () => {
         <NavLink to={ROUTES_PATH.home}>
           <div className='menu-icon'>홈</div>
         </NavLink>
-        <NavLink to={ROUTES_PATH.giftList}>
+        <NavLink to={ROUTES_PATH.myList}>
           <div className='menu-icon'>리스트</div>
         </NavLink>
         <NavLink to={ROUTES_PATH.myPage}>
