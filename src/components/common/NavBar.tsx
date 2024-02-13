@@ -28,10 +28,7 @@ const NavBar = () => {
 };
 
 const OuterDiv = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  translate: -50%;
+  margin:0 auto;
   width: 100%;
   max-width: 480px;
   min-width: 375px;

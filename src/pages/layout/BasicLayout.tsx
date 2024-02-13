@@ -36,12 +36,11 @@ export default BasicLayout;
 
 const Layout = styled.div`
   position: relative;
-  height: calc(var(--vh, 1vh) * 100);
+  //height: calc(var(--vh, 1vh) * 100);
   background-color: ${colors.white};
 `;
 
 const ContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height:100%;
 `;

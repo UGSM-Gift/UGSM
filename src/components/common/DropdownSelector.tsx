@@ -73,7 +73,6 @@ const DropdownSelectorDisplay = ({className, placeholder}: DropdownSelectorDispl
 
 const DropdownSelectorItem = ({id, name, className, isInitial}: PropsWithChildren<ItemProps>) => {
     const {onItemSelect, setState, selectedItemId, items} = useDropdownSelectorContext();
-
     useLayoutEffect(() => {
         if(selectedItemId) return;
         setState(prev => {
@@ -98,9 +97,9 @@ const DropdownSelectorItem = ({id, name, className, isInitial}: PropsWithChildre
 const DropDownSelectorItemList = ({children, className}:PropsWithChildren<{className?:string}>) => {
     const {isOpened} = useDropdownSelectorContext();
 
-    return isOpened ? <ul className={className}>
+    return <ul className={`${isOpened ? 'opened' : ''} ${className}`}>
         {children}
-    </ul> : null;
+    </ul>;
 }
 
 DropdownSelector.Item = DropdownSelectorItem;
