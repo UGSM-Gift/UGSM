@@ -16,7 +16,7 @@ const NavBar = () => {
         <NavLink to={ROUTES_PATH.home}>
           <div className='menu-icon'>홈</div>
         </NavLink>
-        <NavLink to={ROUTES_PATH.giftList}>
+        <NavLink to={ROUTES_PATH.myList}>
           <div className='menu-icon'>리스트</div>
         </NavLink>
         <NavLink to={ROUTES_PATH.myPage}>
@@ -28,10 +28,7 @@ const NavBar = () => {
 };
 
 const OuterDiv = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  translate: -50%;
+  margin:0 auto;
   width: 100%;
   max-width: 480px;
   min-width: 375px;
