@@ -1,4 +1,4 @@
-import { Heading } from '@components/header';
+import { Heading } from '@components/Header';
 import NavBar from '@components/common/NavBar';
 import React, { useEffect } from 'react';
 import { colors } from 'src/styles/colors';
@@ -36,10 +36,11 @@ export default BasicLayout;
 
 const Layout = styled.div`
   position: relative;
-  height: calc(var(--vh, 1vh) * 100);
+  //height: calc(var(--vh, 1vh) * 100);
   background-color: ${colors.white};
 `;
 
 const ContentsContainer = styled.div`
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
 `;

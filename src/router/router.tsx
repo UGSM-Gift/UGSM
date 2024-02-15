@@ -11,7 +11,10 @@ import UserProfileEdit from 'src/pages/myPage/UserProfileEdit';
 import NotificationSetting from 'src/pages/myPage/NotificationSetting';
 import AccountDelete from 'src/pages/myPage/AccountDelete';
 import Anniversary from 'src/pages/myPage/Anniversary';
-import GiftList from "src/pages/GiftList";
+import GiftList from "src/pages/myList/GiftList";
+import ReceivedGifts from "src/pages/myList/ReceivedGifts";
+import MyListLayout from "src/pages/myList/MyListLayout";
+import GivenGifts from "src/pages/myList/GivenGifts";
 
 const router = createBrowserRouter([
   {
@@ -35,8 +38,22 @@ const router = createBrowserRouter([
     element: <MyPage />,
   },
   {
-    path: ROUTES_PATH.giftList,
-    element: <GiftList />,
+    path: ROUTES_PATH.myList,
+    element: <MyListLayout/>,
+    children: [
+      {
+        path: ROUTES_PATH.givenGifts,
+        element: <GivenGifts />
+      },
+      {
+        path: ROUTES_PATH.giftList,
+        element: <GiftList />
+      },
+      {
+        path: ROUTES_PATH.receivedGifts,
+        element: <ReceivedGifts />
+      }
+    ]
   },
   {
     path: ROUTES_PATH.anniversary,
