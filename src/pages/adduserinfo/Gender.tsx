@@ -30,7 +30,7 @@ const Gender: React.FC<UserDataProps> = ({ userData, setUserData }) => {
         {userData.nickname}님의 <br />
         생일과 성별을 확인해주세요
       </Typography>
-      <DateWheelPicker />
+      <DateWheelPicker onDateChanged={date => console.log(date)} />
       <Input label='생일'>
         <Input.TextField value={userData.birthdate} type='date' onChange={handleBirthdayChange} />
       </Input>
