@@ -4,17 +4,18 @@ export type UserData = {
   name: string;
   nickname: string;
   mobile: string;
-  profileImgFile: string | null;
+  profileImageName: string | null;
 };
 
 export type UserProfile = {
   nickname: string;
-  profileImgFile: string | null;
-  birthdata: string;
+  profileImageUrl: string | null;
+  birthdate: string;
 };
 
 export type Anniversary = {
   children: string;
   birthdata: boolean;
   anniversaryCount?: number;
+  onClick?: () => void;
 };

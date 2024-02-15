@@ -1,28 +1,30 @@
 // 전화번호 형식을 조정하는 함수
-export const formatPhoneNumber = (value: string) => {
-  if (!value) return value;
-
+export const formatPhoneNumber = (number: string) => {
   // 숫자만 추출
-  const phoneNumber = value.replace(/[^\d]/g, '');
+  const onlyNums = number.replace(/[^\d]/g, '');
 
-  // 각 구간별로 숫자를 분할
-  const phoneNumberParts = [];
-  const part1 = phoneNumber.slice(0, 3);
-  const part2 = phoneNumber.slice(3, 7);
-  const part3 = phoneNumber.slice(7, 11);
-
-  if (part1) phoneNumberParts.push(part1);
-  if (part2) phoneNumberParts.push(part2);
-  if (part3) phoneNumberParts.push(part3);
-
-  // 하이픈으로 연결
-  return phoneNumberParts.join('-');
+  // 전화번호 길이에 따라 포맷 변환
+  if (onlyNums.length <= 3) {
+    return onlyNums;
+  } else if (onlyNums.length <= 6) {
+    // 010-123 형식
+    return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`;
+  } else if (onlyNums.length <= 10) {
+    // 010-123-456 형식
+    return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 6)}-${onlyNums.slice(6)}`;
+  } else {
+    // 010-1234-5678 형식 (11자리 초과하는 경우도 11자리로 제한)
+    return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 7)}-${onlyNums.slice(7, 11)}`;
+  }
 };
 
 export const validatePhoneNumber = (phone: string) => {
   // 전화번호 유효성 검증 로직
+  const regex = /^(02|031|032|033|041|042|043|044|051|052|053|054|055|061|062|063|064|050|010)\d{7,8}$/;
+
+  // 하이픈이 있는 경우 제거
   const phoneNumber = phone.replace(/-/g, '');
-  const regex = /^010\d{8}$/;
+  console.log(phoneNumber);
   return regex.test(phoneNumber);
 };
 

@@ -29,15 +29,21 @@ export const phoneAuthPost = async (phone: string) => {
   }
 };
 
-// 유저데이터 전송
-export const userDataPost = async (userData: UserProfileData, navigator: NavigateFunction) => {
+// 유저데이터 업데이트
+export const userDataPost = async (userData: UserProfileData) => {
   const formattedPhone = userData.mobile.replace(/-/g, '');
   const updatedUserData = { ...userData, mobile: formattedPhone };
   console.log(updatedUserData);
   try {
-    await instance.put(`/api/user/me`, updatedUserData);
-    navigator('/');
+    const response = await instance.put(`/api/user/me`, updatedUserData, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response, '사용자 정보 수정 요청');
+    return response;
   } catch (error) {
     console.log(error);
+    return false;
   }
 };

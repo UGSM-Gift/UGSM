@@ -3,13 +3,14 @@
 import React, { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { HeaderMap } from 'src/types/layout';
-import { MyPageHeader, SettingHeader, UserProfileEditHeader } from './TypeHeader';
+import { AnniversaryHeader, MyPageHeader, SettingHeader, UserProfileEditHeader } from './TypeHeader';
 
 // 헤더 유형별 컴포넌트 정의
 const HeaderElement = {
   mypage: () => <MyPageHeader />,
   setting: () => <SettingHeader />,
   userProfileEdit: () => <UserProfileEditHeader />,
+  anniversary: () => <AnniversaryHeader />,
   Default: () => null,
 };
 
@@ -18,6 +19,7 @@ const headerMap: HeaderMap = {
   '/mypage': HeaderElement.mypage,
   '/mypage/setting': HeaderElement.setting,
   '/mypage/setting/userProfileEdit': HeaderElement.userProfileEdit,
+  '/mypage/setting/anniversary': HeaderElement.anniversary,
 };
 
 export const Heading = ({ children }: { children: ReactNode }) => {

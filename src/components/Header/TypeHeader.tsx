@@ -4,6 +4,8 @@ import { ReactComponent as SettingIcon } from '@assets/icons/settingIcon.svg';
 import { ROUTES_PATH } from 'src/constants/routes';
 
 import Header from './Header';
+import { userDataPost } from 'src/api/userData';
+import { UserData } from 'src/types/userData';
 
 //setting
 export const MyPageHeader = () => {
@@ -25,6 +27,21 @@ export const SettingHeader = () => {
       title='설정'
     />
   );
+};
+export const AnniversaryHeader = () => {
+  const navigator = useNavigate();
+  return (
+    <Header
+      leftContent1={<BackIcon />}
+      leftContentOnClick={() => navigator(ROUTES_PATH.myPage)}
+      title='기념일'
+    />
+  );
+};
+
+const handleEdit = async (userData: UserData) => {
+  const user = await userDataPost(userData);
+  console.log(user);
 };
 export const UserProfileEditHeader = () => {
   const navigator = useNavigate();

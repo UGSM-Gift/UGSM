@@ -55,7 +55,10 @@ const useAccountForm = () => {
       const isValid = await phoneAuthPut(phoneAuthNumber, mobile);
       setIsPhoneAuthValid(isValid);
       if (!isValid) {
-        userDataPost(userData, navigator);
+        const mainMove = await userDataPost(userData);
+        if (mainMove) {
+          navigator('/');
+        }
       }
     }
     updateStep(step + 1);

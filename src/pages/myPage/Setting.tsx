@@ -50,9 +50,6 @@ const ListItem = styled.li`
   padding: 16px;
   border-bottom: 1px solid ${colors.gray[10]};
   cursor: pointer;
-  &:last-child {
-    border-bottom: none;
-  }
 `;
 
 const Divider = styled.hr`
